@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jhj.promptdialog.MainActivity">
+
+    <Button
+        android:id="@+id/btn_default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="有按钮，默认样式" />
+
+    <Button
+        android:id="@+id/btn_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="没按钮，默认样式" />
+
+    <Button
+        android:id="@+id/btn_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="列表位于中间，按钮与内容不分离" />
+
+    <Button
+        android:id="@+id/btn_custom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义布局" />
+
+    <Button
+        android:id="@+id/btn_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="提示框位于底部" />
+
+    <Button
+        android:id="@+id/btn_bottom2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="列表位于底部，按钮与内容分开" />
+
+    <Button
+        android:id="@+id/btn_bottom3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="提示框为与底部，没有内边距" />
+</LinearLayout>

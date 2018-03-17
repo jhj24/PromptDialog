@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jhj.promptdialog.MainActivity">
+
+    <Button
+        android:id="@+id/no_suggest_style_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="样式一，没提示" />
+
+    <Button
+        android:id="@+id/style1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="样式一,有提示" />
+
+    <Button
+        android:id="@+id/black_style1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="样式一，黑色风格" />
+
+    <Button
+        android:id="@+id/define_style1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="样式一，自定义属性" />
+
+    <Button
+        android:id="@+id/no_suggest_style_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="样式二，没提示" />
+
+    <Button
+        android:id="@+id/style2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="样式二，有提示" />
+
+    <Button
+        android:id="@+id/black_style2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="样式二，黑色风格" />
+
+    <Button
+        android:id="@+id/define_style2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="样式二，自定义属性" />
+
+
+    <Button
+        android:id="@+id/percent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="百分比，默认" />
+
+    <Button
+        android:id="@+id/percent1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="百分比，黑色风格" />
+
+    <Button
+        android:id="@+id/percent2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="百分比，有提示" />
+
+    <Button
+        android:id="@+id/percent3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="百分比，自定义属性" />
+
+</LinearLayout>

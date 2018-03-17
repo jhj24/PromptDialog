@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 在底部显示dialog的默认动画-->
+    <style name="anim_dialog_bottom">
+        <item name="android:windowEnterAnimation">@anim/anim_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/anim_out_bottom</item>
+    </style>
+
+    <!-- 在中间显示dialog的默认动画-->
+    <style name="anim_dialog_center">
+        <item name="android:windowEnterAnimation">@anim/anim_in_center</item>
+        <item name="android:windowExitAnimation">@anim/anim_out_center</item>
+    </style>
+
+    <!-- 在顶部显示dialog的默认动画-->
+    <style name="anim_dialog_top">
+        <item name="android:windowEnterAnimation">@anim/anim_in_top</item>
+        <item name="android:windowExitAnimation">@anim/anim_out_top</item>
+    </style>
+
+
+    <style name="dialog_style" parent="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowTitleStyle">@null</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <!-- Dialog的windowFrame框为无 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否漂现在activity上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 是否半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@null</item>
+        <!-- 去除黑色边框的关键设置项 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
+
+
+</resources>

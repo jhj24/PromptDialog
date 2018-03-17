@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_progress_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_progress_dialog"
+        android:gravity="center"
+        android:minHeight="120dp"
+        android:minWidth="120dp"
+        android:orientation="vertical"
+        android:padding="15dp"
+        tools:ignore="UselessParent">
+
+        <com.jhj.prompt.progress.view.PercentView
+            android:id="@+id/circle_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:visibility="gone" />
+
+        <com.jhj.prompt.progress.view.LoadingOldStyleView
+            android:id="@+id/circle_around"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/layout_circle_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <com.jhj.prompt.progress.view.LoadingNewStyleView
+            android:id="@+id/circle_turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop_progress_msg"
+            android:gravity="center"
+            android:textColor="@color/textColor_dialog_msg"
+            android:textSize="@dimen/textSize_progress_msg"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>

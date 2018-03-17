@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- dialog背景样式-->
+    <gradient
+        android:endColor="@color/bg_common_dialog_end"
+        android:gradientRadius="360"
+        android:startColor="@color/bg_common_dialog_start"
+        android:type="radial" />
+
+    <corners android:radius="@dimen/item_round_radius" />
+
+</shape>

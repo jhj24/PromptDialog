@@ -1,0 +1,55 @@
+<resources>
+
+    <!-- 分割线高度 -->
+    <dimen name="height_parting_line">1dp</dimen>
+    <!-- item圆角大小 -->
+    <dimen name="item_round_radius">5dp</dimen>
+
+
+    <!--标题-->
+    <dimen name="textSize_alert_title">22sp</dimen>
+    <dimen name="textSize_bottom_item_title">22sp</dimen>
+    <dimen name="height_alert_title">60dp</dimen>
+    <dimen name="height_bottom_item_title">40dp</dimen>
+
+    <!--内容-->
+    <dimen name="textSize_alert_msg">15sp</dimen>
+    <dimen name="textSize_bottom_item_msg">14sp</dimen>
+
+    <!--item-->
+    <dimen name="textSize_alert_item">18sp</dimen>
+    <dimen name="height_alert_item">48dp</dimen>
+
+    <!--按钮-->
+    <dimen name="textSize_alert_button">18sp</dimen>
+    <dimen name="height_alert_button">48dp</dimen>
+
+    <dimen name="marginBottom_alert_msg">15dp</dimen>
+
+    <!--progress-->
+    ====================================================
+
+    <!--提示的文字大小-->
+    <dimen name="textSize_progress_msg">15sp</dimen>
+    <dimen name="marginTop_progress_msg">10dp</dimen>
+
+
+    <!--picker-->
+    =====================================================
+    <dimen name="textSize_picker_title">20sp</dimen>
+    <dimen name="textSize_picker_content">18sp</dimen>
+    <!-- 顶部按钮栏高度 -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+    <!-- 顶部按钮padding -->
+    <dimen name="pickerview_topbar_padding">20dp</dimen>
+    <!-- 顶部按钮paddingLeft -->
+    <dimen name="pickerview_topbar_paddingleft">10dp</dimen>
+    <!-- 顶部按钮paddingRight -->
+    <dimen name="pickerview_topbar_paddingright">10dp</dimen>
+    <!-- 顶部按钮文字大小 -->
+    <dimen name="pickerview_topbar_btn_textsize">18sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">21sp</dimen>
+    <dimen name="pickerview_textsize">20sp</dimen>
+
+
+</resources>
