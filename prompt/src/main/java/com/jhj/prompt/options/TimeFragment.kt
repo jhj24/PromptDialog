@@ -10,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.jhj.prompt.BaseDialogFragment
 import com.jhj.prompt.Constants
+import com.jhj.prompt.OnDialogCancelListener
 import com.jhj.prompt.R
 import com.jhj.prompt.options.interfaces.ITimeOptions
 import com.jhj.prompt.options.interfaces.OnTimeSelectedListener
 import com.jhj.prompt.options.utils.DividerType
 import com.jhj.prompt.options.wheel.TimeWheel
+import com.jhj.prompt.progress.PercentFragment
 import kotlinx.android.synthetic.main.layout_pickerview_time.view.*
 import kotlinx.android.synthetic.main.layout_pickerview_topbar.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -321,6 +323,11 @@ class TimeFragment : BaseDialogFragment() {
                 }
                 fragment.dismiss()
             }
+            return this
+        }
+
+        override fun setOnDialogCancelListener(listener: OnDialogCancelListener): Builder {
+            arg.putSerializable(Constants.DIALOG_CANCEL_LISTENER, listener)
             return this
         }
 

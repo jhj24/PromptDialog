@@ -2,6 +2,7 @@ package com.jhj.prompt
 
 import android.app.DialogFragment
 import android.app.FragmentManager
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.*
@@ -17,6 +18,12 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     var mGravity: Int? = null
     var mAnim: Int? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_style)
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val cancel = arguments.getBoolean(Constants.OUT_SIDE_CANCEL, true)
@@ -94,16 +101,21 @@ abstract class BaseDialogFragment : DialogFragment() {
             if (dim != -1f) {
                 it.dimAmount = dim
             } else {
-                if (blackStyle){
+                if (blackStyle) {
                     it.dimAmount = 0f
-                }else{
+                } else {
                     it.dimAmount = 0.3f
                 }
             }
 
         }
-
         window.attributes = attr
+    }
+
+    override fun onCancel(dialog: DialogInterface?) {
+        super.onCancel(dialog)
+        val listener = arguments.getSerializable(Constants.DIALOG_CANCEL_LISTENER) as? OnDialogCancelListener
+        listener?.cancel()
     }
 
 
@@ -125,6 +137,9 @@ abstract class BaseDialogFragment : DialogFragment() {
         }
     }
 
+
+
     abstract fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 
 }
+

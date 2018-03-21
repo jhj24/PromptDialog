@@ -2,6 +2,7 @@ package com.jhj.prompt.progress
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jhj.prompt.BaseDialogFragment
 import com.jhj.prompt.Constants
+import com.jhj.prompt.OnDialogCancelListener
 import com.jhj.prompt.R
 import com.jhj.prompt.progress.interfaces.IBaseProgress
 import com.jhj.prompt.progress.interfaces.IPercent
@@ -33,6 +35,7 @@ class PercentFragment : BaseDialogFragment() {
     }
 
     private var mView: View? = null
+    private var isCancel = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,8 +66,15 @@ class PercentFragment : BaseDialogFragment() {
         if (mView == null) {
             throw IllegalStateException("This setProgress() method must be called after show()")
         }
-        mView?.circle_progress?.progress = i
-        Log.w("xxx", i.toString())
+        if (!isCancel) {
+            mView?.circle_progress?.progress = i
+            Log.w("xxx", i.toString())
+        }
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        isCancel = true
     }
 
     private fun initView(view: View) {
@@ -179,8 +189,13 @@ class PercentFragment : BaseDialogFragment() {
             return this
         }
 
-        override fun setOutSideCanccel(cancel: Boolean): Builder {
+        override fun setOutSideCancel(cancel: Boolean): Builder {
             arg.putBoolean(Constants.OUT_SIDE_CANCEL, cancel)
+            return this
+        }
+
+        override fun setOnDialogCancelListener(listener: OnDialogCancelListener): Builder {
+            arg.putSerializable(Constants.DIALOG_CANCEL_LISTENER, listener)
             return this
         }
 

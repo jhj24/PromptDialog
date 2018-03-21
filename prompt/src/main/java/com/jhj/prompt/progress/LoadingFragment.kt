@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jhj.prompt.BaseDialogFragment
 import com.jhj.prompt.Constants
+import com.jhj.prompt.OnDialogCancelListener
 import com.jhj.prompt.R
 import com.jhj.prompt.progress.constants.LoadingStyle
 import com.jhj.prompt.progress.interfaces.IBaseProgress
@@ -55,7 +56,9 @@ class LoadingFragment : BaseDialogFragment() {
         } else {
             setOldStyleCircle(view)
         }
+
     }
+
 
     private fun setNewStyleCircle(view: View) {
 
@@ -186,7 +189,7 @@ class LoadingFragment : BaseDialogFragment() {
             return this
         }
 
-        override fun setOutSideCanccel(cancel: Boolean): Builder {
+        override fun setOutSideCancel(cancel: Boolean): Builder {
             arg.putBoolean(Constants.OUT_SIDE_CANCEL, cancel)
             return this
         }
@@ -194,6 +197,11 @@ class LoadingFragment : BaseDialogFragment() {
         override fun setBlackStyle(): Builder {
             arg.putBoolean(Constants.IS_BLACK_STYLE, true)
             return this
+        }
+
+        override fun setOnDialogCancelListener(listener: OnDialogCancelListener): Builder {
+            arg.putSerializable(Constants.DIALOG_CANCEL_LISTENER, listener)
+            return this;
         }
 
         fun setLoadingStyle(style: LoadingStyle): Builder {

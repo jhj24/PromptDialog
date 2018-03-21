@@ -1,6 +1,7 @@
 package com.jhj.prompt.options.interfaces
 
 import android.graphics.Typeface
+import com.jhj.prompt.OnDialogCancelListener
 import com.jhj.prompt.options.utils.DividerType
 
 /**
@@ -44,6 +45,7 @@ interface IBaseOptions<T : IBaseOptions<T>> {
     fun setDimAmount(dimAmount: Float): T
     fun setAnimation(resource: Int): T
     fun setOutSideCancelable(cancelable: Boolean): T
+    fun setOnDialogCancelListener(listener: OnDialogCancelListener): T//dialog弹出时点击返回键进行的操作
 
     fun show(): T
     fun dismiss()

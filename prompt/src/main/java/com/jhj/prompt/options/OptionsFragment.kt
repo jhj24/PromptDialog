@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jhj.prompt.BaseDialogFragment
 import com.jhj.prompt.Constants
+import com.jhj.prompt.OnDialogCancelListener
 import com.jhj.prompt.R
 import com.jhj.prompt.options.interfaces.ICommonOptions
 import com.jhj.prompt.options.interfaces.OnOptionsSelectedListener
@@ -300,6 +301,11 @@ class OptionsFragment<T> : BaseDialogFragment() {
                 listener.onOptionsSelect(items[0], items[1], items[2])
                 fragment.dismiss()
             }
+            return this
+        }
+
+        override fun setOnDialogCancelListener(listener: OnDialogCancelListener): Builder<T> {
+            arg.putSerializable(Constants.DIALOG_CANCEL_LISTENER, listener)
             return this
         }
 

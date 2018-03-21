@@ -1,5 +1,6 @@
 package com.jhj.prompt.alert.interfaces
 
+import com.jhj.prompt.OnDialogCancelListener
 import com.jhj.prompt.alert.constants.DialogStyle
 import com.jhj.prompt.alert.constants.TextGravity
 
@@ -65,7 +66,9 @@ interface IAlertDialog<T : IAlertDialog<T>> {
 
     fun setAnimation(resource: Int): T
 
-    fun show() :T
+    fun setOnDialogCancelListener(listener: OnDialogCancelListener): T
+
+    fun show(): T
 
     fun dismiss()
 

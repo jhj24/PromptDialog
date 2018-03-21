@@ -67,5 +67,7 @@ object Constants {
     const val MAX_PROGRESS: String = "max_progress"
     const val IS_BLACK_STYLE: String = "is_black_style"
     const val BACKGROUND_RESOURCE: String = "background_resource"
-    const val CURRENT_PRPGRESS: String = "max_progress"
+
+    //dialog弹出时点击返回按钮进行的操作
+    const val DIALOG_CANCEL_LISTENER: String = "dialog_cancel_listener"
 }

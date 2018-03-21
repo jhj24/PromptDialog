@@ -4,12 +4,16 @@ import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.util.Log
+import android.view.KeyEvent
+import com.jhj.prompt.OnDialogCancelListener
 import com.jhj.prompt.progress.LoadingFragment
 import com.jhj.prompt.progress.PercentFragment
 import com.jhj.prompt.progress.constants.LoadingStyle
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.toast
 
 /**
  * Created by jhj on 2018-3-17 0017.
@@ -20,7 +24,14 @@ class LoadingActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading)
         no_suggest_style_1.onClick {
+
             LoadingFragment.Builder(this@LoadingActivity)
+                    .setOutSideCancel(false)
+                    .setOnDialogCancelListener(object : OnDialogCancelListener {
+                        override fun cancel() {
+                            toast("Dialog弹出时，我进行了back操作")
+                        }
+                    })
                     .show()
         }
 
@@ -40,6 +51,11 @@ class LoadingActivity : Activity() {
                     .setCircleRadius((40 * resources.displayMetrics.density).toInt())
                     .setCircleColor(Color.RED)
                     .setCircleWidth(4 * resources.displayMetrics.density)
+                    .setOnDialogCancelListener(object : OnDialogCancelListener {
+                        override fun cancel() {
+                            toast("Dialog弹出时，我进行了back操作")
+                        }
+                    })
                     .show()
         }
         no_suggest_style_2.onClick {
@@ -125,4 +141,17 @@ class LoadingActivity : Activity() {
             }
         }
     }
+
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        Log.w("xxx", "down")
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Log.w("xxx", "press")
+    }
+
+
 }

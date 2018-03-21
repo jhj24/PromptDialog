@@ -1,5 +1,7 @@
 package com.jhj.prompt.progress.interfaces
 
+import com.jhj.prompt.OnDialogCancelListener
+
 /**
  * Created by jhj on 2018-3-2 0002;
  */
@@ -60,7 +62,12 @@ interface IBaseProgress<T : IBaseProgress<T>> {
      */
     fun setBlackStyle(): T
 
-    fun setOutSideCanccel(cancel: Boolean): T
+    /**
+     * dialog弹出按返回键需要的操作
+     */
+    fun setOnDialogCancelListener(listener: OnDialogCancelListener): T
+
+    fun setOutSideCancel(cancel: Boolean): T
 
     fun show(): T
 

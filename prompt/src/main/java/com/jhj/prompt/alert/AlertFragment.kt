@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jhj.prompt.BaseDialogFragment
 import com.jhj.prompt.Constants
+import com.jhj.prompt.OnDialogCancelListener
 import com.jhj.prompt.R
 import com.jhj.prompt.alert.constants.DialogStyle
 import com.jhj.prompt.alert.constants.TextGravity
@@ -482,6 +483,11 @@ class AlertFragment : BaseDialogFragment() {
 
         override fun setAnimation(resource: Int): Builder {
             arg.putInt(Constants.ANIMATION, resource)
+            return this
+        }
+
+        override fun setOnDialogCancelListener(listener: OnDialogCancelListener): Builder {
+            arg.putSerializable(Constants.DIALOG_CANCEL_LISTENER, listener)
             return this
         }
 
