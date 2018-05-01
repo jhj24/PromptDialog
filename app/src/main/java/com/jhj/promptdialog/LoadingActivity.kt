@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.KeyEvent
-import com.jhj.prompt.OnDialogCancelListener
-import com.jhj.prompt.progress.LoadingFragment
-import com.jhj.prompt.progress.PercentFragment
-import com.jhj.prompt.progress.constants.LoadingStyle
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
+import com.jhj.prompt.dialog.progress.LoadingFragment
+import com.jhj.prompt.dialog.progress.PercentFragment
+import com.jhj.prompt.dialog.progress.constants.LoadingStyle
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -27,7 +27,7 @@ class LoadingActivity : Activity() {
 
             LoadingFragment.Builder(this@LoadingActivity)
                     .setOutSideCancel(false)
-                    .setOnDialogCancelListener(object : OnDialogCancelListener {
+                    .setDialogShowOnBackListener(object : OnDialogShowOnBackListener {
                         override fun cancel() {
                             toast("Dialog弹出时，我进行了back操作")
                         }
@@ -51,7 +51,7 @@ class LoadingActivity : Activity() {
                     .setCircleRadius((40 * resources.displayMetrics.density).toInt())
                     .setCircleColor(Color.RED)
                     .setCircleWidth(4 * resources.displayMetrics.density)
-                    .setOnDialogCancelListener(object : OnDialogCancelListener {
+                    .setDialogShowOnBackListener(object : OnDialogShowOnBackListener {
                         override fun cancel() {
                             toast("Dialog弹出时，我进行了back操作")
                         }

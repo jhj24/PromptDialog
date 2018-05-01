@@ -2,12 +2,13 @@ package com.jhj.promptdialog
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
-import com.jhj.prompt.options.OptionsFragment
-import com.jhj.prompt.options.TimeFragment
-import com.jhj.prompt.options.interfaces.OnOptionsSelectedListener
-import com.jhj.prompt.options.interfaces.OnTimeSelectedListener
+import com.jhj.prompt.dialog.options.OptionsFragment
+import com.jhj.prompt.dialog.options.TimeFragment
+import com.jhj.prompt.dialog.options.interfaces.OnOptionsSelectedListener
+import com.jhj.prompt.dialog.options.interfaces.OnTimeSelectedListener
 import kotlinx.android.synthetic.main.activity_progress.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -31,8 +32,9 @@ class OptionsActivity : Activity() {
         initData()
 
         zero.onClick {
+            val a = System.nanoTime()
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
-                    .setPicker(provinceList, cityList)
+                    .setLinkedPicker(provinceList, cityList)
                     .setCyclic(false)
                     .setSubmitListener(object : OnOptionsSelectedListener {
                         override fun onOptionsSelect(options1: Int?, options2: Int?, options3: Int?) {
@@ -40,13 +42,14 @@ class OptionsActivity : Activity() {
                         }
                     })
                     .show()
+            Log.w("xxx", (System.nanoTime() - a).toString())
         }
 
         one.onClick {
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
-                    .setPicker(provinceList, cityList)
+                    .setLinkedPicker(provinceList, cityList)
                     .setPaddingHorizontal(150)
-                    .setItemSize(9)
+                    .setItemNum(9)
                     .setAnimation(R.style.anim_dialog_center)
                     .setGravity(Gravity.CENTER)
                     .setSubmitListener(object : OnOptionsSelectedListener {
@@ -59,7 +62,7 @@ class OptionsActivity : Activity() {
 
         two.onClick {
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
-                    .setPicker(provinceList, cityList, districtList)
+                    .setLinkedPicker(provinceList, cityList, districtList)
                     .setSubmitListener(object : OnOptionsSelectedListener {
                         override fun onOptionsSelect(options1: Int?, options2: Int?, options3: Int?) {
                             toast(options1.toString())
@@ -73,7 +76,7 @@ class OptionsActivity : Activity() {
             TimeFragment.Builder(this@OptionsActivity)
                     .setDate(selectedDate)
                     .setDisplayStyle(booleanArrayOf(false, false, false, true, true, false))
-                    .isOptionsLabel(false)
+                    .setOnlyCenterLabel(false)
                     .setLabels(null, null, null, "时", "分", null)
                     .setSubmitListener(object : OnTimeSelectedListener {
                         override fun onTimeSelect(date: Date, v: View) {
@@ -92,7 +95,7 @@ class OptionsActivity : Activity() {
                     .setAnimation(R.style.anim_dialog_center)
                     .setPaddingHorizontal(200)
                     .setDisplayStyle(booleanArrayOf(false, false, false, true, true, false))
-                    .isOptionsLabel(false)
+                    .setOnlyCenterLabel(false)
                     .setLabels(null, null, null, "时", "分", null)
                     .setSubmitListener(object : OnTimeSelectedListener {
                         override fun onTimeSelect(date: Date, v: View) {
@@ -112,7 +115,7 @@ class OptionsActivity : Activity() {
             TimeFragment.Builder(this@OptionsActivity)
                     .setDate(selectedDate)
                     .setDisplayStyle(booleanArrayOf(true, true, true, false, false, false))
-                    .isOptionsLabel(false)
+                    .setOnlyCenterLabel(false)
                     .setLabels("年", "月", "日", null, null, null)
                     .setSubmitListener(object : OnTimeSelectedListener {
                         override fun onTimeSelect(date: Date, v: View) {
@@ -134,7 +137,7 @@ class OptionsActivity : Activity() {
                     .setCyclic(false)
                     .setRangDate(startDate, endDate)
                     .setDisplayStyle(booleanArrayOf(true, true, true, true, true, true))
-                    .isOptionsLabel(false)
+                    .setOnlyCenterLabel(false)
                     .setSubmitListener(object : OnTimeSelectedListener {
                         override fun onTimeSelect(date: Date, v: View) {
                             val df = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
@@ -143,6 +146,30 @@ class OptionsActivity : Activity() {
 
                     })
                     .show()
+        }
+
+        seven.setOnClickListener { }
+        seven.onClick {
+            val a = System.nanoTime()
+            val selectedDate = Calendar.getInstance()//系统当前时间
+            val startDate = Calendar.getInstance()
+            startDate.set(2014, 0, 1)
+            val endDate = Calendar.getInstance()
+            endDate.set(2015, 11, 31)
+            TimeFragment.Builder(this@OptionsActivity)
+                    .setDate(selectedDate)
+                    .setCyclic(false)
+                    .setRangDate(startDate, endDate)
+                    .setDisplayStyle(booleanArrayOf(true, true, true, true, true, true))
+                    .setSubmitListener(object : OnTimeSelectedListener {
+                        override fun onTimeSelect(date: Date, v: View) {
+                            val df = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
+                            toast(df.format(date))
+                        }
+
+                    })
+                    .show()
+            Log.w("xxx", (System.nanoTime() - a).toString())
         }
 
 

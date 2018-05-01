@@ -5,11 +5,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.view.View
-import com.jhj.prompt.alert.AlertFragment
-import com.jhj.prompt.alert.constants.DialogStyle
-import com.jhj.prompt.alert.interfaces.OnButtonClickedListener
-import com.jhj.prompt.alert.interfaces.OnCustomListener
-import com.jhj.prompt.alert.interfaces.OnItemClickListener
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
+import com.jhj.prompt.dialog.alert.AlertFragment
+import com.jhj.prompt.dialog.alert.constants.DialogStyle
+import com.jhj.prompt.dialog.alert.interfaces.OnButtonClickedListener
+import com.jhj.prompt.dialog.alert.interfaces.OnCustomListener
+import com.jhj.prompt.dialog.alert.interfaces.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_alert.*
 import kotlinx.android.synthetic.main.layout_image.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -126,6 +127,7 @@ class AlertActivity : Activity() {
                     .setDialogStyle(DialogStyle.DIALOG_BOTTOM)
                     .setPaddingHorizontal(0)
                     .setPaddingBottom(0)
+                    .setBackgroundResource(R.drawable.bg_dialog_no_corner)
                     .setTitle("标题")
                     .setMessage("内容")
                     .setSubmitListener(object : OnButtonClickedListener {
@@ -136,6 +138,11 @@ class AlertActivity : Activity() {
                     .setCancelListener(object : OnButtonClickedListener {
                         override fun onClick(view: View?) {
                             toast("取消")
+                        }
+                    })
+                    .setDialogShowOnBackListener(object : OnDialogShowOnBackListener {
+                        override fun cancel() {
+                            toast("点击了返回按钮")
                         }
                     })
                     .show()
