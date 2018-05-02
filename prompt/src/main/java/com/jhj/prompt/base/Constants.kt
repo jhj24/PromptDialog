@@ -72,36 +72,36 @@ object Constants {
     const val DIALOG_ON_BACK_LISTENER: String = "dialog_cancel_listener"
 
     //联动
-    val OPTIONS_BACKGROUND_RESOURCE: String = "options_background_resource" //options背景色
-    val OPTIONS_TEXT_SIZE: String = "options_text_size" //options 的字体大小
-    val ONLY_CENTER_LABEL: String = "only_center_label_display" //只显示中间itme的单位
-    val DIVIDER_COLOR: String = "divider_color" //分割线颜色
-    val TEXT_COLOR_OUT: String = "text_color_out" //中间字体颜色
-    val TEXT_COLOR_CENTER: String = "text_color_center" //两边字体颜色
-    val DIVIDER_TYPE: String = "divider_type" //分割线类型
-    val ITEM_NUM: String = "item_num" // item个数
-    val OPTIONS_LABELS: String = "options_labels" //item单位
-    val IS_CYCLIC: String = "is_cyclic" //是否循环
-    val DISPLAY_STYLE: String = "display_style"//时间显示类型，6个boolean值对应年月日时分秒
-    val X_OFFSET: String = "x_offset" //x轴的偏移量
-    val SPACING_RATIO: String = "spacing_ratio" //各个item的间距
-    val EXTRA_HEIGHT: String = "extra_height" //设置item的额外高度
-    val DATE_MILLS: String = "date_mills" //设置时间
-    val START_DATE_MILLS: String = "start_date_mills"//起始时间
-    val END_DATE_MILLS: String = "end_date_mills"//结束时间
-    val LUNAR_CALENDAR: String = "lunar_calendar"//是否是农历
+    const val OPTIONS_BACKGROUND_RESOURCE: String = "options_background_resource" //options背景色
+    const val OPTIONS_TEXT_SIZE: String = "options_text_size" //options 的字体大小
+    const val ONLY_CENTER_LABEL: String = "only_center_label_display" //只显示中间itme的单位
+    const val DIVIDER_COLOR: String = "divider_color" //分割线颜色
+    const val TEXT_COLOR_OUT: String = "text_color_out" //中间字体颜色
+    const val TEXT_COLOR_CENTER: String = "text_color_center" //两边字体颜色
+    const val DIVIDER_TYPE: String = "divider_type" //分割线类型
+    const val ITEM_NUM: String = "item_num" // item个数
+    const val OPTIONS_LABELS: String = "options_labels" //item单位
+    const val IS_CYCLIC: String = "is_cyclic" //是否循环
+    const val DISPLAY_STYLE: String = "display_style"//时间显示类型，6个boolean值对应年月日时分秒
+    const val X_OFFSET: String = "x_offset" //x轴的偏移量
+    const val SPACING_RATIO: String = "spacing_ratio" //各个item的间距
+    const val EXTRA_HEIGHT: String = "extra_height" //设置item的额外高度
+    const val DATE_MILLS: String = "date_mills" //设置时间
+    const val START_DATE_MILLS: String = "start_date_mills"//起始时间
+    const val END_DATE_MILLS: String = "end_date_mills"//结束时间
+    const val LUNAR_CALENDAR: String = "lunar_calendar"//是否是农历
 
-    val OPTIONS_SELECT_ONE: String = "options_select_1"
-    val OPTIONS_SELECT_TWO: String = "options_select_2"
-    val OPTIONS_SELECT_THREE: String = "options_select_3"
+    const val OPTIONS_SELECT_ONE: String = "options_select_1"
+    const val OPTIONS_SELECT_TWO: String = "options_select_2"
+    const val OPTIONS_SELECT_THREE: String = "options_select_3"
 
-    val OPTIONS_ITEMS_ONE: String = "options_items_1"
-    val OPTIONS_ITEMS_TWO: String = "options_items_2"
-    val OPTIONS_ITEMS_THREE: String = "options_items_3"
+    const val OPTIONS_ITEMS_ONE: String = "options_items_1"
+    const val OPTIONS_ITEMS_TWO: String = "options_items_2"
+    const val OPTIONS_ITEMS_THREE: String = "options_items_3"
 
-    val OPTIONS_LINKED_ITEMS_ONE: String = "options_linked_items_1"
-    val OPTIONS_LINKED_ITEMS_TWO: String = "options_linked_items_2"
-    val OPTIONS_LINKED_ITEMS_THREE: String = "options_linked_items_3"
-    val OPTIONS_IS_LINKED: String = "options_is_linked"
+    const val OPTIONS_LINKED_ITEMS_ONE: String = "options_linked_items_1"
+    const val OPTIONS_LINKED_ITEMS_TWO: String = "options_linked_items_2"
+    const val OPTIONS_LINKED_ITEMS_THREE: String = "options_linked_items_3"
+    const val OPTIONS_IS_LINKED: String = "options_is_linked"
 
 }

@@ -1,6 +1,7 @@
 package com.jhj.prompt.util
 
 /**
+ * 扩展工具
  * Created by jhj on 2018-3-27 0027.
  */
 

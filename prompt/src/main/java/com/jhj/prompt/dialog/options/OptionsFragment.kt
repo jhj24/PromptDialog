@@ -74,7 +74,6 @@ class OptionsFragment<T> : BaseDialogFragment() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
-        outState?.putBoolean(Constants.ACTIVITY_DESTROY, true)
         outState?.let {
             it.putString(Constants.TITLE, titleText)
             it.putInt(Constants.TITLE_COLOR, titleColor)
@@ -132,6 +131,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
 
 
     override fun initParams(bundle: Bundle) {
+        super.initParams(bundle)
         titleText = bundle.getString(Constants.TITLE, "")
         titleColor = bundle.getInt(Constants.TITLE_COLOR, -1)
         titleSize = bundle.getFloat(Constants.TITLE_SIZE, -1f)
