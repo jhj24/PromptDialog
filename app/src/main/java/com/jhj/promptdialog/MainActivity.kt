@@ -23,10 +23,11 @@ class MainActivity : AppCompatActivity() {
 
         three.onClick {
             startActivity<OptionsActivity>()
-
         }
 
-
+        four.onClick {
+            startActivity<PopActivity>()
+        }
 
     }
 
