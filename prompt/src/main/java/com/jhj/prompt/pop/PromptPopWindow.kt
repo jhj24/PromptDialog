@@ -26,6 +26,8 @@ class PromptPopWindow() {
     private var isTouchable = true
     private var backgroundAlpha = 0f// 背景变暗的值，0 - 1
     private var canceledOnTouchOutSide = true
+    private var inputMode: Int? = null
+    private var softInputMode: Int? = null
     private var touchListener: View.OnTouchListener? = null
     private var dismissListener: PopupWindow.OnDismissListener? = null
     private var customListener: OnCustomListener? = null
@@ -136,6 +138,13 @@ class PromptPopWindow() {
             if (touchListener != null) {
                 it.setTouchInterceptor(touchListener)
             }
+            if (inputMode != null) {
+                it.inputMethodMode = inputMode as Int
+            }
+            if (softInputMode != null) {
+                it.softInputMode = softInputMode as Int
+            }
+
             it.isClippingEnabled = isClipEnable
             it.isTouchable = isTouchable
             it.isFocusable = isFocusable
@@ -221,6 +230,24 @@ class PromptPopWindow() {
             popWindow.isTouchable = isTouchable
             return this
         }
+
+        /**
+         * 设置输入模式(允许，不允许，根据焦点判断是否可输入)
+         *
+         */
+        fun setInputMethodMode(mode: Int): Builder {
+            popWindow.inputMode = mode
+            return this
+        }
+
+        /**
+         * 设置软键盘模式
+         */
+        fun setSoftInputMode(softInputMode: Int): Builder {
+            popWindow.softInputMode = softInputMode
+            return this
+        }
+
 
         /**
          * popupWindow消失事件监听

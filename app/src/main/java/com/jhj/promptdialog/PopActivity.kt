@@ -2,6 +2,7 @@ package com.jhj.promptdialog
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.view.View
 import android.widget.PopupWindow
 import com.jhj.prompt.pop.OnCustomListener
@@ -68,7 +69,8 @@ class PopActivity : AppCompatActivity() {
                         toast("popupWindow消失")
                     })
                     .setOnTouchListener(View.OnTouchListener { p0, p1 ->
-                        toast("触摸了popupWindow")
+                        if (p1.action == KeyEvent.ACTION_DOWN)
+                            toast("触摸了popupWindow")
                         false
                     })
                     .build()
