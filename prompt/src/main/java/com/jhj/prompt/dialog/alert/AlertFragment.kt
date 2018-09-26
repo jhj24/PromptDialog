@@ -192,7 +192,7 @@ class AlertFragment : BaseDialogFragment() {
 
     private fun setCustomLayout(view: View) {
         val layoutRes = arguments.getInt(Constants.CUSTOM_LAYOUT, -1)
-        val listener = arguments.getSerializable(Constants.CUSTOM_LISTENER) as? OnCustomListener
+        val listener = arguments.getParcelable(Constants.CUSTOM_LISTENER) as? OnCustomListener
         if (layoutRes != -1) {
             isCustomLayoutShow = true
             view.tv_alert_msg.visibility = View.GONE
@@ -412,7 +412,7 @@ class AlertFragment : BaseDialogFragment() {
 
         override fun setLayoutRes(resource: Int, listener: OnCustomListener): Builder {
             arg.putInt(Constants.CUSTOM_LAYOUT, resource)
-            arg.putSerializable(Constants.CUSTOM_LISTENER, listener)
+            arg.putParcelable(Constants.CUSTOM_LISTENER, listener)
             return this
         }
 

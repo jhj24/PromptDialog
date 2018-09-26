@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.KeyEvent
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import com.jhj.prompt.dialog.progress.LoadingFragment
 import com.jhj.prompt.dialog.progress.PercentFragment
 import com.jhj.prompt.dialog.progress.constants.LoadingStyle
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -26,6 +26,7 @@ class LoadingActivity : Activity() {
         no_suggest_style_1.onClick {
 
             LoadingFragment.Builder(this@LoadingActivity)
+                    .setText("111")
                     .setOutSideCancel(false)
                     .setDialogShowOnBackListener(object : OnDialogShowOnBackListener {
                         override fun cancel() {
