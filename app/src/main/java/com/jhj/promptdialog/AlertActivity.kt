@@ -70,7 +70,7 @@ class AlertActivity : Activity() {
         }
 
         btn_custom_layout.onClick {
-            AlertFragment.Builder(this@AlertActivity)
+          AlertFragment.Builder(this@AlertActivity)
                     .setTitle("自定义")
                     .setLayoutRes(R.layout.layout_image, object : OnCustomListener {
                         override fun onLayout(view: View) {

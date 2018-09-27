@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jhj.prompt.R
 import com.jhj.prompt.base.BaseDialogFragment
 import com.jhj.prompt.base.Constants
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
-import com.jhj.prompt.R
 import com.jhj.prompt.dialog.options.interfaces.ICommonOptions
 import com.jhj.prompt.dialog.options.interfaces.OnOptionsSelectedListener
 import com.jhj.prompt.dialog.options.utils.DividerType
 import com.jhj.prompt.dialog.options.wheel.OptionsWheel
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.layout_pickerview_topbar.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.textColor
@@ -439,6 +439,10 @@ class OptionsFragment<T> : BaseDialogFragment() {
             arg.putSerializable(Constants.OPTIONS_LINKED_ITEMS_THREE, options3Items)
             arg.putBoolean(Constants.OPTIONS_IS_LINKED, true)
             return this
+        }
+
+        override fun isShow(): Boolean {
+            return fragment.isShow() ?: false
         }
 
         override fun show(): Builder<T> {

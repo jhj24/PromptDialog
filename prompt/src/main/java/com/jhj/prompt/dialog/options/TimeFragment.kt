@@ -457,6 +457,10 @@ class TimeFragment : BaseDialogFragment() {
             return this
         }
 
+        override fun isShow(): Boolean {
+            return fragment.isShow() ?: false
+        }
+
         override fun show(): Builder {
             fragment.arguments = arg
             fragment.show((mContext as Activity).fragmentManager)

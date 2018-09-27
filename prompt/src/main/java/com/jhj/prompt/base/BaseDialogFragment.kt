@@ -6,8 +6,8 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.*
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import com.jhj.prompt.R
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import org.jetbrains.anko.padding
 import java.lang.Exception
 import java.lang.IllegalStateException
@@ -47,7 +47,7 @@ abstract class BaseDialogFragment : DialogFragment() {
         dialog.window.decorView.padding = 0
         dialog.window.setBackgroundDrawableResource(R.drawable.transition)
         setAttributes(dialog.window)
-        return createView(inflater, container, savedInstanceState)
+        return  createView(inflater, container, savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -174,6 +174,9 @@ abstract class BaseDialogFragment : DialogFragment() {
         }
     }
 
+    fun isShow(): Boolean? {
+        return dialog?.isShowing
+    }
 
     abstract fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
 

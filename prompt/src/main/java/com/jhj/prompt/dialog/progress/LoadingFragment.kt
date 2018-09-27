@@ -9,12 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.jhj.prompt.R
 import com.jhj.prompt.base.BaseDialogFragment
 import com.jhj.prompt.base.Constants
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
-import com.jhj.prompt.R
 import com.jhj.prompt.dialog.progress.constants.LoadingStyle
 import com.jhj.prompt.dialog.progress.interfaces.IBaseProgress
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.layout_progress_view.view.*
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
@@ -207,6 +207,10 @@ class LoadingFragment : BaseDialogFragment() {
         fun setLoadingStyle(style: LoadingStyle): Builder {
             arg.putSerializable(Constants.DIALOG_STYLE, style)
             return this
+        }
+
+        override fun isShow(): Boolean {
+            return fragment.isShow() ?: false
         }
 
         override fun show(): Builder {

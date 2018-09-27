@@ -1,8 +1,8 @@
 package com.jhj.prompt.dialog.alert.interfaces
 
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import com.jhj.prompt.dialog.alert.constants.DialogStyle
 import com.jhj.prompt.dialog.alert.constants.TextGravity
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
 
 /**
  * 警告提示框方法接口
@@ -55,7 +55,6 @@ interface IAlertDialog<T : IAlertDialog<T>> {
 
     fun setButtonTextSize(size: Float): T
 
-
     fun setCanceledOnTouchOutSide(cancel: Boolean): T
 
     fun setPaddingTop(top: Int): T
@@ -69,6 +68,8 @@ interface IAlertDialog<T : IAlertDialog<T>> {
     fun setAnimation(resource: Int): T
 
     fun setDialogShowOnBackListener(listener: OnDialogShowOnBackListener): T
+
+    fun isShow(): Boolean
 
     fun show(): T
 

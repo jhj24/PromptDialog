@@ -69,6 +69,8 @@ interface IBaseProgress<T : IBaseProgress<T>> {
 
     fun setOutSideCancel(cancel: Boolean): T
 
+    fun isShow(): Boolean
+
     fun show(): T
 
     fun dismiss()

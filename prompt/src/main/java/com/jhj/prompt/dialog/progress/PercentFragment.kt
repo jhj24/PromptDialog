@@ -13,12 +13,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.jhj.prompt.R
 import com.jhj.prompt.base.BaseDialogFragment
 import com.jhj.prompt.base.Constants
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
-import com.jhj.prompt.R
 import com.jhj.prompt.dialog.progress.interfaces.IBaseProgress
 import com.jhj.prompt.dialog.progress.interfaces.IPercent
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.layout_progress_view.view.*
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
@@ -232,6 +232,10 @@ class PercentFragment : BaseDialogFragment() {
             this.maxProgress = maxProgress
             arg.putInt(Constants.MAX_PROGRESS, maxProgress)
             return this
+        }
+
+        override fun isShow(): Boolean {
+            return fragment.isShow() ?: false
         }
 
 

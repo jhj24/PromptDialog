@@ -1,7 +1,7 @@
 package com.jhj.prompt.dialog.options.interfaces
 
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import com.jhj.prompt.dialog.options.utils.DividerType
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
 
 /**
  * 选择器的基类方法
@@ -45,6 +45,7 @@ interface IBaseOptions<T : IBaseOptions<T>> {
     fun setOutSideCancelable(cancelable: Boolean): T
     fun setDialogShowOnBackListener(listener: OnDialogShowOnBackListener): T//dialog弹出时点击返回键进行的操作
 
+    fun isShow(): Boolean
     fun show(): T
     fun dismiss()
 }

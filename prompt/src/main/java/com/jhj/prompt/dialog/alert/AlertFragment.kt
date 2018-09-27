@@ -499,6 +499,9 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
+        override fun isShow():Boolean {
+            return fragment.isShow() ?: false
+        }
 
         override fun show(): Builder {
             fragment.arguments = arg
