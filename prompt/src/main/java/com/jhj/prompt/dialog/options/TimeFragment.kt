@@ -17,7 +17,7 @@ import com.jhj.prompt.dialog.options.wheel.TimeWheel
 import com.jhj.prompt.util.notMinusOne
 import kotlinx.android.synthetic.main.layout_pickerview_time.view.*
 import kotlinx.android.synthetic.main.layout_pickerview_topbar.view.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.textColor
 import java.text.ParseException
 import java.util.*

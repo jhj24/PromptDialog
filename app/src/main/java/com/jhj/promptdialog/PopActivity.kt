@@ -9,7 +9,7 @@ import com.jhj.prompt.pop.OnCustomListener
 import com.jhj.prompt.pop.PromptPopWindow
 import kotlinx.android.synthetic.main.activity_pop.*
 import kotlinx.android.synthetic.main.layout_pop_item.view.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
 
 /**

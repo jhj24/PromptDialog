@@ -13,7 +13,7 @@ import com.jhj.prompt.dialog.alert.interfaces.OnCustomListener
 import com.jhj.prompt.dialog.alert.interfaces.OnItemClickListener
 import kotlinx.android.synthetic.main.activity_alert.*
 import kotlinx.android.synthetic.main.layout_image.view.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
 
 /**

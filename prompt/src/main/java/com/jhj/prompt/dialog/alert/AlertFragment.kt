@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.layout_alert_dialog_body.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_button.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_item.view.*
 import org.jetbrains.anko.displayMetrics
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 /**
  * 提示框

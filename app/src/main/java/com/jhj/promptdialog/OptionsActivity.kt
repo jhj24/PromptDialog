@@ -11,7 +11,7 @@ import com.jhj.prompt.dialog.options.interfaces.OnOptionsSelectedListener
 import com.jhj.prompt.dialog.options.interfaces.OnTimeSelectedListener
 import kotlinx.android.synthetic.main.activity_progress.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
