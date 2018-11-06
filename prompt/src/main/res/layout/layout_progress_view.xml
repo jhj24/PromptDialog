@@ -10,10 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/bg_progress_dialog"
+        android:background="@drawable/bg_progress_white_dialog"
         android:gravity="center"
-        android:minHeight="120dp"
         android:minWidth="120dp"
+        android:minHeight="120dp"
         android:orientation="vertical"
         android:padding="15dp"
         tools:ignore="UselessParent">
@@ -26,7 +26,7 @@
             android:visibility="gone" />
 
         <com.jhj.prompt.dialog.progress.view.LoadingOldStyleView
-            android:id="@+id/circle_around"
+            android:id="@+id/circle_loading_old_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
@@ -38,13 +38,13 @@
             android:orientation="vertical" />
 
         <com.jhj.prompt.dialog.progress.view.LoadingNewStyleView
-            android:id="@+id/circle_turn"
+            android:id="@+id/circle_loading_new_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/tv_msg"
+            android:id="@+id/tv_loading_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/marginTop_progress_msg"

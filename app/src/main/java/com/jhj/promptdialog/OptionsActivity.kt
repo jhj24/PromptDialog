@@ -1,7 +1,7 @@
 package com.jhj.promptdialog
 
-import android.app.Activity
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -20,7 +20,7 @@ import kotlin.collections.ArrayList
 /**
  * Created by jhj on 2018-3-17 0017.
  */
-class OptionsActivity : Activity() {
+class OptionsActivity : FragmentActivity() {
 
     var provinceList = ArrayList<AreaUtil.AreaNode>()
     var cityList = ArrayList<ArrayList<AreaUtil.AreaNode>>()
@@ -34,7 +34,12 @@ class OptionsActivity : Activity() {
         zero.onClick {
             val a = System.nanoTime()
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
+                    .setTitle("地区选择")
+                    .setSelectOptions(3)
+                    .setLabels("1", "2", null)
                     .setLinkedPicker(provinceList, cityList)
+                    .setSelectOptions(1, 1)
+                    .setOptionsBackgroundResource(R.drawable.bg_progress_black_dialog)
                     .setCyclic(false)
                     .setSubmitListener(object : OnOptionsSelectedListener {
                         override fun onOptionsSelect(options1: Int?, options2: Int?, options3: Int?) {
@@ -94,6 +99,7 @@ class OptionsActivity : Activity() {
                     .setGravity(Gravity.CENTER)
                     .setAnimation(R.style.anim_dialog_center)
                     .setPaddingHorizontal(200)
+                    .setOptionsBackgroundResource(R.drawable.bg_progress_black_dialog)
                     .setDisplayStyle(booleanArrayOf(false, false, false, true, true, false))
                     .setOnlyCenterLabel(false)
                     .setLabels(null, null, null, "时", "分", null)

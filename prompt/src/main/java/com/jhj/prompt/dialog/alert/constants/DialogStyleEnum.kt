@@ -6,7 +6,7 @@ import java.io.Serializable
  * 通用提示对话框样式
  * Created by jhj on 17-9-26.
  */
-enum class DialogStyle : Serializable {
+enum class DialogStyleEnum : Serializable {
 
     DIALOG_TOP,
     DIALOG_CENTER,

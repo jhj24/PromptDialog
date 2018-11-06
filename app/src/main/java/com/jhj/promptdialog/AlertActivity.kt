@@ -3,11 +3,12 @@ package com.jhj.promptdialog
 import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.View
 import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import com.jhj.prompt.dialog.alert.AlertFragment
-import com.jhj.prompt.dialog.alert.constants.DialogStyle
+import com.jhj.prompt.dialog.alert.constants.DialogStyleEnum
 import com.jhj.prompt.dialog.alert.interfaces.OnButtonClickedListener
 import com.jhj.prompt.dialog.alert.interfaces.OnCustomListener
 import com.jhj.prompt.dialog.alert.interfaces.OnItemClickListener
@@ -19,7 +20,7 @@ import org.jetbrains.anko.toast
 /**
  * Created by jhj on 2018-3-17 0017.
  */
-class AlertActivity : Activity() {
+class AlertActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +88,7 @@ class AlertActivity : Activity() {
         }
         btn_bottom.onClick {
             AlertFragment.Builder(this@AlertActivity)
-                    .setDialogStyle(DialogStyle.DIALOG_BOTTOM)
+                    .setDialogStyle(DialogStyleEnum.DIALOG_BOTTOM)
                     .setTitle("标题")
                     .setMessage("内容")
                     .setSubmitListener(object : OnButtonClickedListener {
@@ -105,7 +106,7 @@ class AlertActivity : Activity() {
 
         btn_bottom2.onClick {
             AlertFragment.Builder(this@AlertActivity)
-                    .setDialogStyle(DialogStyle.DIALOG_BOTTOM_SEPARATE)
+                    .setDialogStyle(DialogStyleEnum.DIALOG_BOTTOM_SEPARATE)
                     .setTitle("列表")
                     .setItems(arrayListOf("1111", "2222"))
                     .setItems(arrayListOf("3333", "4444"), Color.BLACK)
@@ -124,7 +125,7 @@ class AlertActivity : Activity() {
 
         btn_bottom3.onClick {
             AlertFragment.Builder(this@AlertActivity)
-                    .setDialogStyle(DialogStyle.DIALOG_BOTTOM)
+                    .setDialogStyle(DialogStyleEnum.DIALOG_BOTTOM)
                     .setPaddingHorizontal(0)
                     .setPaddingBottom(0)
                     .setBackgroundResource(R.drawable.bg_dialog_no_corner)

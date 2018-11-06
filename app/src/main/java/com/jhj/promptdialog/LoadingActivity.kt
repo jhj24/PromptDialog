@@ -3,6 +3,7 @@ package com.jhj.promptdialog
 import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.KeyEvent
@@ -18,7 +19,7 @@ import org.jetbrains.anko.toast
 /**
  * Created by jhj on 2018-3-17 0017.
  */
-class LoadingActivity : Activity() {
+class LoadingActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +39,13 @@ class LoadingActivity : Activity() {
 
         style1.onClick {
             LoadingFragment.Builder(this@LoadingActivity)
-                    .setText("....")
+                    .setText("加载中...")
                     .show()
         }
         black_style1.onClick {
             LoadingFragment.Builder(this@LoadingActivity)
                     .setBlackStyle()
-                    .setText("....")
+                    .setText("加载中...")
                     .show()
         }
         define_style1.onClick {
@@ -67,14 +68,14 @@ class LoadingActivity : Activity() {
         style2.onClick {
             LoadingFragment.Builder(this@LoadingActivity)
                     .setLoadingStyle(LoadingStyle.NEW_STYLE)
-                    .setText("....")
+                    .setText("加载中...")
                     .show()
         }
         black_style2.onClick {
             LoadingFragment.Builder(this@LoadingActivity)
                     .setLoadingStyle(LoadingStyle.NEW_STYLE)
                     .setBlackStyle()
-                    .setText("....")
+                    .setText("加载中...")
                     .show()
         }
         define_style2.onClick {
@@ -101,13 +102,13 @@ class LoadingActivity : Activity() {
         percent2.onClick {
             val dialog = PercentFragment.Builder(this@LoadingActivity)
                     .setScaleDisplay()
-                    .setText("....")
+                    .setText("加载中...")
                     .show()
             setPro(dialog)
         }
         percent3.onClick {
             val dialog = PercentFragment.Builder(this@LoadingActivity)
-                    .setText("......")
+                    .setText("加载中...")
                     .setScaleColor(ContextCompat.getColor(this@LoadingActivity, R.color.red))
                     .setScaleDisplay()
                     .setScaleColor(ContextCompat.getColor(this@LoadingActivity, R.color.red))
@@ -118,7 +119,7 @@ class LoadingActivity : Activity() {
                     .setCircleWidth(10 * resources.displayMetrics.density)
                     .setAnimResource(R.style.anim_dialog_bottom)
                     .setBlackStyle()
-                    .setText("......")
+                    .setText("加载中...")
                     .setTextColor(ContextCompat.getColor(this@LoadingActivity, R.color.red))
                     .show()
 

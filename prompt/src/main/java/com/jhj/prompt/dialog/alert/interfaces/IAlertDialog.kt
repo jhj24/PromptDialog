@@ -1,6 +1,6 @@
 package com.jhj.prompt.dialog.alert.interfaces
 
-import com.jhj.prompt.dialog.alert.constants.DialogStyle
+import com.jhj.prompt.dialog.alert.constants.DialogStyleEnum
 import com.jhj.prompt.dialog.alert.constants.TextGravity
 import com.jhj.prompt.listener.OnDialogShowOnBackListener
 
@@ -11,7 +11,7 @@ import com.jhj.prompt.listener.OnDialogShowOnBackListener
 
 interface IAlertDialog<T : IAlertDialog<T>> {
 
-    fun setDialogStyle(style: DialogStyle): T
+    fun setDialogStyle(style: DialogStyleEnum): T
 
     fun setBackgroundResource(resource: Int): T
 

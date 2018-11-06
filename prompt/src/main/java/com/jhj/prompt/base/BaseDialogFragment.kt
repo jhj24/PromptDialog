@@ -1,16 +1,14 @@
 package com.jhj.prompt.base
 
-import android.app.DialogFragment
-import android.app.FragmentManager
 import android.content.DialogInterface
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
+import android.support.v4.app.FragmentManager
 import android.util.DisplayMetrics
 import android.view.*
 import com.jhj.prompt.R
 import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import org.jetbrains.anko.padding
-import java.lang.Exception
-import java.lang.IllegalStateException
 
 /**
  * DialogFragment基类
@@ -20,7 +18,7 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     var mGravity: Int? = null
     var mAnim: Int? = null
-    private var cancleOut = true
+    private var cancelOut = true
     private var top = -1
     private var bottom = -1
     private var horizontal = -1
@@ -29,6 +27,8 @@ abstract class BaseDialogFragment : DialogFragment() {
     private var anim = R.style.anim_dialog_bottom
     private var gravity = Gravity.BOTTOM
     private var backListener: OnDialogShowOnBackListener? = null
+    var attr: WindowManager.LayoutParams? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,17 +42,17 @@ abstract class BaseDialogFragment : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dialog.setCanceledOnTouchOutside(cancleOut)
+        dialog.setCanceledOnTouchOutside(cancelOut)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.window.decorView.padding = 0
-        dialog.window.setBackgroundDrawableResource(R.drawable.transition)
-        setAttributes(dialog.window)
-        return  createView(inflater, container, savedInstanceState)
+        dialog.window?.decorView?.padding = 0
+        dialog.window?.setBackgroundDrawableResource(R.drawable.transition)
+        dialog.window?.let { setAttributes(it) }
+        return createView(inflater, container, savedInstanceState)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.let {
+        outState.let {
             it.putInt(Constants.PADDING_TOP, top)
             it.putInt(Constants.PADDING_BOTTOM, bottom)
             it.putInt(Constants.PADDING_HORIZONTAL, horizontal)
@@ -65,19 +65,20 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     }
 
-    open fun initParams(bundle: Bundle) {
-        cancleOut = bundle.getBoolean(Constants.OUT_SIDE_CANCEL, true)
-        bottom = bundle.getInt(Constants.PADDING_BOTTOM, -1)
-        top = bundle.getInt(Constants.PADDING_TOP, -1)
-        horizontal = bundle.getInt(Constants.PADDING_HORIZONTAL, -1)
-        dim = bundle.getFloat(Constants.DIM_AMOUNT, -1f)
-        blackStyle = bundle.getBoolean(Constants.IS_BLACK_STYLE)
-        anim = bundle.getInt(Constants.ANIMATION, -1)
-        gravity = bundle.getInt(Constants.DIALOG_GRAVITY, -1)
-        backListener = bundle.getSerializable(Constants.DIALOG_ON_BACK_LISTENER) as? OnDialogShowOnBackListener
+    open fun initParams(bundle: Bundle?) {
+        bundle?.let {
+            cancelOut = it.getBoolean(Constants.OUT_SIDE_CANCEL, true)
+            bottom = it.getInt(Constants.PADDING_BOTTOM, -1)
+            top = it.getInt(Constants.PADDING_TOP, -1)
+            horizontal = it.getInt(Constants.PADDING_HORIZONTAL, -1)
+            dim = it.getFloat(Constants.DIM_AMOUNT, -1f)
+            blackStyle = it.getBoolean(Constants.IS_BLACK_STYLE)
+            anim = it.getInt(Constants.ANIMATION, -1)
+            gravity = it.getInt(Constants.DIALOG_GRAVITY, -1)
+            backListener = it.getSerializable(Constants.DIALOG_ON_BACK_LISTENER) as? OnDialogShowOnBackListener
+        }
     }
 
-    var attr: WindowManager.LayoutParams? = null
 
     private fun setAttributes(window: Window) {
         attr = window.attributes
@@ -145,9 +146,9 @@ abstract class BaseDialogFragment : DialogFragment() {
                     it.dimAmount = 0.3f
                 }
             }
-
+            window.attributes = it
         }
-        window.attributes = attr
+
     }
 
     override fun onCancel(dialog: DialogInterface?) {

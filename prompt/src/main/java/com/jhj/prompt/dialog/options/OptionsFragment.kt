@@ -1,8 +1,12 @@
 package com.jhj.prompt.dialog.options
 
-import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.support.annotation.ColorRes
+import android.support.annotation.DrawableRes
+import android.support.v4.app.FragmentActivity
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +18,12 @@ import com.jhj.prompt.dialog.options.interfaces.OnOptionsSelectedListener
 import com.jhj.prompt.dialog.options.utils.DividerType
 import com.jhj.prompt.dialog.options.wheel.OptionsWheel
 import com.jhj.prompt.listener.OnDialogShowOnBackListener
+import kotlinx.android.synthetic.main.layout_pickerview_options.view.*
 import kotlinx.android.synthetic.main.layout_pickerview_topbar.view.*
+import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.textColor
+import org.jetbrains.anko.textColorResource
 
 
 /**
@@ -26,31 +33,53 @@ import org.jetbrains.anko.textColor
 
 class OptionsFragment<T> : BaseDialogFragment() {
 
+    companion object {
+        val TITLE_TEXT_SIZE = 21f
+        val TITLE_TEXT_COLOR = Color.BLACK
+        val BUTTON_COLOR = R.drawable.selector_pickerview_btn
+        val BUTTON_SIZE = 18f
+        val TOP_BAR_BACKGROUND = R.color.pickerview_bg_topbar
+        val BACKGROUND_RESOURCE = R.drawable.bg_dialog_no_corner
+        val OPTION_TEXT_SIZE = 20f
+        val OPTION_TEXT_COLOR_CENTER = 0xFF2a2a2a.toInt()
+        val OPTION_TEXT_COLOR_OUT = 0xFFa8a8a8.toInt()
+        val DIVIDER_TYPE = DividerType.FILL
+        val DIVIDER_COLOR = 0xFFd5d5d5.toInt()
+        val ITEM_NUM = 11
+        val LINE_SPACEING_MULTIPLIER = 1.6f
+        val EXTRA_HEIGHT = 2;
+        val X_OFFSET = 0
+        val TEXT_GRAVITY = Gravity.CENTER
+    }
+
+
     private lateinit var wheel: OptionsWheel<T>
 
+
     private var titleText: String = ""
-    private var titleColor: Int = -1
-    private var titleSize: Float = -1f
+    private var titleColor: Int = TITLE_TEXT_COLOR
+    private var titleSize: Float = TITLE_TEXT_SIZE
     private var submitText: String? = "确定"
-    private var submitColor: Int = -1
-    private var cancelColor: Int = -1
+    private var submitColor: Int = BUTTON_COLOR
+    private var cancelColor: Int = BUTTON_COLOR
     private var cancelText: String? = "取消"
-    private var buttonSize: Float = -1f
-    private var topBarBackground: Int = -1
-    private var backgroundResource: Int = -1
-    private var optionsTextSize: Float = -1f
+    private var buttonSize: Float = BUTTON_SIZE
+    private var topBarBackground: Int = TOP_BAR_BACKGROUND
+    private var backgroundResource: Int = BACKGROUND_RESOURCE
+    private var optionsTextSize: Float = OPTION_TEXT_SIZE
     private var onlyCenterLabel: Boolean = false
-    private var colorOut: Int = -1
-    private var colorCenter: Int = -1
-    private var dividerColor: Int = -1
-    private var dividerType: DividerType? = DividerType.FILL
-    private var itemNum: Int = -1
+    private var colorOut: Int = OPTION_TEXT_COLOR_OUT
+    private var colorCenter: Int = OPTION_TEXT_COLOR_CENTER
+    private var dividerColor: Int = DIVIDER_COLOR
+    private var dividerType: DividerType? = DIVIDER_TYPE
+    private var itemNum: Int = ITEM_NUM
     private var optionsLabels: Array<out String>? = arrayOf()
     private var isCyclic: Boolean = true
+    private var textGravity: Int = TEXT_GRAVITY
     private var displayStyle: BooleanArray? = booleanArrayOf()
-    private var xOffset: Int = -1
-    private var spacingRatio: Float = -1f
-    private var extraHeight: Int = -1
+    private var xOffset: Int = X_OFFSET
+    private var spacingRatio: Float = LINE_SPACEING_MULTIPLIER
+    private var extraHeight: Int = EXTRA_HEIGHT
     private var cancelListener: OnOptionsSelectedListener? = null
     private var submitListener: OnOptionsSelectedListener? = null
 
@@ -72,9 +101,118 @@ class OptionsFragment<T> : BaseDialogFragment() {
         wheel = OptionsWheel(view)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        setButtonStyle(wheel.view)
+        if (isLinked) {
+            wheel.setPicker(optionsLinked1Items, optionsLinked2Items, optionsLinked3Items)
+        } else {
+            wheel.setNPicker(options1Items, options2Items, options3Items)
+        }
+        wheel.setCurrentItems(options1, options2, options3)
+        wheel.setTextContentSize(optionsTextSize)
+        wheel.setCyclic(isCyclic)
+        wheel.setDividerColor(dividerColor)
+        wheel.setDividerType(dividerType ?: DIVIDER_TYPE)
+        wheel.setItemNum(itemNum)
+        wheel.setLabels(optionsLabels?.get(0), optionsLabels?.get(1), optionsLabels?.get(2))
+        wheel.setLineSpacingMultiplier(spacingRatio)
+        wheel.setMaxAddHeight(extraHeight)
+        wheel.setTextXOffset(xOffset)
+        wheel.setTextColorCenter(colorCenter)
+        wheel.setTextColorOut(colorOut)
+        wheel.isCenterLabel(onlyCenterLabel)
+        wheel.setTextGravity(textGravity)
+        wheel.setTextXOffset(xOffset)
+
+        return wheel.view
+    }
+
+
+    override fun initParams(bundle: Bundle?) {
+        super.initParams(bundle)
+        bundle?.let {
+            titleText = it.getString(Constants.TITLE, "")
+            titleSize = it.getFloat(Constants.TITLE_SIZE, TITLE_TEXT_SIZE)
+            titleColor = it.getInt(Constants.TITLE_COLOR, TITLE_TEXT_COLOR)
+            submitText = it.getString(Constants.SUBMIT_TEXT, "确定")
+            submitColor = it.getInt(Constants.SUBMIT_TEXT_COLOR, BUTTON_COLOR)
+            cancelColor = it.getInt(Constants.CANCEL_TEXT_COLOR, BUTTON_COLOR)
+            cancelText = it.getString(Constants.CANCEL_TEXT, "取消")
+            buttonSize = it.getFloat(Constants.BUTTON_SIZE, BUTTON_SIZE)
+            topBarBackground = it.getInt(Constants.TOPBAR_BACKGROUND_RESOURCE, TOP_BAR_BACKGROUND)
+            backgroundResource = it.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, BACKGROUND_RESOURCE)
+            cancelListener = it.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnOptionsSelectedListener
+            submitListener = it.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnOptionsSelectedListener
+            optionsTextSize = it.getFloat(Constants.OPTIONS_TEXT_SIZE, OPTION_TEXT_SIZE)
+            onlyCenterLabel = it.getBoolean(Constants.ONLY_CENTER_LABEL, false)
+            colorOut = it.getInt(Constants.TEXT_COLOR_OUT, OPTION_TEXT_COLOR_OUT)
+            colorCenter = it.getInt(Constants.TEXT_COLOR_CENTER, OPTION_TEXT_COLOR_CENTER)
+            dividerColor = it.getInt(Constants.DIVIDER_COLOR, DIVIDER_COLOR)
+            dividerType = it.getSerializable(Constants.DIVIDER_TYPE) as? DividerType
+            itemNum = it.getInt(Constants.ITEM_NUM, ITEM_NUM)
+            optionsLabels = it.getStringArray(Constants.OPTIONS_LABELS)
+            isCyclic = it.getBoolean(Constants.IS_CYCLIC, true)
+            displayStyle = it.getBooleanArray(Constants.DISPLAY_STYLE)
+            xOffset = it.getInt(Constants.X_OFFSET, X_OFFSET)
+            spacingRatio = it.getFloat(Constants.SPACING_RATIO, LINE_SPACEING_MULTIPLIER)
+            extraHeight = it.getInt(Constants.EXTRA_HEIGHT, EXTRA_HEIGHT)
+            textGravity = it.getInt(Constants.MESSAGE_GRAVITY, TEXT_GRAVITY)
+            options1 = it.getInt(Constants.OPTIONS_SELECT_ONE, 0)
+            options2 = it.getInt(Constants.OPTIONS_SELECT_TWO, 0)
+            options3 = it.getInt(Constants.OPTIONS_SELECT_THREE, 0)
+            isLinked = it.getBoolean(Constants.OPTIONS_IS_LINKED)
+            if (isLinked) {
+                optionsLinked1Items = it.getSerializable(Constants.OPTIONS_LINKED_ITEMS_ONE) as ArrayList<T>
+                optionsLinked2Items = it.getSerializable(Constants.OPTIONS_LINKED_ITEMS_TWO) as? ArrayList<ArrayList<T>>
+                optionsLinked3Items = it.getSerializable(Constants.OPTIONS_LINKED_ITEMS_THREE) as? ArrayList<ArrayList<ArrayList<T>>>
+            } else {
+                options1Items = it.getSerializable(Constants.OPTIONS_ITEMS_ONE) as ArrayList<T>
+                options2Items = it.getSerializable(Constants.OPTIONS_ITEMS_TWO) as? ArrayList<T>
+                options3Items = it.getSerializable(Constants.OPTIONS_ITEMS_THREE) as? ArrayList<T>
+            }
+        }
+    }
+
+    private fun setButtonStyle(view: View) {
+
+        view.rv_topbar.backgroundResource = topBarBackground
+        view.layout_picker.backgroundResource = backgroundResource
+        view.tv_option_title.text = titleText
+        view.tv_option_title.textColor = titleColor
+        view.tv_option_title.textSize = titleSize
+
+        cancelListener?.let {
+            view.btn_option_cancel.textSize = buttonSize
+            view.btn_option_cancel.textColorResource = cancelColor
+            view.btn_option_cancel.text = cancelText
+            view.btn_option_cancel.onClick { view ->
+                val array = wheel.currentItems
+                it.onOptionsSelect(array[0], array[1], array[2])
+                dismiss()
+            }
+
+        }
+
+        submitListener?.let {
+            view.btn_option_submit.textSize = buttonSize
+            view.btn_option_submit.textColorResource = submitColor
+            view.btn_option_submit.text = submitText
+            view.btn_option_submit.onClick { view ->
+                val array = wheel.currentItems
+                it.onOptionsSelect(array[0], array[1], array[2])
+                dismiss()
+            }
+        }
+
+
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.let {
+        outState.let {
             it.putString(Constants.TITLE, titleText)
             it.putInt(Constants.TITLE_COLOR, titleColor)
             it.putFloat(Constants.TITLE_SIZE, titleSize)
@@ -117,106 +255,6 @@ class OptionsFragment<T> : BaseDialogFragment() {
     }
 
 
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setTitleStyle(wheel.view)
-        setButtonStyle(wheel.view)
-        if (isLinked) {
-            wheel.setPicker(optionsLinked1Items, optionsLinked2Items, optionsLinked3Items)
-        } else {
-            wheel.setNPicker(options1Items, options2Items, options3Items)
-        }
-        wheel.setCurrentItems(options1, options2, options3)
-        return wheel.view
-    }
-
-
-    override fun initParams(bundle: Bundle) {
-        super.initParams(bundle)
-        titleText = bundle.getString(Constants.TITLE, "")
-        titleColor = bundle.getInt(Constants.TITLE_COLOR, -1)
-        titleSize = bundle.getFloat(Constants.TITLE_SIZE, -1f)
-        submitText = bundle.getString(Constants.SUBMIT_TEXT, "确定")
-        submitColor = bundle.getInt(Constants.SUBMIT_TEXT_COLOR, -1)
-        cancelColor = bundle.getInt(Constants.CANCEL_TEXT_COLOR, -1)
-        cancelText = bundle.getString(Constants.CANCEL_TEXT, "取消")
-        buttonSize = bundle.getFloat(Constants.BUTTON_SIZE, -1f)
-        topBarBackground = bundle.getInt(Constants.TOPBAR_BACKGROUND_RESOURCE, -1)
-        cancelListener = bundle.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnOptionsSelectedListener
-        submitListener = bundle.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnOptionsSelectedListener
-        backgroundResource = bundle.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, -1)
-        optionsTextSize = bundle.getFloat(Constants.OPTIONS_TEXT_SIZE, -1f)
-        onlyCenterLabel = bundle.getBoolean(Constants.ONLY_CENTER_LABEL, false)
-        colorOut = bundle.getInt(Constants.TEXT_COLOR_OUT, -1)
-        colorCenter = bundle.getInt(Constants.TEXT_COLOR_CENTER, -1)
-        dividerColor = bundle.getInt(Constants.DIVIDER_COLOR, -1)
-        dividerType = bundle.getSerializable(Constants.DIVIDER_TYPE)as? DividerType
-        itemNum = bundle.getInt(Constants.ITEM_NUM, -1)
-        optionsLabels = bundle.getStringArray(Constants.OPTIONS_LABELS)
-        isCyclic = bundle.getBoolean(Constants.IS_CYCLIC, true)
-        displayStyle = bundle.getBooleanArray(Constants.DISPLAY_STYLE)
-        xOffset = bundle.getInt(Constants.X_OFFSET, -1)
-        spacingRatio = bundle.getFloat(Constants.SPACING_RATIO, -1f)
-        extraHeight = bundle.getInt(Constants.EXTRA_HEIGHT, -1)
-        options1 = bundle.getInt(Constants.OPTIONS_SELECT_ONE, 0)
-        options2 = bundle.getInt(Constants.OPTIONS_SELECT_TWO, 0)
-        options3 = bundle.getInt(Constants.OPTIONS_SELECT_THREE, 0)
-        isLinked = bundle.getBoolean(Constants.OPTIONS_IS_LINKED)
-        if (isLinked) {
-            optionsLinked1Items = bundle.getSerializable(Constants.OPTIONS_LINKED_ITEMS_ONE) as ArrayList<T>
-            optionsLinked2Items = bundle.getSerializable(Constants.OPTIONS_LINKED_ITEMS_TWO) as? ArrayList<ArrayList<T>>
-            optionsLinked3Items = bundle.getSerializable(Constants.OPTIONS_LINKED_ITEMS_THREE) as? ArrayList<ArrayList<ArrayList<T>>>
-        } else {
-            options1Items = bundle.getSerializable(Constants.OPTIONS_ITEMS_ONE) as ArrayList<T>
-            options2Items = bundle.getSerializable(Constants.OPTIONS_ITEMS_TWO) as? ArrayList<T>
-            options3Items = bundle.getSerializable(Constants.OPTIONS_ITEMS_THREE) as? ArrayList<T>
-        }
-    }
-
-    private fun setButtonStyle(view: View) {
-        cancelListener?.let {
-            if (buttonSize != -1f)
-                view.btnCancel.textSize = buttonSize
-            if (cancelColor != -1)
-                view.btnCancel.textColor = cancelColor
-            view.btnCancel.text = cancelText
-            view.btnCancel.onClick { view ->
-                val array = wheel.currentItems
-                it.onOptionsSelect(array[0], array[1], array[2])
-                dismiss()
-            }
-
-        }
-
-        submitListener?.let {
-            if (buttonSize != -1f)
-                view.btnSubmit.textSize = buttonSize
-            if (submitColor != -1)
-                view.btnSubmit.textColor = submitColor
-            view.btnSubmit.text = submitText
-            view.btnSubmit.onClick { view ->
-                val array = wheel.currentItems
-                it.onOptionsSelect(array[0], array[1], array[2])
-                dismiss()
-            }
-        }
-        if (topBarBackground != -1) {
-            view.rv_topbar.setBackgroundResource(topBarBackground)
-        }
-    }
-
-    private fun setTitleStyle(view: View) {
-        view.tvTitle.let { title ->
-            title.text = titleText
-            if (titleColor != -1) {
-                title.setTextColor(titleColor)
-            }
-            if (titleSize != -1f) {
-                title.textSize = titleSize
-            }
-        }
-    }
-
-
     class Builder<T>(val mContext: Context) : ICommonOptions<Builder<T>> {
 
         private val fragment = OptionsFragment<T>()
@@ -242,7 +280,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        override fun setCancelColor(color: Int): Builder<T> {
+        override fun setCancelColor(@DrawableRes color: Int): Builder<T> {
             arg.putInt(Constants.CANCEL_TEXT_COLOR, color)
             return this
         }
@@ -252,7 +290,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        override fun setSubmitColor(color: Int): Builder<T> {
+        override fun setSubmitColor(@DrawableRes color: Int): Builder<T> {
             arg.putInt(Constants.SUBMIT_TEXT_COLOR, color)
             return this
         }
@@ -263,12 +301,12 @@ class OptionsFragment<T> : BaseDialogFragment() {
         }
 
 
-        override fun setTopBarBackgroundResource(resource: Int): Builder<T> {
+        override fun setTopBarBackgroundResource(@DrawableRes resource: Int): Builder<T> {
             arg.putInt(Constants.TOPBAR_BACKGROUND_RESOURCE, resource)
             return this
         }
 
-        override fun setOptionsBackgroundResource(resource: Int): Builder<T> {
+        override fun setOptionsBackgroundResource(@DrawableRes resource: Int): Builder<T> {
             arg.putInt(Constants.OPTIONS_BACKGROUND_RESOURCE, resource)
             return this
         }
@@ -283,7 +321,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        override fun setDividerColor(color: Int): Builder<T> {
+        override fun setDividerColor(@ColorRes color: Int): Builder<T> {
             arg.putInt(Constants.DIVIDER_COLOR, color)
             return this
         }
@@ -447,7 +485,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
 
         override fun show(): Builder<T> {
             fragment.arguments = arg
-            fragment.show((mContext as Activity).fragmentManager)
+            fragment.show((mContext as FragmentActivity).supportFragmentManager)
             return this
         }
 

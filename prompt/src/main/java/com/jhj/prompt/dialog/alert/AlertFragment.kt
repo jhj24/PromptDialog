@@ -1,9 +1,9 @@
 package com.jhj.prompt.dialog.alert
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.util.DisplayMetrics
 import android.view.Gravity
@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import com.jhj.prompt.R
 import com.jhj.prompt.base.BaseDialogFragment
 import com.jhj.prompt.base.Constants
-import com.jhj.prompt.dialog.alert.constants.DialogStyle
+import com.jhj.prompt.dialog.alert.constants.DialogStyleEnum
 import com.jhj.prompt.dialog.alert.constants.TextGravity
 import com.jhj.prompt.dialog.alert.interfaces.IAlertDialog
 import com.jhj.prompt.dialog.alert.interfaces.OnButtonClickedListener
@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.layout_alert_dialog.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_body.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_button.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_item.view.*
-import org.jetbrains.anko.displayMetrics
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
 /**
@@ -36,7 +35,7 @@ class AlertFragment : BaseDialogFragment() {
 
     companion object {
         private const val TEXT_SIZE_TITLE = 22f
-        private const val TEXT_SIZE_MSG = 16f
+        private const val TEXT_SIZE_MSG = 15f
         private const val TEXT_SIZE_BUTTON = 18f
         private const val TEXT_COLOR_TITLE = Color.BLACK
         private const val TEXT_COLOR_MSG = Color.BLACK
@@ -47,31 +46,31 @@ class AlertFragment : BaseDialogFragment() {
     }
 
     private var title: String? = null
-    private var style = DialogStyle.DIALOG_CENTER
+    private var style = DialogStyleEnum.DIALOG_CENTER
     private var isItemsShow: Boolean = false //是否有列表
     private var isButtonSeparate: Boolean = false//内容与按钮是否分离
     private var isCustomLayoutShow = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        style = arguments.getSerializable(Constants.DIALOG_STYLE) as? DialogStyle
-                ?: DialogStyle.DIALOG_CENTER
-        val animResource = arguments.getInt(Constants.ANIMATION, -1)
+        style = arguments?.getSerializable(Constants.DIALOG_STYLE) as? DialogStyleEnum
+                ?: DialogStyleEnum.DIALOG_CENTER
+
+        val animResource = arguments?.getInt(Constants.ANIMATION, -1)
 
         //内容与按钮是否分割
-        isButtonSeparate = (style == DialogStyle.DIALOG_BOTTOM_SEPARATE
-                || style == DialogStyle.DIALOG_CENTER_SEPARATE
-                || style == DialogStyle.DIALOG_TOP_SEPARATE)
+        isButtonSeparate = (style == DialogStyleEnum.DIALOG_BOTTOM_SEPARATE
+                || style == DialogStyleEnum.DIALOG_CENTER_SEPARATE
+                || style == DialogStyleEnum.DIALOG_TOP_SEPARATE)
 
 
         mAnim = if (animResource == -1) {//dialog动画
             when (style) {
-                DialogStyle.DIALOG_BOTTOM, DialogStyle.DIALOG_BOTTOM_SEPARATE ->
+                DialogStyleEnum.DIALOG_BOTTOM, DialogStyleEnum.DIALOG_BOTTOM_SEPARATE ->
                     R.style.anim_dialog_bottom
-                DialogStyle.DIALOG_CENTER, DialogStyle.DIALOG_CENTER_SEPARATE ->
+                DialogStyleEnum.DIALOG_CENTER, DialogStyleEnum.DIALOG_CENTER_SEPARATE ->
                     R.style.anim_dialog_center
-                DialogStyle.DIALOG_TOP, DialogStyle.DIALOG_TOP_SEPARATE ->
+                DialogStyleEnum.DIALOG_TOP, DialogStyleEnum.DIALOG_TOP_SEPARATE ->
                     R.style.anim_dialog_top
             }
         } else {
@@ -79,9 +78,9 @@ class AlertFragment : BaseDialogFragment() {
         }
 
         mGravity = when (style) {
-            DialogStyle.DIALOG_TOP, DialogStyle.DIALOG_TOP_SEPARATE -> Gravity.TOP
-            DialogStyle.DIALOG_CENTER, DialogStyle.DIALOG_CENTER_SEPARATE -> Gravity.CENTER
-            DialogStyle.DIALOG_BOTTOM, DialogStyle.DIALOG_BOTTOM_SEPARATE -> Gravity.BOTTOM
+            DialogStyleEnum.DIALOG_TOP, DialogStyleEnum.DIALOG_TOP_SEPARATE -> Gravity.TOP
+            DialogStyleEnum.DIALOG_CENTER, DialogStyleEnum.DIALOG_CENTER_SEPARATE -> Gravity.CENTER
+            DialogStyleEnum.DIALOG_BOTTOM, DialogStyleEnum.DIALOG_BOTTOM_SEPARATE -> Gravity.BOTTOM
         }
 
 
@@ -89,7 +88,8 @@ class AlertFragment : BaseDialogFragment() {
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.layout_alert_dialog, container)
-        val backgroundResource = arguments.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_dialog)
+        val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_dialog)
+                ?: R.drawable.bg_dialog
         view.layout_alert_dialog.setBackgroundResource(backgroundResource)
         view.layout_button_separate.setBackgroundResource(backgroundResource)
         setTitle(view)
@@ -103,10 +103,10 @@ class AlertFragment : BaseDialogFragment() {
 
 
     private fun setTitle(view: View) {
-        title = arguments.getString(Constants.TITLE)
-        val color = arguments.getInt(Constants.TITLE_COLOR, TEXT_COLOR_TITLE)
-        val size = arguments.getFloat(Constants.TITLE_SIZE, TEXT_SIZE_TITLE)
-        val gravity = arguments.getSerializable(Constants.TITLE_GRAVITY) as? TextGravity
+        title = arguments?.getString(Constants.TITLE)
+        val color = arguments?.getInt(Constants.TITLE_COLOR, TEXT_COLOR_TITLE) ?: TEXT_COLOR_TITLE
+        val size = arguments?.getFloat(Constants.TITLE_SIZE, TEXT_SIZE_TITLE) ?: TEXT_SIZE_TITLE
+        val gravity = arguments?.getSerializable(Constants.TITLE_GRAVITY) as? TextGravity
         if (title.isNullOrBlank()) {
             view.tv_alert_title.visibility = View.GONE
         } else {
@@ -118,10 +118,10 @@ class AlertFragment : BaseDialogFragment() {
     }
 
     private fun setMessage(view: View) {
-        val msg = arguments.getString(Constants.MESSAGE)
-        val color = arguments.getInt(Constants.MESSAGE_COLOR, TEXT_COLOR_MSG)
-        val size = arguments.getFloat(Constants.MESSAGE_SIZE, TEXT_SIZE_MSG)
-        val gravity = arguments.getSerializable(Constants.MESSAGE_GRAVITY) as? TextGravity
+        val msg = arguments?.getString(Constants.MESSAGE)
+        val color = arguments?.getInt(Constants.MESSAGE_COLOR, TEXT_COLOR_MSG) ?: TEXT_COLOR_MSG
+        val size = arguments?.getFloat(Constants.MESSAGE_SIZE, TEXT_SIZE_MSG) ?: TEXT_SIZE_MSG
+        val gravity = arguments?.getSerializable(Constants.MESSAGE_GRAVITY) as? TextGravity
 
         if (msg.isNullOrBlank()) {
             view.tv_alert_msg.visibility = View.GONE
@@ -134,9 +134,9 @@ class AlertFragment : BaseDialogFragment() {
     }
 
     private fun setItems(view: View) {
-        val commonList = arguments.getStringArrayList(Constants.ITEM_COMMON_LIST)
-        val colorList = arguments.getStringArrayList(Constants.ITEM_COLOR_LIST)
-        val itemsColor = arguments.getInt(Constants.ITEM_TEXT_COLOR, Color.BLACK)
+        val commonList = arguments?.getStringArrayList(Constants.ITEM_COMMON_LIST)
+        val colorList = arguments?.getStringArrayList(Constants.ITEM_COLOR_LIST)
+        val itemsColor = arguments?.getInt(Constants.ITEM_TEXT_COLOR, Color.BLACK) ?: Color.BLACK
         val items = commonList.orEmpty() + colorList.orEmpty()
 
         if (items.isEmpty()) {
@@ -161,7 +161,7 @@ class AlertFragment : BaseDialogFragment() {
      * 设置列表
      */
     private fun setItemStyle(view: View, text: String, textColor: Int, position: Int, size: Int) {
-        val listener = arguments.getSerializable(Constants.LISTENER_ITEM_CLICK) as? OnItemClickListener
+        val listener = arguments?.getSerializable(Constants.LISTENER_ITEM_CLICK) as? OnItemClickListener
         val inflater = LayoutInflater.from(activity)
         val layout = inflater.inflate(R.layout.layout_alert_dialog_item, view.layout_items, false)
         val textView = layout.tv_item_text
@@ -191,9 +191,9 @@ class AlertFragment : BaseDialogFragment() {
 
 
     private fun setCustomLayout(view: View) {
-        val layoutRes = arguments.getInt(Constants.CUSTOM_LAYOUT, -1)
-        val listener = arguments.getParcelable(Constants.CUSTOM_LISTENER) as? OnCustomListener
-        if (layoutRes != -1) {
+        val layoutRes = arguments?.getInt(Constants.CUSTOM_LAYOUT, -1)
+        val listener = arguments?.getParcelable(Constants.CUSTOM_LISTENER) as? OnCustomListener
+        if (layoutRes != -1 && layoutRes != null) {
             isCustomLayoutShow = true
             view.tv_alert_msg.visibility = View.GONE
             view.layout_items.visibility = View.GONE
@@ -205,7 +205,7 @@ class AlertFragment : BaseDialogFragment() {
 
 
     /**
-     * 根据DialogStyle设置dialog显示位置以及加载的底部按钮样式
+     * 根据DialogStyleEnum设置dialog显示位置以及加载的底部按钮样式
      */
     private fun initButtonView(view: View) {
         val inflater = LayoutInflater.from(activity)
@@ -225,13 +225,16 @@ class AlertFragment : BaseDialogFragment() {
      * 根据底部按钮个数以及按钮与内容是否分开设置显示样式
      */
     private fun setAlertButtonStyles(view: View) {
-        val submit = arguments.getString(Constants.SUBMIT_TEXT, "确定")
-        val submitColor = arguments.getInt(Constants.SUBMIT_TEXT_COLOR, TEXT_COLOR_SUBMIT)
-        val cancel = arguments.getString(Constants.CANCEL_TEXT, "取消")
-        val cancelColor = arguments.getInt(Constants.CANCEL_TEXT_COLOR, TEXT_COLOR_CANCEL)
-        val buttonSize = arguments.getFloat(Constants.BUTTON_SIZE, TEXT_SIZE_BUTTON)
-        val submitListener = arguments.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnButtonClickedListener
-        val cancelListener = arguments.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnButtonClickedListener
+        val submit = arguments?.getString(Constants.SUBMIT_TEXT, "确定")
+        val submitColor = arguments?.getInt(Constants.SUBMIT_TEXT_COLOR, TEXT_COLOR_SUBMIT)
+                ?: TEXT_COLOR_SUBMIT
+        val cancel = arguments?.getString(Constants.CANCEL_TEXT, "取消")
+        val cancelColor = arguments?.getInt(Constants.CANCEL_TEXT_COLOR, TEXT_COLOR_CANCEL)
+                ?: TEXT_COLOR_CANCEL
+        val buttonSize = arguments?.getFloat(Constants.BUTTON_SIZE, TEXT_SIZE_BUTTON)
+                ?: TEXT_SIZE_BUTTON
+        val submitListener = arguments?.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnButtonClickedListener
+        val cancelListener = arguments?.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnButtonClickedListener
         var submitButtonShow = false//是否有确定按钮
         var cancelButtonShow = false//是否有取消按钮
         //取消
@@ -294,27 +297,27 @@ class AlertFragment : BaseDialogFragment() {
     }
 
     private fun setDialogPadding(view: View) {
-        val paddingTop = arguments.getInt(Constants.PADDING_TOP, -1)
-        val paddingBottom = arguments.getInt(Constants.PADDING_BOTTOM, -1)
-        val paddingHorizontal = arguments.getInt(Constants.PADDING_HORIZONTAL, -1)
+        val paddingTop = arguments?.getInt(Constants.PADDING_TOP, -1)
+        val paddingBottom = arguments?.getInt(Constants.PADDING_BOTTOM, -1)
+        val paddingHorizontal = arguments?.getInt(Constants.PADDING_HORIZONTAL, -1)
+        val density = requireActivity().resources.displayMetrics.density
 
         //没有设置padding时，默认边距
         if (paddingBottom == -1 && paddingTop == -1 && paddingHorizontal == -1) {
             val dm = DisplayMetrics()
-            val density = activity.resources.displayMetrics.density
-            dialog.window.windowManager.defaultDisplay.getMetrics(dm)
+            dialog?.window?.windowManager?.defaultDisplay?.getMetrics(dm)
             when (style) {
-                DialogStyle.DIALOG_TOP,
-                DialogStyle.DIALOG_BOTTOM,
-                DialogStyle.DIALOG_TOP_SEPARATE,
-                DialogStyle.DIALOG_BOTTOM_SEPARATE -> {
+                DialogStyleEnum.DIALOG_TOP,
+                DialogStyleEnum.DIALOG_BOTTOM,
+                DialogStyleEnum.DIALOG_TOP_SEPARATE,
+                DialogStyleEnum.DIALOG_BOTTOM_SEPARATE -> {
                     attr?.width = dm.widthPixels - (density * 30).toInt()
                     attr?.height = LinearLayout.LayoutParams.WRAP_CONTENT
                     attr?.y = (density * 5).toInt()
                 }
 
-                DialogStyle.DIALOG_CENTER,
-                DialogStyle.DIALOG_CENTER_SEPARATE -> {
+                DialogStyleEnum.DIALOG_CENTER,
+                DialogStyleEnum.DIALOG_CENTER_SEPARATE -> {
                     attr?.width = dm.widthPixels - (density * 80).toInt()
                     attr?.height = LinearLayout.LayoutParams.WRAP_CONTENT
                 }
@@ -325,26 +328,29 @@ class AlertFragment : BaseDialogFragment() {
         //内容与按钮分开的中间间距为 5dp
         if (isButtonSeparate) {
             val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.setMargins(0, (activity.displayMetrics.density * 5).toInt(), 0, 0)
+            params.setMargins(0, (5 * density).toInt(), 0, 0)
             view.layout_button_separate.layoutParams = params
         }
 
         //显示数组时，标题栏高度
         if (isItemsShow && !title.isNullOrBlank() && !isCustomLayoutShow) {
             val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.height = (activity.displayMetrics.density * 40).toInt()
+            params.height = (density * 40).toInt()
             view.tv_alert_title.layoutParams = params
-            view.tv_alert_title.textSize = 15f
-            view.tv_alert_title.setTextColor(ContextCompat.getColor(activity, R.color.textColor_item_title))
+            view.tv_alert_title.textSize = TEXT_SIZE_MSG
+            activity?.let {
+                view.tv_alert_title.setTextColor(ContextCompat.getColor(it, R.color.textColor_item_title))
+            }
         }
     }
+
 
     class Builder(val mContext: Context) : IAlertDialog<Builder> {
 
         private val arg = Bundle()
         private val fragment = AlertFragment()
 
-        override fun setDialogStyle(style: DialogStyle): Builder {
+        override fun setDialogStyle(style: DialogStyleEnum): Builder {
             arg.putSerializable(Constants.DIALOG_STYLE, style)
             return this
         }
@@ -499,13 +505,13 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        override fun isShow():Boolean {
+        override fun isShow(): Boolean {
             return fragment.isShow() ?: false
         }
 
         override fun show(): Builder {
             fragment.arguments = arg
-            fragment.show((mContext as Activity).fragmentManager)
+            fragment.show((mContext as FragmentActivity).supportFragmentManager)
             return this
         }
 
