@@ -183,7 +183,6 @@ class OptionsActivity : FragmentActivity() {
 
     private fun initData() {
         val area = AreaUtil.getAreaList(this)
-
         doAsync {
             provinceList = area.filter { it.areaDeep == 1 }.toArrayList()
             cityList = provinceList.map { provinceBean ->
