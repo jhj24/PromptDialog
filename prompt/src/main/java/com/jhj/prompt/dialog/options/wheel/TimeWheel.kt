@@ -21,8 +21,8 @@ class TimeWheel(private val view: View) {
 
     companion object {
         var dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
-        private const val DEFAULT_START_YEAR = 2017
-        private const val DEFAULT_END_YEAR = 1017
+        private const val DEFAULT_START_YEAR = 1999
+        private const val DEFAULT_END_YEAR = 2099
         private const val DEFAULT_START_MONTH = 1
         private const val DEFAULT_END_MONTH = 12
         private const val DEFAULT_START_DAY = 1

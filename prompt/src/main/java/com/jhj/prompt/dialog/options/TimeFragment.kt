@@ -49,7 +49,6 @@ class TimeFragment : BaseDialogFragment() {
         val LINE_SPACEING_MULTIPLIER = 1.6f
         val EXTRA_HEIGHT = 2;
         val X_OFFSET = 0
-        val TEXT_GRAVITY = Gravity.CENTER
     }
 
 
