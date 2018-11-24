@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import com.jhj.prompt.dialog.progress.view.BaseLoadingView
-import com.jhj.prompt.dialog.progress.view.LoadingOldStyleView
+import com.jhj.prompt.R
 
 /**
  * 带百分比的加载框
@@ -113,7 +112,7 @@ class PercentView(val mContext: Context, attrs: AttributeSet?, defStyleAttr: Int
         }
 
     @get:Synchronized
-    var scaleSize: Float = density * 12
+    var scaleSize: Float = resources.getDimensionPixelSize(R.dimen.textSize_scale).toFloat()
         @Synchronized set(value) {
             field = value
         }

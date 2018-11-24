@@ -31,7 +31,6 @@ class PercentFragment : BaseDialogFragment() {
 
     companion object {
         const val MESSAGE_TEXT_SIZE = 15f
-        const val SCALE_TEXT_SIZE = 12f
         const val CIRCLE_WIDTH = 6f
         const val CIRCLE_RADIUS = 75
         const val MAX_PROGRESS = 100
@@ -39,13 +38,13 @@ class PercentFragment : BaseDialogFragment() {
 
     private var mView: View? = null
     private var isCancel = false
-
+    private var mScaleSize: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mGravity = Gravity.CENTER
         mAnim = R.style.anim_dialog_center
-
+        mScaleSize = requireActivity().resources.getDimensionPixelSize(R.dimen.textSize_scale).toFloat()
         savedInstanceState?.let {
             if (it.getBoolean(Constants.ACTIVITY_DESTROY)) {
                 dismiss()
@@ -89,7 +88,7 @@ class PercentFragment : BaseDialogFragment() {
         val circleRadius = arguments?.getInt(Constants.CIRCLE_RADIUS, CIRCLE_RADIUS)
         val circleWidth = arguments?.getFloat(Constants.CIRCLE_WIDTH, CIRCLE_WIDTH)
         val isShowScale = arguments?.getBoolean(Constants.SCALE_DISPLAY, true)
-        val scaleSize = arguments?.getFloat(Constants.SCALE_SIZE, SCALE_TEXT_SIZE)
+        val scaleSize = arguments?.getFloat(Constants.SCALE_SIZE, mScaleSize)
         val maxProgress = arguments?.getInt(Constants.MAX_PROGRESS, MAX_PROGRESS)
 
         val circleView = view.circle_progress
@@ -103,7 +102,7 @@ class PercentFragment : BaseDialogFragment() {
 
         //百分比
         circleView.showScale = isShowScale ?: true
-        circleView.scaleSize = scaleSize ?: SCALE_TEXT_SIZE
+        circleView.scaleSize = scaleSize ?: mScaleSize
 
         //圆环
         circleView.visibility = View.VISIBLE
