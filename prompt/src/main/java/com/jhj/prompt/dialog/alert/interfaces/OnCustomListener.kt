@@ -3,6 +3,7 @@ package com.jhj.prompt.dialog.alert.interfaces
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.View
+import com.jhj.prompt.dialog.alert.AlertFragment
 
 /**
  * 自定义View
@@ -10,7 +11,7 @@ import android.view.View
  */
 interface OnCustomListener : Parcelable {
 
-    fun onLayout(view: View)
+    fun onLayout(view: View, alertFragment: AlertFragment)
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
 

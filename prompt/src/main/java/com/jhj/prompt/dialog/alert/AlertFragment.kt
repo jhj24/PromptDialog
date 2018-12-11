@@ -199,7 +199,7 @@ class AlertFragment : BaseDialogFragment() {
             view.layout_items.visibility = View.GONE
             val layout = LayoutInflater.from(activity).inflate(layoutRes, view.layout_view)
             view.layout_view.visibility = View.VISIBLE
-            listener?.onLayout(layout)
+            listener?.onLayout(layout,this)
         }
     }
 

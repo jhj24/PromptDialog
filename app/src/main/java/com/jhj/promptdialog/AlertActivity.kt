@@ -1,6 +1,5 @@
 package com.jhj.promptdialog
 
-import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
@@ -74,9 +73,10 @@ class AlertActivity : FragmentActivity() {
           AlertFragment.Builder(this@AlertActivity)
                     .setTitle("自定义")
                     .setLayoutRes(R.layout.layout_image, object : OnCustomListener {
-                        override fun onLayout(view: View) {
+                        override fun onLayout(view: View, alertFragment: AlertFragment) {
                             view.image.onClick {
                                 toast("自定义样式")
+                                alertFragment.dismiss()
                             }
                         }
                     }).setCancelListener(object : OnButtonClickedListener {
