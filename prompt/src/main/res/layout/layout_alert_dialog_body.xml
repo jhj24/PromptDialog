@@ -20,46 +20,31 @@
         android:background="@color/bg_view_line"
         android:visibility="gone" />
 
-    <ScrollView
+    <TextView
+        android:id="@+id/tv_alert_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        android:scrollbarSize="3dp"
-        android:scrollbarThumbVertical="@color/bg_scroll_bar">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        android:layout_marginBottom="@dimen/marginBottom_alert_msg"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/textColor_dialog_msg"
+        android:textSize="@dimen/textSize_alert_msg" />
 
 
-            <TextView
-                android:id="@+id/tv_alert_msg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/marginBottom_alert_msg"
-                android:gravity="center"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:textColor="@color/textColor_dialog_msg"
-                android:textSize="@dimen/textSize_alert_msg" />
+    <LinearLayout
+        android:id="@+id/layout_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
+    <!-- 自定义View -->
+    <LinearLayout
+        android:id="@+id/layout_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" />
 
-            <LinearLayout
-                android:id="@+id/layout_items"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
-            <!-- 自定义View -->
-            <LinearLayout
-                android:id="@+id/layout_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone" />
-
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>
