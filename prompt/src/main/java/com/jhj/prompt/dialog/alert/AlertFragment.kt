@@ -312,14 +312,12 @@ class AlertFragment : BaseDialogFragment() {
                 DialogStyleEnum.DIALOG_TOP_SEPARATE,
                 DialogStyleEnum.DIALOG_BOTTOM_SEPARATE -> {
                     attr?.width = dm.widthPixels - (density * 30).toInt()
-                    attr?.height = LinearLayout.LayoutParams.WRAP_CONTENT
                     attr?.y = (density * 5).toInt()
                 }
 
                 DialogStyleEnum.DIALOG_CENTER,
                 DialogStyleEnum.DIALOG_CENTER_SEPARATE -> {
                     attr?.width = dm.widthPixels - (density * 80).toInt()
-                    attr?.height = LinearLayout.LayoutParams.WRAP_CONTENT
                 }
             }
         }
@@ -352,6 +350,11 @@ class AlertFragment : BaseDialogFragment() {
 
         override fun setDialogStyle(style: DialogStyleEnum): Builder {
             arg.putSerializable(Constants.DIALOG_STYLE, style)
+            return this
+        }
+
+        override fun setDialogHeight(height: Int): Builder {
+            arg.putInt(Constants.DIALOG_HEIGHT, height)
             return this
         }
 

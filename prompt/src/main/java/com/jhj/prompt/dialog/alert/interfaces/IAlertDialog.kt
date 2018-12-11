@@ -13,6 +13,8 @@ interface IAlertDialog<T : IAlertDialog<T>> {
 
     fun setDialogStyle(style: DialogStyleEnum): T
 
+    fun setDialogHeight(height: Int): T
+
     fun setBackgroundResource(resource: Int): T
 
     fun setTitle(title: String): T

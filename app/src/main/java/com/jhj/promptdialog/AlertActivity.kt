@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.View
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import com.jhj.prompt.dialog.alert.AlertFragment
 import com.jhj.prompt.dialog.alert.constants.DialogStyleEnum
 import com.jhj.prompt.dialog.alert.interfaces.OnButtonClickedListener
 import com.jhj.prompt.dialog.alert.interfaces.OnCustomListener
 import com.jhj.prompt.dialog.alert.interfaces.OnItemClickListener
+import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.activity_alert.*
 import kotlinx.android.synthetic.main.layout_image.view.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -84,6 +84,7 @@ class AlertActivity : FragmentActivity() {
                             toast("取消")
                         }
                     })
+                  .setDialogHeight(700)
                     .show()
         }
         btn_bottom.onClick {

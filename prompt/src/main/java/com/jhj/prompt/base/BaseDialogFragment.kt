@@ -19,6 +19,7 @@ abstract class BaseDialogFragment : DialogFragment() {
     var mGravity: Int? = null
     var mAnim: Int? = null
     private var cancelOut = true
+    private var dialogHeight = -1
     private var top = -1
     private var bottom = -1
     private var horizontal = -1
@@ -53,6 +54,7 @@ abstract class BaseDialogFragment : DialogFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.let {
+            it.putInt(Constants.DIALOG_HEIGHT, dialogHeight)
             it.putInt(Constants.PADDING_TOP, top)
             it.putInt(Constants.PADDING_BOTTOM, bottom)
             it.putInt(Constants.PADDING_HORIZONTAL, horizontal)
@@ -67,6 +69,7 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     open fun initParams(bundle: Bundle?) {
         bundle?.let {
+            dialogHeight = it.getInt(Constants.DIALOG_HEIGHT, -1)
             cancelOut = it.getBoolean(Constants.OUT_SIDE_CANCEL, true)
             bottom = it.getInt(Constants.PADDING_BOTTOM, -1)
             top = it.getInt(Constants.PADDING_TOP, -1)
@@ -130,10 +133,14 @@ abstract class BaseDialogFragment : DialogFragment() {
                 }
                 val width = dm.widthPixels - horizontal * 2
                 it.width = width
-                it.height = WindowManager.LayoutParams.WRAP_CONTENT
             } else {
                 it.width = WindowManager.LayoutParams.WRAP_CONTENT
+            }
+
+            if (dialogHeight == -1) {
                 it.height = WindowManager.LayoutParams.WRAP_CONTENT
+            } else {
+                it.height = dialogHeight
             }
 
             //透明度

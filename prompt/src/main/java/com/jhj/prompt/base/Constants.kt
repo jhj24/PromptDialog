@@ -7,6 +7,7 @@ package com.jhj.prompt.base
 object Constants {
 
     //dialog属性
+    const val DIALOG_HEIGHT = "dialog_height"
     const val DIM_AMOUNT = "dim_amount"
     const val ANIMATION = "animation"
     const val DIALOG_GRAVITY = "dialog_gravity"
