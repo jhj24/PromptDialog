@@ -9,17 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jhj.prompt.R
+import com.jhj.prompt.base.BaseBuilder
 import com.jhj.prompt.base.BaseDialogFragment
 import com.jhj.prompt.base.Constants
-import com.jhj.prompt.dialog.options.interfaces.ITimeOptions
 import com.jhj.prompt.dialog.options.interfaces.OnTimeSelectedListener
 import com.jhj.prompt.dialog.options.utils.DividerType
 import com.jhj.prompt.dialog.options.wheel.TimeWheel
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.layout_pickerview_time.view.*
 import kotlinx.android.synthetic.main.layout_pickerview_topbar.view.*
 import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.textColorResource
 import java.text.ParseException
 import java.util.*
@@ -89,6 +87,7 @@ class TimeFragment : BaseDialogFragment() {
         super.onCreate(savedInstanceState)
         val view = LayoutInflater.from(activity).inflate(R.layout.layout_pickerview_time, null)
         wheel = TimeWheel(view)
+        mGravity = Gravity.BOTTOM
     }
 
 
@@ -148,7 +147,7 @@ class TimeFragment : BaseDialogFragment() {
             submit.text = submitText
             submit.textSize = buttonSize
             submit.textColorResource = submitColor
-            submit.onClick {
+            submit.setOnClickListener {
                 submitListener?.let {
                     val date = TimeWheel.dateFormat.parse(wheel.time)
                     it.onTimeSelect(date, wheel.getView())
@@ -161,7 +160,7 @@ class TimeFragment : BaseDialogFragment() {
             cancel.text = cancelText
             cancel.textSize = buttonSize
             cancel.textColorResource = cancelColor
-            cancel.onClick {
+            cancel.setOnClickListener {
                 cancelListener?.let {
                     val date = TimeWheel.dateFormat.parse(wheel.time)
                     it.onTimeSelect(date, wheel.getView())
@@ -211,6 +210,7 @@ class TimeFragment : BaseDialogFragment() {
             }
         }
         setTime(dateMillis)
+
     }
 
 
@@ -281,207 +281,166 @@ class TimeFragment : BaseDialogFragment() {
     }
 
 
-    class Builder(val mContext: Context) : ITimeOptions<Builder> {
+    class Builder(val mContext: Context) : BaseBuilder<Builder>() {
         private val fragment = TimeFragment()
-        private val arg = Bundle()
 
-        override fun setTitle(title: String): Builder {
+        fun setTitle(title: String): Builder {
             arg.putString(Constants.TITLE, title)
             return this
         }
 
-        override fun setTitleSize(size: Float): Builder {
+        fun setTitleSize(size: Float): Builder {
             arg.putFloat(Constants.TITLE_SIZE, size)
             return this
         }
 
-        override fun setTitleColor(color: Int): Builder {
+        fun setTitleColor(color: Int): Builder {
             arg.putInt(Constants.TITLE_COLOR, color)
             return this
         }
 
-        override fun setCancel(cancel: String): Builder {
+        fun setCancel(cancel: String): Builder {
             arg.putString(Constants.CANCEL_TEXT, cancel)
             return this
         }
 
-        override fun setCancelColor(color: Int): Builder {
+        fun setCancelColor(color: Int): Builder {
             arg.putInt(Constants.CANCEL_TEXT_COLOR, color)
             return this
         }
 
-        override fun setSubmit(submit: String): Builder {
+        fun setSubmit(submit: String): Builder {
             arg.putString(Constants.SUBMIT_TEXT, submit)
             return this
         }
 
-        override fun setSubmitColor(color: Int): Builder {
+        fun setSubmitColor(color: Int): Builder {
             arg.putInt(Constants.SUBMIT_TEXT_COLOR, color)
             return this
         }
 
-        override fun setButtonSize(size: Float): Builder {
+        fun setButtonSize(size: Float): Builder {
             arg.putFloat(Constants.BUTTON_SIZE, size)
             return this
         }
 
-        override fun setTopBarBackgroundResource(resource: Int): Builder {
+        fun setTopBarBackgroundResource(resource: Int): Builder {
             arg.putInt(Constants.TOPBAR_BACKGROUND_RESOURCE, resource)
             return this
         }
 
-        override fun setOptionsBackgroundResource(resource: Int): Builder {
+        fun setOptionsBackgroundResource(resource: Int): Builder {
             arg.putInt(Constants.OPTIONS_BACKGROUND_RESOURCE, resource)
             return this
         }
 
-        override fun setOptionsSize(size: Float): Builder {
+        fun setOptionsSize(size: Float): Builder {
             arg.putFloat(Constants.OPTIONS_TEXT_SIZE, size)
             return this
         }
 
-        override fun setOnlyCenterLabel(centerLabel: Boolean): ITimeOptions<Builder> {
+        fun setOnlyCenterLabel(centerLabel: Boolean): Builder {
             arg.putBoolean(Constants.ONLY_CENTER_LABEL, centerLabel)
             return this
         }
 
-        override fun setDividerColor(color: Int): Builder {
+        fun setDividerColor(color: Int): Builder {
             arg.putInt(Constants.DIVIDER_COLOR, color)
             return this
         }
 
-        override fun setTextColorOut(color: Int): Builder {
+        fun setTextColorOut(color: Int): Builder {
             arg.putInt(Constants.TEXT_COLOR_OUT, color)
             return this
         }
 
-        override fun setTextColorCenter(color: Int): Builder {
+        fun setTextColorCenter(color: Int): Builder {
             arg.putInt(Constants.TEXT_COLOR_CENTER, color)
             return this
         }
 
-        override fun setTextGravity(gravity: Int): Builder {
+        fun setTextGravity(gravity: Int): Builder {
             arg.putInt(Constants.MESSAGE_GRAVITY, gravity)
             return this
         }
 
-        override fun setDividerType(type: DividerType): Builder {
+        fun setDividerType(type: DividerType): Builder {
             arg.putSerializable(Constants.DIVIDER_TYPE, type)
             return this
         }
 
-        override fun setItemNum(num: Int): Builder {
+        fun setItemNum(num: Int): Builder {
             arg.putInt(Constants.ITEM_NUM, num)
             return this
         }
 
-        override fun setLabels(label1: String?, label2: String?, label3: String?, label4: String?, label5: String?, label6: String?): Builder {
+        fun setLabels(label1: String?, label2: String?, label3: String?, label4: String?, label5: String?, label6: String?): Builder {
             arg.putStringArray(Constants.OPTIONS_LABELS, arrayOf(label1, label2, label3, label4, label5, label6))
             return this
         }
 
-        override fun setCyclic(cyclic: Boolean): Builder {
+        fun setCyclic(cyclic: Boolean): Builder {
             arg.putBoolean(Constants.IS_CYCLIC, cyclic)
             return this
         }
 
-        override fun setDisplayStyle(booleanArray: BooleanArray): Builder {
+        fun setDisplayStyle(booleanArray: BooleanArray): Builder {
             arg.putBooleanArray(Constants.DISPLAY_STYLE, booleanArray)
             return this
         }
 
-        override fun setTextXOffset(offset: Int): Builder {
+        fun setTextXOffset(offset: Int): Builder {
             arg.putInt(Constants.X_OFFSET, offset)
             return this
         }
 
-        override fun setItemsSpacingRatio(spacingRatio: Float): Builder {
+        fun setItemsSpacingRatio(spacingRatio: Float): Builder {
             arg.putFloat(Constants.SPACING_RATIO, spacingRatio)
             return this
         }
 
-        override fun setExtraHeight(height: Int): Builder {
+        fun setExtraHeight(height: Int): Builder {
             arg.putInt(Constants.EXTRA_HEIGHT, height)
             return this
         }
 
-        override fun setOutSideCancelable(cancelable: Boolean): Builder {
-            arg.putBoolean(Constants.OUT_SIDE_CANCEL, cancelable)
-            return this
-        }
-
-        override fun setGravity(gravity: Int): Builder {
-            arg.putInt(Constants.DIALOG_GRAVITY, gravity)
-            return this
-        }
-
-        override fun setPaddingHorizontal(padding: Int): Builder {
-            arg.putInt(Constants.PADDING_HORIZONTAL, padding)
-            return this
-        }
-
-        override fun setPaddingBottom(bottom: Int): Builder {
-            arg.putInt(Constants.PADDING_BOTTOM, bottom)
-            return this
-        }
-
-        override fun setPaddingTop(top: Int): Builder {
-            arg.putInt(Constants.PADDING_TOP, top)
-            return this
-        }
-
-        override fun setDimAmount(dimAmount: Float): Builder {
-            arg.putFloat(Constants.DIM_AMOUNT, dimAmount)
-            return this
-        }
-
-        override fun setAnimation(resource: Int): Builder {
-            arg.putInt(Constants.ANIMATION, resource)
-            return this
-        }
-
-        override fun setDate(date: Calendar): Builder {
+        fun setDate(date: Calendar): Builder {
             arg.putLong(Constants.DATE_MILLS, date.time.time)
             return this
         }
 
-        override fun setRangDate(startDate: Calendar, endDate: Calendar): Builder {
+        fun setRangDate(startDate: Calendar, endDate: Calendar): Builder {
             arg.putLong(Constants.START_DATE_MILLS, startDate.time.time)
             arg.putLong(Constants.END_DATE_MILLS, endDate.time.time)
             return this
         }
 
-        override fun setLunarCalendar(lunarCalendar: Boolean): Builder {
+        fun setLunarCalendar(lunarCalendar: Boolean): Builder {
             arg.putBoolean(Constants.LUNAR_CALENDAR, lunarCalendar)
             return this
         }
 
-        override fun setSubmitListener(listener: OnTimeSelectedListener): Builder {
+        fun setSubmitListener(listener: OnTimeSelectedListener): Builder {
             arg.putSerializable(Constants.LISTENER_SUBMIT_CLICK, listener)
             return this
         }
 
-        override fun setCancelListener(listener: OnTimeSelectedListener): Builder {
+        fun setCancelListener(listener: OnTimeSelectedListener): Builder {
             arg.putSerializable(Constants.LISTENER_CANCEL_CLICK, listener)
             return this
         }
 
-        override fun setDialogShowOnBackListener(listener: OnDialogShowOnBackListener): Builder {
-            arg.putSerializable(Constants.DIALOG_ON_BACK_LISTENER, listener)
-            return this
-        }
-
-        override fun isShow(): Boolean {
+        fun isShow(): Boolean {
             return fragment.isShow() ?: false
         }
 
-        override fun show(): Builder {
+        fun show(): Builder {
             fragment.arguments = arg
             fragment.show((mContext as FragmentActivity).supportFragmentManager)
             return this
         }
 
-        override fun dismiss() {
+        fun dismiss() {
             fragment.dismiss()
         }
     }

@@ -11,7 +11,6 @@ import com.jhj.prompt.dialog.options.interfaces.OnOptionsSelectedListener
 import com.jhj.prompt.dialog.options.interfaces.OnTimeSelectedListener
 import kotlinx.android.synthetic.main.activity_progress.*
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +30,7 @@ class OptionsActivity : FragmentActivity() {
         setContentView(R.layout.activity_progress)
         initData()
 
-        zero.onClick {
+        zero.setOnClickListener {
             val a = System.nanoTime()
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
                     .setTitle("地区选择")
@@ -50,13 +49,13 @@ class OptionsActivity : FragmentActivity() {
             Log.w("xxx", (System.nanoTime() - a).toString())
         }
 
-        one.onClick {
+        one.setOnClickListener {
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
                     .setLinkedPicker(provinceList, cityList)
                     .setPaddingHorizontal(150)
                     .setItemNum(9)
                     .setAnimation(R.style.anim_dialog_center)
-                    .setGravity(Gravity.CENTER)
+                    .setDialogGravity(Gravity.CENTER)
                     .setSubmitListener(object : OnOptionsSelectedListener {
                         override fun onOptionsSelect(options1: Int?, options2: Int?, options3: Int?) {
                             toast(options1.toString())
@@ -65,7 +64,7 @@ class OptionsActivity : FragmentActivity() {
                     .show()
         }
 
-        two.onClick {
+        two.setOnClickListener {
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
                     .setLinkedPicker(provinceList, cityList, districtList)
                     .setSubmitListener(object : OnOptionsSelectedListener {
@@ -76,7 +75,7 @@ class OptionsActivity : FragmentActivity() {
                     .show()
         }
 
-        three.onClick {
+        three.setOnClickListener {
             val selectedDate = Calendar.getInstance()//系统当前时间
             TimeFragment.Builder(this@OptionsActivity)
                     .setDate(selectedDate)
@@ -92,11 +91,11 @@ class OptionsActivity : FragmentActivity() {
                     })
                     .show()
         }
-        four.onClick {
+        four.setOnClickListener {
             val selectedDate = Calendar.getInstance()//系统当前时间
             TimeFragment.Builder(this@OptionsActivity)
                     .setDate(selectedDate)
-                    .setGravity(Gravity.CENTER)
+                    .setDialogGravity(Gravity.CENTER)
                     .setAnimation(R.style.anim_dialog_center)
                     .setPaddingHorizontal(200)
                     .setOptionsBackgroundResource(R.drawable.bg_progress_black_dialog)
@@ -112,7 +111,7 @@ class OptionsActivity : FragmentActivity() {
                     })
                     .show()
         }
-        five.onClick {
+        five.setOnClickListener {
             val selectedDate = Calendar.getInstance()//系统当前时间
             val startDate = Calendar.getInstance()
             startDate.set(2014, 0, 1)
@@ -132,7 +131,7 @@ class OptionsActivity : FragmentActivity() {
                     })
                     .show()
         }
-        six.onClick {
+        six.setOnClickListener {
             val selectedDate = Calendar.getInstance()//系统当前时间
             val startDate = Calendar.getInstance()
             startDate.set(2014, 0, 1)
@@ -155,7 +154,8 @@ class OptionsActivity : FragmentActivity() {
         }
 
         seven.setOnClickListener { }
-        seven.onClick {
+        seven.setOnClickListener {
+
             val a = System.nanoTime()
             val selectedDate = Calendar.getInstance()//系统当前时间
             val startDate = Calendar.getInstance()

@@ -1,20 +1,22 @@
 package com.jhj.prompt.base
 
 /**
- * 常亮
+ * 常量
  * Created by jhj on 2018-3-14 0014.
  */
 object Constants {
 
-    //dialog属性
-    const val DIALOG_HEIGHT = "dialog_height"
-    const val DIM_AMOUNT = "dim_amount"
-    const val ANIMATION = "animation"
-    const val DIALOG_GRAVITY = "dialog_gravity"
-    const val OUT_SIDE_CANCEL = "out_side_cancel"
-    const val PADDING_HORIZONTAL = "padding_horizontal"
-    const val PADDING_BOTTOM = "padding_bottom"
-    const val PADDING_TOP = "padding_top"
+    //============dialog属性==============
+
+    const val DIALOG_HEIGHT = "dialog_height" //设置dialog固定高度
+    const val DIM_AMOUNT = "dim_amount" // 设置透明度
+    const val ANIMATION = "animation" //设置动画
+    const val DIALOG_GRAVITY = "dialog_gravity" //设置位置
+    const val OUT_SIDE_CANCEL = "out_side_cancel" // 点击dialog外部是否消失
+    const val MARGIN_HORIZONTAL = "margin_horizontal" //水平边距
+    const val MARGIN_BOTTOM = "margin_bottom" //底部边距
+    const val MARGIN_TOP = "margin_top" //头部边距
+    const val DIALOG_ON_BACK_LISTENER: String = "dialog_cancel_listener" //dialog弹出后点击返回按钮监听
 
     //标题
     const val TITLE = "title"
@@ -70,7 +72,7 @@ object Constants {
     const val BACKGROUND_RESOURCE: String = "background_resource"
 
     //dialog弹出时点击返回按钮进行的操作
-    const val DIALOG_ON_BACK_LISTENER: String = "dialog_cancel_listener"
+
 
     //联动
     const val OPTIONS_BACKGROUND_RESOURCE: String = "options_background_resource" //options背景色

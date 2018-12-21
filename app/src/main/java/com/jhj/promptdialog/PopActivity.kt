@@ -9,7 +9,6 @@ import com.jhj.prompt.pop.OnCustomListener
 import com.jhj.prompt.pop.PromptPopWindow
 import kotlinx.android.synthetic.main.activity_pop.*
 import kotlinx.android.synthetic.main.layout_pop_item.view.*
-import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
 
 /**
@@ -23,7 +22,7 @@ class PopActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pop)
 
-        btn_0.onClick {
+        btn_0.setOnClickListener {
             PromptPopWindow.Builder(this@PopActivity)
                     .setLayoutRes(R.layout.layout_pop_item)
                     .build()
@@ -31,7 +30,7 @@ class PopActivity : AppCompatActivity() {
         }
 
 
-        btn_1.onClick {
+        btn_1.setOnClickListener {
             val pop = PromptPopWindow.Builder(this@PopActivity)
                     .setLayoutRes(R.layout.layout_pop_item)
                     .setBackgroundAlpha(0.7f)
@@ -39,20 +38,20 @@ class PopActivity : AppCompatActivity() {
             pop.showAsDropDown(btn_1, -(pop.getWidth() - btn_1.width), 0)
         }
 
-        btn_2.onClick {
+        btn_2.setOnClickListener {
             val pop = PromptPopWindow.Builder(this@PopActivity)
                     .setCanceledOnTouchOutSide(false)
                     .setLayoutRes(R.layout.layout_pop_item, object : OnCustomListener {
                         override fun onLayout(view: View, popupWindow: PopupWindow?) {
-                            view.tv_1.onClick {
+                            view.tv_1.setOnClickListener {
                                 popupWindow?.dismiss()
                                 toast("1111")
                             }
-                            view.tv_2.onClick {
+                            view.tv_2.setOnClickListener {
                                 popupWindow?.dismiss()
                                 toast("2222")
                             }
-                            view.tv_3.onClick {
+                            view.tv_3.setOnClickListener {
                                 popupWindow?.dismiss()
                                 toast("3333")
                             }
@@ -62,7 +61,7 @@ class PopActivity : AppCompatActivity() {
                     .build()
             pop.showAsDropDown(btn_2, 0, -(btn_2.height + pop.getHeight()))
         }
-        btn_3.onClick {
+        btn_3.setOnClickListener {
             PromptPopWindow.Builder(this@PopActivity)
                     .setLayoutRes(R.layout.layout_pop_item)
                     .setOnDismissListener(PopupWindow.OnDismissListener {

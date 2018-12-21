@@ -11,17 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jhj.prompt.R
+import com.jhj.prompt.base.BaseBuilder
 import com.jhj.prompt.base.BaseDialogFragment
 import com.jhj.prompt.base.Constants
-import com.jhj.prompt.dialog.options.interfaces.ICommonOptions
 import com.jhj.prompt.dialog.options.interfaces.OnOptionsSelectedListener
 import com.jhj.prompt.dialog.options.utils.DividerType
 import com.jhj.prompt.dialog.options.wheel.OptionsWheel
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.layout_pickerview_options.view.*
 import kotlinx.android.synthetic.main.layout_pickerview_topbar.view.*
 import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.textColor
 import org.jetbrains.anko.textColorResource
 
@@ -99,6 +97,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
         super.onCreate(savedInstanceState)
         val view: View = LayoutInflater.from(activity).inflate(R.layout.layout_pickerview_options, null)
         wheel = OptionsWheel(view)
+        mGravity = Gravity.BOTTOM
     }
 
 
@@ -187,7 +186,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             view.btn_option_cancel.textSize = buttonSize
             view.btn_option_cancel.textColorResource = cancelColor
             view.btn_option_cancel.text = cancelText
-            view.btn_option_cancel.onClick { view ->
+            view.btn_option_cancel.setOnClickListener { view ->
                 val array = wheel.currentItems
                 it.onOptionsSelect(array[0], array[1], array[2])
                 dismiss()
@@ -199,7 +198,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             view.btn_option_submit.textSize = buttonSize
             view.btn_option_submit.textColorResource = submitColor
             view.btn_option_submit.text = submitText
-            view.btn_option_submit.onClick { view ->
+            view.btn_option_submit.setOnClickListener { view ->
                 val array = wheel.currentItems
                 it.onOptionsSelect(array[0], array[1], array[2])
                 dismiss()
@@ -255,193 +254,154 @@ class OptionsFragment<T> : BaseDialogFragment() {
     }
 
 
-    class Builder<T>(val mContext: Context) : ICommonOptions<Builder<T>> {
+    class Builder<T>(val mContext: Context) : BaseBuilder<Builder<T>>() {
 
         private val fragment = OptionsFragment<T>()
-        private val arg = Bundle()
 
-        override fun setTitle(title: String): Builder<T> {
+        fun setTitle(title: String): Builder<T> {
             arg.putString(Constants.TITLE, title)
             return this
         }
 
-        override fun setTitleSize(size: Float): Builder<T> {
+        fun setTitleSize(size: Float): Builder<T> {
             arg.putFloat(Constants.TITLE_SIZE, size)
             return this
         }
 
-        override fun setTitleColor(color: Int): Builder<T> {
+        fun setTitleColor(color: Int): Builder<T> {
             arg.putInt(Constants.TITLE_COLOR, color)
             return this
         }
 
-        override fun setCancel(cancel: String): Builder<T> {
+        fun setCancel(cancel: String): Builder<T> {
             arg.putString(Constants.CANCEL_TEXT, cancel)
             return this
         }
 
-        override fun setCancelColor(@DrawableRes color: Int): Builder<T> {
+        fun setCancelColor(@DrawableRes color: Int): Builder<T> {
             arg.putInt(Constants.CANCEL_TEXT_COLOR, color)
             return this
         }
 
-        override fun setSubmit(submit: String): Builder<T> {
+        fun setSubmit(submit: String): Builder<T> {
             arg.putString(Constants.SUBMIT_TEXT, submit)
             return this
         }
 
-        override fun setSubmitColor(@DrawableRes color: Int): Builder<T> {
+        fun setSubmitColor(@DrawableRes color: Int): Builder<T> {
             arg.putInt(Constants.SUBMIT_TEXT_COLOR, color)
             return this
         }
 
-        override fun setButtonSize(size: Float): Builder<T> {
+        fun setButtonSize(size: Float): Builder<T> {
             arg.putFloat(Constants.BUTTON_SIZE, size)
             return this
         }
 
 
-        override fun setTopBarBackgroundResource(@DrawableRes resource: Int): Builder<T> {
+        fun setTopBarBackgroundResource(@DrawableRes resource: Int): Builder<T> {
             arg.putInt(Constants.TOPBAR_BACKGROUND_RESOURCE, resource)
             return this
         }
 
-        override fun setOptionsBackgroundResource(@DrawableRes resource: Int): Builder<T> {
+        fun setOptionsBackgroundResource(@DrawableRes resource: Int): Builder<T> {
             arg.putInt(Constants.OPTIONS_BACKGROUND_RESOURCE, resource)
             return this
         }
 
-        override fun setOptionsSize(size: Float): Builder<T> {
+        fun setOptionsSize(size: Float): Builder<T> {
             arg.putFloat(Constants.OPTIONS_TEXT_SIZE, size)
             return this
         }
 
-        override fun setOnlyCenterLabel(centerLabel: Boolean): Builder<T> {
+        fun setOnlyCenterLabel(centerLabel: Boolean): Builder<T> {
             arg.putBoolean(Constants.ONLY_CENTER_LABEL, centerLabel)
             return this
         }
 
-        override fun setDividerColor(@ColorRes color: Int): Builder<T> {
+        fun setDividerColor(@ColorRes color: Int): Builder<T> {
             arg.putInt(Constants.DIVIDER_COLOR, color)
             return this
         }
 
-        override fun setTextColorOut(color: Int): Builder<T> {
+        fun setTextColorOut(color: Int): Builder<T> {
             arg.putInt(Constants.TEXT_COLOR_OUT, color)
             return this
         }
 
-        override fun setTextColorCenter(color: Int): Builder<T> {
+        fun setTextColorCenter(color: Int): Builder<T> {
             arg.putInt(Constants.TEXT_COLOR_CENTER, color)
             return this
         }
 
-        override fun setTextGravity(gravity: Int): Builder<T> {
+        fun setTextGravity(gravity: Int): Builder<T> {
             arg.putInt(Constants.MESSAGE_GRAVITY, gravity)
             return this
         }
 
-        override fun setDividerType(type: DividerType): Builder<T> {
+        fun setDividerType(type: DividerType): Builder<T> {
             arg.putSerializable(Constants.DIVIDER_TYPE, type)
             return this
         }
 
-        override fun setItemNum(num: Int): Builder<T> {
+        fun setItemNum(num: Int): Builder<T> {
             arg.putInt(Constants.ITEM_NUM, num)
             return this
         }
 
-        override fun setLabels(label1: String?, label2: String?, label3: String?): Builder<T> {
+        fun setLabels(label1: String?, label2: String?, label3: String?): Builder<T> {
             arg.putStringArray(Constants.OPTIONS_LABELS, arrayOf(label1, label2, label3))
             return this
         }
 
-        override fun setCyclic(cyclic: Boolean): Builder<T> {
+        fun setCyclic(cyclic: Boolean): Builder<T> {
             arg.putBoolean(Constants.IS_CYCLIC, cyclic)
             return this
         }
 
-        override fun setTextXOffset(offset: Int): Builder<T> {
+        fun setTextXOffset(offset: Int): Builder<T> {
             arg.putInt(Constants.X_OFFSET, offset)
             return this
         }
 
-        override fun setItemsSpacingRatio(spacingRatio: Float): Builder<T> {
+        fun setItemsSpacingRatio(spacingRatio: Float): Builder<T> {
             arg.putFloat(Constants.SPACING_RATIO, spacingRatio)
             return this
         }
 
-        override fun setExtraHeight(height: Int): Builder<T> {
+        fun setExtraHeight(height: Int): Builder<T> {
             arg.putInt(Constants.EXTRA_HEIGHT, height)
             return this
         }
 
-        override fun setOutSideCancelable(cancelable: Boolean): Builder<T> {
-            arg.putBoolean(Constants.OUT_SIDE_CANCEL, cancelable)
-            return this
-        }
 
-        override fun setGravity(gravity: Int): Builder<T> {
-            arg.putInt(Constants.DIALOG_GRAVITY, gravity)
-            return this
-        }
-
-        override fun setPaddingHorizontal(padding: Int): Builder<T> {
-            arg.putInt(Constants.PADDING_HORIZONTAL, padding)
-            return this
-        }
-
-        override fun setPaddingBottom(bottom: Int): Builder<T> {
-            arg.putInt(Constants.PADDING_BOTTOM, bottom)
-            return this
-        }
-
-        override fun setPaddingTop(top: Int): Builder<T> {
-            arg.putInt(Constants.PADDING_TOP, top)
-            return this
-        }
-
-        override fun setDimAmount(dimAmount: Float): Builder<T> {
-            arg.putFloat(Constants.DIM_AMOUNT, dimAmount)
-            return this
-        }
-
-        override fun setAnimation(resource: Int): Builder<T> {
-            arg.putInt(Constants.ANIMATION, resource)
-            return this
-        }
-
-        override fun setSelectOptions(option1: Int): Builder<T> {
+        fun setSelectOptions(option1: Int): Builder<T> {
             setSelectOptions(option1, 0)
             return this
         }
 
-        override fun setSelectOptions(option1: Int, option2: Int): Builder<T> {
+        fun setSelectOptions(option1: Int, option2: Int): Builder<T> {
             setSelectOptions(option1, option2, 0)
             return this
         }
 
-        override fun setSelectOptions(option1: Int, option2: Int, option3: Int): Builder<T> {
+        fun setSelectOptions(option1: Int, option2: Int, option3: Int): Builder<T> {
             arg.putInt(Constants.OPTIONS_SELECT_ONE, option1)
             arg.putInt(Constants.OPTIONS_SELECT_TWO, option2)
             arg.putInt(Constants.OPTIONS_SELECT_THREE, option3)
             return this
         }
 
-        override fun setSubmitListener(listener: OnOptionsSelectedListener): Builder<T> {
+        fun setSubmitListener(listener: OnOptionsSelectedListener): Builder<T> {
             arg.putSerializable(Constants.LISTENER_SUBMIT_CLICK, listener)
             return this
         }
 
-        override fun setCancelListener(listener: OnOptionsSelectedListener): Builder<T> {
+        fun setCancelListener(listener: OnOptionsSelectedListener): Builder<T> {
             arg.putSerializable(Constants.LISTENER_CANCEL_CLICK, listener)
             return this
         }
 
-        override fun setDialogShowOnBackListener(listener: OnDialogShowOnBackListener): Builder<T> {
-            arg.putSerializable(Constants.DIALOG_ON_BACK_LISTENER, listener)
-            return this
-        }
 
         fun setPicker(optionsItems: ArrayList<T>): Builder<T> {
             setPicker(optionsItems, null)
@@ -479,17 +439,17 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        override fun isShow(): Boolean {
+        fun isShow(): Boolean {
             return fragment.isShow() ?: false
         }
 
-        override fun show(): Builder<T> {
+        fun show(): Builder<T> {
             fragment.arguments = arg
             fragment.show((mContext as FragmentActivity).supportFragmentManager)
             return this
         }
 
-        override fun dismiss() {
+        fun dismiss() {
             fragment.dismiss()
         }
     }

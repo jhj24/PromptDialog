@@ -10,11 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jhj.prompt.R
+import com.jhj.prompt.base.BaseBuilder
 import com.jhj.prompt.base.BaseDialogFragment
 import com.jhj.prompt.base.Constants
-import com.jhj.prompt.dialog.progress.constants.LoadingStyle
-import com.jhj.prompt.dialog.progress.interfaces.IBaseProgress
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.layout_progress_view.view.*
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
@@ -32,16 +30,40 @@ class LoadingFragment : BaseDialogFragment() {
         const val CIRCLE_RADIUS = 75
     }
 
+    enum class LoadingStyle {
+        OLD_STYLE,
+        NEW_STYLE
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mGravity = Gravity.CENTER
-        mAnim = R.style.anim_dialog_center
     }
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.layout_progress_view, container)
         initView(view)
         return view
+    }
+
+
+    override fun initParams(bundle: Bundle?) {
+        super.initParams(bundle)
+        bundle?.let {
+            val text = arguments?.getString(Constants.MESSAGE)
+            val textSize = arguments?.getFloat(Constants.MESSAGE_SIZE, MESSAGE_TEXT_SIZE)
+            val style = arguments?.getSerializable(Constants.DIALOG_STYLE) as? LoadingStyle
+            val isBlackStyle = arguments?.getBoolean(Constants.IS_BLACK_STYLE)
+            val circleWidth = arguments?.getFloat(Constants.CIRCLE_WIDTH, CIRCLE_WIDTH)
+            val circleRadius = arguments?.getInt(Constants.CIRCLE_RADIUS, CIRCLE_RADIUS)
+
+            val textColor = arguments?.getInt(Constants.MESSAGE_COLOR, Color.WHITE)
+            val circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, Color.WHITE)
+            val bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, Color.GRAY)
+            val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_progress_black_dialog)
+
+        }
     }
 
     private fun initView(view: View) {
@@ -140,93 +162,66 @@ class LoadingFragment : BaseDialogFragment() {
 
     }
 
-    class Builder(val mContext: Context) : IBaseProgress<Builder> {
+    class Builder(val mContext: Context) : BaseBuilder<Builder>() {
 
-
-        private val arg = Bundle()
         private val fragment = LoadingFragment()
-
-        override fun setText(text: String?): Builder {
-            arg.putString(Constants.MESSAGE, text)
-            return this
-        }
-
-        override fun setTextColor(textColor: Int): Builder {
-            arg.putInt(Constants.MESSAGE_COLOR, textColor)
-            return this
-        }
-
-        override fun setTextSize(textSize: Float): Builder {
-            arg.putFloat(Constants.MESSAGE_SIZE, textSize)
-            return this
-        }
-
-        override fun setCircleRadius(radius: Int): Builder {
-            arg.putInt(Constants.CIRCLE_RADIUS, radius)
-            return this
-        }
-
-        override fun setCircleWidth(circleWidth: Float): Builder {
-            arg.putFloat(Constants.CIRCLE_WIDTH, circleWidth)
-            return this
-        }
-
-        override fun setCircleColor(circleColor: Int): Builder {
-            arg.putInt(Constants.CIRCLE_COLOR, circleColor)
-            return this
-        }
-
-        override fun setBottomCircleColor(bottomCircleColor: Int): Builder {
-            arg.putInt(Constants.CIRCLE_BOTTOM_COLOR, bottomCircleColor)
-            return this
-        }
-
-        override fun setBackgroundResource(resource: Int): Builder {
-            arg.putInt(Constants.BACKGROUND_RESOURCE, resource)
-            return this
-        }
-
-        override fun setDimAmount(dimAmount: Float): Builder {
-            arg.putFloat(Constants.DIM_AMOUNT, dimAmount)
-            return this
-        }
-
-        override fun setAnimResource(resource: Int): Builder {
-            arg.putInt(Constants.ANIMATION, resource)
-            return this
-        }
-
-        override fun setOutSideCancel(cancel: Boolean): Builder {
-            arg.putBoolean(Constants.OUT_SIDE_CANCEL, cancel)
-            return this
-        }
-
-        override fun setBlackStyle(): Builder {
-            arg.putBoolean(Constants.IS_BLACK_STYLE, true)
-            return this
-        }
-
-        override fun setDialogShowOnBackListener(listener: OnDialogShowOnBackListener): Builder {
-            arg.putSerializable(Constants.DIALOG_ON_BACK_LISTENER, listener)
-            return this;
-        }
 
         fun setLoadingStyle(style: LoadingStyle): Builder {
             arg.putSerializable(Constants.DIALOG_STYLE, style)
             return this
         }
 
-        override fun isShow(): Boolean {
+        fun setText(text: String?): Builder {
+            arg.putString(Constants.MESSAGE, text)
+            return this
+        }
+
+        fun setTextColor(textColor: Int): Builder {
+            arg.putInt(Constants.MESSAGE_COLOR, textColor)
+            return this
+        }
+
+        fun setTextSize(textSize: Float): Builder {
+            arg.putFloat(Constants.MESSAGE_SIZE, textSize)
+            return this
+        }
+
+        fun setCircleRadius(radius: Int): Builder {
+            arg.putInt(Constants.CIRCLE_RADIUS, radius)
+            return this
+        }
+
+        fun setCircleWidth(circleWidth: Float): Builder {
+            arg.putFloat(Constants.CIRCLE_WIDTH, circleWidth)
+            return this
+        }
+
+        fun setCircleColor(circleColor: Int): Builder {
+            arg.putInt(Constants.CIRCLE_COLOR, circleColor)
+            return this
+        }
+
+        fun setBottomCircleColor(bottomCircleColor: Int): Builder {
+            arg.putInt(Constants.CIRCLE_BOTTOM_COLOR, bottomCircleColor)
+            return this
+        }
+
+        fun setBackgroundResource(resource: Int): Builder {
+            arg.putInt(Constants.BACKGROUND_RESOURCE, resource)
+            return this
+        }
+
+        fun isShow(): Boolean {
             return fragment.isShow() ?: false
         }
 
-        override fun show(): Builder {
+        fun show(): Builder {
             fragment.arguments = arg
             fragment.show((mContext as FragmentActivity).supportFragmentManager)
             return this
         }
 
-        override fun dismiss() {
+        fun dismiss() {
             fragment.dismiss()
         }
 

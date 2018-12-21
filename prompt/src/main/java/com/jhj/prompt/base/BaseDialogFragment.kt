@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager
 import android.util.DisplayMetrics
 import android.view.*
 import com.jhj.prompt.R
+import com.jhj.prompt.dialog.alert.AlertFragment
 import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import org.jetbrains.anko.padding
 
@@ -17,23 +18,25 @@ import org.jetbrains.anko.padding
 abstract class BaseDialogFragment : DialogFragment() {
 
     var mGravity: Int? = null
-    var mAnim: Int? = null
+    var density: Float = 3f
+
     private var cancelOut = true
     private var dialogHeight = -1
-    private var top = -1
-    private var bottom = -1
-    private var horizontal = -1
+    private var marginTop = -1
+    private var marginBottom = -1
+    private var marginHorizontal = -1
     private var dim = 0.3f
-    private var blackStyle = false
-    private var anim = R.style.anim_dialog_bottom
-    private var gravity = Gravity.BOTTOM
+    private var isBlackStyle = false
+    private var anim = -1
+    private var gravity = -1
     private var backListener: OnDialogShowOnBackListener? = null
-    var attr: WindowManager.LayoutParams? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_style)
+        density = requireActivity().resources.displayMetrics.density
         if (savedInstanceState == null) {
             initParams(arguments)
         } else {
@@ -44,8 +47,11 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog.setCanceledOnTouchOutside(cancelOut)
+        //去掉dialog默认样式中的Title
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        //去掉默认边距
         dialog.window?.decorView?.padding = 0
+        //设置dialog背景透明
         dialog.window?.setBackgroundDrawableResource(R.drawable.transition)
         dialog.window?.let { setAttributes(it) }
         return createView(inflater, container, savedInstanceState)
@@ -55,13 +61,15 @@ abstract class BaseDialogFragment : DialogFragment() {
         super.onSaveInstanceState(outState)
         outState.let {
             it.putInt(Constants.DIALOG_HEIGHT, dialogHeight)
-            it.putInt(Constants.PADDING_TOP, top)
-            it.putInt(Constants.PADDING_BOTTOM, bottom)
-            it.putInt(Constants.PADDING_HORIZONTAL, horizontal)
+            it.putInt(Constants.MARGIN_TOP, marginTop)
+            it.putInt(Constants.MARGIN_BOTTOM, marginBottom)
+            it.putInt(Constants.MARGIN_HORIZONTAL, marginHorizontal)
             it.putFloat(Constants.DIM_AMOUNT, dim)
-            it.putBoolean(Constants.IS_BLACK_STYLE, blackStyle)
+            it.putBoolean(Constants.IS_BLACK_STYLE, isBlackStyle)
             it.putInt(Constants.ANIMATION, anim)
             it.putInt(Constants.DIALOG_GRAVITY, gravity)
+            it.putBoolean(Constants.OUT_SIDE_CANCEL, cancelOut)
+            it.putSerializable(Constants.DIALOG_ON_BACK_LISTENER, backListener)
         }
 
 
@@ -70,33 +78,25 @@ abstract class BaseDialogFragment : DialogFragment() {
     open fun initParams(bundle: Bundle?) {
         bundle?.let {
             dialogHeight = it.getInt(Constants.DIALOG_HEIGHT, -1)
-            cancelOut = it.getBoolean(Constants.OUT_SIDE_CANCEL, true)
-            bottom = it.getInt(Constants.PADDING_BOTTOM, -1)
-            top = it.getInt(Constants.PADDING_TOP, -1)
-            horizontal = it.getInt(Constants.PADDING_HORIZONTAL, -1)
+            marginTop = it.getInt(Constants.MARGIN_TOP, -1)
+            marginBottom = it.getInt(Constants.MARGIN_BOTTOM, -1)
+            marginHorizontal = it.getInt(Constants.MARGIN_HORIZONTAL, -1)
             dim = it.getFloat(Constants.DIM_AMOUNT, -1f)
-            blackStyle = it.getBoolean(Constants.IS_BLACK_STYLE)
+            isBlackStyle = it.getBoolean(Constants.IS_BLACK_STYLE)
             anim = it.getInt(Constants.ANIMATION, -1)
             gravity = it.getInt(Constants.DIALOG_GRAVITY, -1)
+            cancelOut = it.getBoolean(Constants.OUT_SIDE_CANCEL, true)
             backListener = it.getSerializable(Constants.DIALOG_ON_BACK_LISTENER) as? OnDialogShowOnBackListener
         }
     }
 
 
     private fun setAttributes(window: Window) {
-        attr = window.attributes
+        val attr = window.attributes
         val dm = DisplayMetrics()
         window.windowManager.defaultDisplay.getMetrics(dm)
+        val density = requireActivity().resources.displayMetrics.density
 
-        val anim = if (anim == -1) {
-            if (mAnim == null) {
-                R.style.anim_dialog_bottom
-            } else {
-                mAnim
-            }
-        } else {
-            anim
-        }
         val gravity = if (gravity == -1) {
             if (mGravity == null) {
                 Gravity.BOTTOM
@@ -108,51 +108,64 @@ abstract class BaseDialogFragment : DialogFragment() {
         }
 
 
+        //是否有自定义动画，没有根据 Gravity 设置动画
+        val anim = if (anim != -1) {
+            anim
+        } else if (gravity == Gravity.TOP) {
+            R.style.anim_dialog_top
+        } else if (gravity == Gravity.BOTTOM) {
+            R.style.anim_dialog_bottom
+        } else {
+            R.style.anim_dialog_center
+        }
+
+
         attr?.let {
-            //位置
-            it.windowAnimations = anim ?: R.style.anim_dialog_bottom
-            it.gravity = gravity ?: Gravity.BOTTOM
+            // 位置
+            it.windowAnimations = anim
+            it.gravity = gravity ?: Gravity.CENTER
 
-            if (bottom != -1 && gravity == Gravity.BOTTOM) {
-                if (bottom < 0) {
-                    throw IllegalArgumentException("Bottom padding cannot be less than 0")
-                }
-                it.y = bottom
+            // Y 轴偏移量
+            if (gravity == Gravity.BOTTOM && marginBottom != -1) {  //dialog 在底部时设置Margin Bottom 才起作用
+                it.y = marginBottom
+            } else if (gravity == Gravity.TOP && marginTop != -1) {  //dialog 在顶部时设置Margin Top 才起作用
+                it.y = marginTop
+            } else if (this is AlertFragment && gravity == Gravity.BOTTOM && marginBottom == -1) { //dialog 是AlertFragment，并且在底部，则默认5dp的偏移
+                it.y = (density * 5).toInt()
             }
 
-            if (top != -1 && gravity == Gravity.TOP) {
-                if (top < 0) {
-                    throw IllegalArgumentException("Top padding cannot be less than 0")
-                }
-                it.y = top
-            }
-
-            if (horizontal != -1) {
-                if (horizontal < 0) {
-                    throw IllegalArgumentException("Horizontal padding cannot be less than 0")
-                }
-                val width = dm.widthPixels - horizontal * 2
-                it.width = width
+            // 设置 Dialog 宽度
+            it.width = if (marginHorizontal != -1) { //根据指定水平 Margin 设置 Dialog 宽度
+                dm.widthPixels - marginHorizontal * 2
             } else {
-                it.width = WindowManager.LayoutParams.WRAP_CONTENT
+                if (this is AlertFragment) { // AlertFragment 根据样式不同显示不同的宽度
+                    if (gravity == Gravity.CENTER) {
+                        dm.widthPixels - (density * 80).toInt()
+                    } else {
+                        dm.widthPixels - (density * 30).toInt()
+                    }
+                } else { //默认 Dialog 宽度
+                    WindowManager.LayoutParams.WRAP_CONTENT
+                }
             }
 
-            if (dialogHeight == -1) {
-                it.height = WindowManager.LayoutParams.WRAP_CONTENT
+
+            //设置 Dialog 高度
+            it.height = if (dialogHeight == -1) {
+                WindowManager.LayoutParams.WRAP_CONTENT
             } else {
-                it.height = dialogHeight
+                dialogHeight
             }
 
             //透明度
-            if (dim != -1f) {
+            if (dim != -1f) { //自定义了透明度
                 it.dimAmount = dim
-            } else {
-                if (blackStyle) {
-                    it.dimAmount = 0f
-                } else {
-                    it.dimAmount = 0.3f
-                }
+            } else if (isBlackStyle) { //设置了黑色样式时，完全透明
+                it.dimAmount = 0f
+            } else { //默认透明度
+                it.dimAmount = 0.3f
             }
+
             window.attributes = it
         }
 
@@ -172,6 +185,7 @@ abstract class BaseDialogFragment : DialogFragment() {
             }
             ft.add(this, System.currentTimeMillis().toString())
             ft.commitAllowingStateLoss()
+            //fragmentManager.executePendingTransactions()
         } catch (e: Exception) {
             /*
              * 出现情况:

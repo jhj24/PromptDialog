@@ -14,7 +14,7 @@
         android:id="@+id/tv_item_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_alert_item"
-        android:background="@drawable/bg_item_click_no_round"
+        android:background="@drawable/clicked_item_no_round"
         android:gravity="center"
         android:textSize="@dimen/textSize_alert_item" />
 </LinearLayout>

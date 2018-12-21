@@ -14,11 +14,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jhj.prompt.R
+import com.jhj.prompt.base.BaseBuilder
 import com.jhj.prompt.base.BaseDialogFragment
 import com.jhj.prompt.base.Constants
-import com.jhj.prompt.dialog.progress.interfaces.IBaseProgress
-import com.jhj.prompt.dialog.progress.interfaces.IPercent
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.layout_progress_view.view.*
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
@@ -43,7 +41,6 @@ class PercentFragment : BaseDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mGravity = Gravity.CENTER
-        mAnim = R.style.anim_dialog_center
         mScaleSize = requireActivity().resources.getDimensionPixelSize(R.dimen.textSize_scale).toFloat()
         savedInstanceState?.let {
             if (it.getBoolean(Constants.ACTIVITY_DESTROY)) {
@@ -141,122 +138,93 @@ class PercentFragment : BaseDialogFragment() {
         }
     }
 
-    class Builder(val mContext: Context) :
-            IPercent<Builder>,
-            IBaseProgress<Builder> {
+    class Builder(val mContext: Context) : BaseBuilder<Builder>() {
 
-
-        private val arg = Bundle()
         private val fragment = PercentFragment()
         private var maxProgress = 100
 
-        override fun setText(text: String?): Builder {
+        fun setText(text: String?): Builder {
             arg.putString(Constants.MESSAGE, text)
             return this
         }
 
-        override fun setTextColor(textColor: Int): Builder {
+        fun setTextColor(textColor: Int): Builder {
             arg.putInt(Constants.MESSAGE_COLOR, textColor)
             return this
         }
 
-        override fun setTextSize(textSize: Float): Builder {
+        fun setTextSize(textSize: Float): Builder {
             arg.putFloat(Constants.MESSAGE_SIZE, textSize)
             return this
         }
 
-        override fun setCircleRadius(radius: Int): Builder {
+        fun setCircleRadius(radius: Int): Builder {
             arg.putInt(Constants.CIRCLE_RADIUS, radius)
             return this
         }
 
-        override fun setCircleWidth(circleWidth: Float): Builder {
+        fun setCircleWidth(circleWidth: Float): Builder {
             arg.putFloat(Constants.CIRCLE_WIDTH, circleWidth)
             return this
         }
 
-        override fun setCircleColor(circleColor: Int): Builder {
+        fun setCircleColor(circleColor: Int): Builder {
             arg.putInt(Constants.CIRCLE_COLOR, circleColor)
             return this
         }
 
-        override fun setBottomCircleColor(bottomCircleColor: Int): Builder {
+        fun setBottomCircleColor(bottomCircleColor: Int): Builder {
             arg.putInt(Constants.CIRCLE_BOTTOM_COLOR, bottomCircleColor)
             return this
         }
 
-        override fun setBackgroundResource(resource: Int): Builder {
+        fun setBackgroundResource(resource: Int): Builder {
             arg.putInt(Constants.BACKGROUND_RESOURCE, resource)
             return this
         }
 
-        override fun setDimAmount(dimAmount: Float): Builder {
-            arg.putFloat(Constants.DIM_AMOUNT, dimAmount)
-            return this
-        }
-
-        override fun setAnimResource(resource: Int): Builder {
-            arg.putInt(Constants.ANIMATION, resource)
-            return this
-        }
-
-        override fun setOutSideCancel(cancel: Boolean): Builder {
-            arg.putBoolean(Constants.OUT_SIDE_CANCEL, cancel)
-            return this
-        }
-
-        override fun setDialogShowOnBackListener(listener: OnDialogShowOnBackListener): Builder {
-            arg.putSerializable(Constants.DIALOG_ON_BACK_LISTENER, listener)
-            return this
-        }
-
-        override fun setBlackStyle(): Builder {
-            arg.putBoolean(Constants.IS_BLACK_STYLE, true)
-            return this
-        }
-
-        override fun setScaleDisplay(): Builder {
+        fun setScaleDisplay(): Builder {
             arg.putBoolean(Constants.SCALE_DISPLAY, true)
             return this
         }
 
-        override fun setScaleColor(scaleColor: Int): Builder {
+        fun setScaleColor(scaleColor: Int): Builder {
             arg.putInt(Constants.SCALE_COLOR, scaleColor)
             return this
         }
 
-        override fun setScaleSize(scaleSize: Float): Builder {
+        fun setScaleSize(scaleSize: Float): Builder {
             arg.putFloat(Constants.SCALE_SIZE, scaleSize)
             return this
         }
 
-        override fun setProgress(progress: Int): Builder {
+        fun setProgress(progress: Int): Builder {
             fragment.setProgress(progress)
             return this
         }
 
-        override fun getMaxProgress(): Int {
+        fun getMaxProgress(): Int {
             return maxProgress
         }
 
-        override fun setMaxProgress(maxProgress: Int): Builder {
+        fun setMaxProgress(maxProgress: Int): Builder {
             this.maxProgress = maxProgress
             arg.putInt(Constants.MAX_PROGRESS, maxProgress)
             return this
         }
 
-        override fun isShow(): Boolean {
+        fun isShow(): Boolean {
             return fragment.isShow() ?: false
         }
 
 
-        override fun show(): Builder {
+        fun show(): Builder {
             fragment.arguments = arg
             fragment.show((mContext as FragmentActivity).supportFragmentManager)
             return this
         }
 
-        override fun dismiss() {
+        fun dismiss() {
             Handler().postDelayed({
                 if (fragment.dialog?.isShowing == true)
                     fragment.dismiss()

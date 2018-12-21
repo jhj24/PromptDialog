@@ -20,6 +20,7 @@
         android:background="@color/bg_view_line"
         android:visibility="gone" />
 
+    <!-- 普通body -->
     <TextView
         android:id="@+id/tv_alert_msg"
         android:layout_width="match_parent"
@@ -31,14 +32,14 @@
         android:textColor="@color/textColor_dialog_msg"
         android:textSize="@dimen/textSize_alert_msg" />
 
-
+    <!-- body为item -->
     <LinearLayout
         android:id="@+id/layout_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
 
-    <!-- 自定义View -->
+    <!-- body为自定义View -->
     <LinearLayout
         android:id="@+id/layout_view"
         android:layout_width="match_parent"

@@ -12,6 +12,6 @@ object Config {
     const val TEXT_COLOR_SUBMIT = Color.RED
     const val TEXT_COLOR_CANCEL = Color.BLUE
 
-    val a = R.drawable.bg_dialog
+    val a = R.drawable.bg_dialog_corner
 
 }
