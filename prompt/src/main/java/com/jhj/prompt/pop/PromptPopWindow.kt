@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.view.*
 import android.widget.PopupWindow
-import java.lang.NullPointerException
 
 /**
  * 自定义弹出popWindow
@@ -270,5 +269,10 @@ class PromptPopWindow() {
             popWindow.build()
             return popWindow
         }
+    }
+
+
+    interface OnCustomListener {
+        fun onLayout(view: View, popupWindow: PopupWindow?)
     }
 }

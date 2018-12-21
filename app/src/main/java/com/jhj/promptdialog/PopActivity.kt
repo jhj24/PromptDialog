@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.PopupWindow
-import com.jhj.prompt.pop.OnCustomListener
 import com.jhj.prompt.pop.PromptPopWindow
 import kotlinx.android.synthetic.main.activity_pop.*
 import kotlinx.android.synthetic.main.layout_pop_item.view.*
@@ -41,7 +40,7 @@ class PopActivity : AppCompatActivity() {
         btn_2.setOnClickListener {
             val pop = PromptPopWindow.Builder(this@PopActivity)
                     .setCanceledOnTouchOutSide(false)
-                    .setLayoutRes(R.layout.layout_pop_item, object : OnCustomListener {
+                    .setLayoutRes(R.layout.layout_pop_item, object : PromptPopWindow.OnCustomListener {
                         override fun onLayout(view: View, popupWindow: PopupWindow?) {
                             view.tv_1.setOnClickListener {
                                 popupWindow?.dismiss()

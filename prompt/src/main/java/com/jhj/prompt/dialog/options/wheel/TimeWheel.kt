@@ -505,8 +505,12 @@ class TimeWheel(private val view: View) {
                 }
             }
         }
-        wvYear.setOnItemSelectedListener(wheelListenerYear)
-        wvMonth.setOnItemSelectedListener(wheelListenerMonth)
+        if (wvYear.visibility == View.VISIBLE){
+            wvYear.setOnItemSelectedListener(wheelListenerYear)
+        }
+        if (wvMonth.visibility == View.VISIBLE){
+            wvMonth.setOnItemSelectedListener(wheelListenerMonth)
+        }
     }
 
 

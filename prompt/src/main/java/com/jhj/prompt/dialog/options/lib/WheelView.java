@@ -316,7 +316,7 @@ public class WheelView extends View {
         this.selectedItem = currentItem;
         this.initPosition = currentItem;
         totalScrollY = 0;//回归顶部，不然重设setCurrentItem的话位置会偏移的，就会显示出不对位置的数据
-        invalidate();
+        postInvalidate();
     }
 
     public final void setOnItemSelectedListener(OnItemSelectedListener OnItemSelectedListener) {
@@ -326,7 +326,7 @@ public class WheelView extends View {
     public final void setAdapter(WheelAdapter adapter) {
         this.adapter = adapter;
         remeasure();
-        invalidate();
+        postInvalidate();
     }
 
     public final WheelAdapter getAdapter() {
@@ -693,7 +693,7 @@ public class WheelView extends View {
                 break;
         }
 
-        invalidate();
+        postInvalidate();
         return true;
     }
 
