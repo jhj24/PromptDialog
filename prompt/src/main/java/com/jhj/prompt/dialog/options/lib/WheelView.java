@@ -253,7 +253,7 @@ public class WheelView extends View {
             paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（以它为标准高度）
 
             maxTextHeight = rect.height() + addHeight;
-
+            break;
         }
         itemHeight = lineSpacingMultiplier * maxTextHeight;
     }

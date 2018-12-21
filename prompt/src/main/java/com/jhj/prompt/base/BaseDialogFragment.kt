@@ -29,8 +29,8 @@ abstract class BaseDialogFragment : DialogFragment() {
     private var isBlackStyle = false
     private var anim = -1
     private var gravity = -1
+    private var isTouchWindow = false
     private var backListener: OnDialogShowOnBackListener? = null
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -169,11 +169,19 @@ abstract class BaseDialogFragment : DialogFragment() {
             window.attributes = it
         }
 
+        //是否点击了界面
+        window.decorView.setOnTouchListener { v, event ->
+            isTouchWindow = true
+            false
+        }
+
     }
 
     override fun onCancel(dialog: DialogInterface?) {
         super.onCancel(dialog)
-        backListener?.cancel()
+        if (!isTouchWindow) {
+            backListener?.cancel()
+        }
     }
 
 
