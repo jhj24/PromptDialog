@@ -3,23 +3,21 @@ package com.jhj.prompt.dialog.options
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jhj.prompt.R
-import com.jhj.prompt.base.BaseBuilder
-import com.jhj.prompt.base.BaseDialogFragment
-import com.jhj.prompt.base.Constants
+import com.jhj.prompt.dialog.base.BaseBuilder
+import com.jhj.prompt.dialog.base.BaseDialogFragment
+import com.jhj.prompt.dialog.base.Constants
 import com.jhj.prompt.dialog.options.interfaces.OnTimeSelectedListener
 import com.jhj.prompt.dialog.options.utils.DividerType
 import com.jhj.prompt.dialog.options.wheel.TimeWheel
 import kotlinx.android.synthetic.main.layout_pickerview_time.view.*
 import kotlinx.android.synthetic.main.layout_pickerview_topbar.view.*
 import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.textColorResource
 import java.text.ParseException
 import java.util.*
 
@@ -276,8 +274,12 @@ class TimeFragment : BaseDialogFragment() {
     }
 
 
-    class Builder(val mContext: Context) : BaseBuilder<Builder>() {
-        private val fragment = TimeFragment()
+    class Builder(val context: Context) : BaseBuilder<Builder>(context) {
+
+        private val mFragment = TimeFragment()
+
+        override val fragment: TimeFragment
+            get() = mFragment
 
         fun setTitle(title: String): Builder {
             arg.putString(Constants.TITLE, title)
@@ -423,20 +425,6 @@ class TimeFragment : BaseDialogFragment() {
         fun setCancelListener(listener: OnTimeSelectedListener): Builder {
             arg.putSerializable(Constants.LISTENER_CANCEL_CLICK, listener)
             return this
-        }
-
-        fun isShow(): Boolean {
-            return fragment.isShow() ?: false
-        }
-
-        fun show(): Builder {
-            fragment.arguments = arg
-            fragment.show((mContext as FragmentActivity).supportFragmentManager)
-            return this
-        }
-
-        fun dismiss() {
-            fragment.dismiss()
         }
     }
 }

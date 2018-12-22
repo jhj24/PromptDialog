@@ -5,16 +5,15 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
-import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jhj.prompt.R
-import com.jhj.prompt.base.BaseBuilder
-import com.jhj.prompt.base.BaseDialogFragment
-import com.jhj.prompt.base.Constants
+import com.jhj.prompt.dialog.base.BaseBuilder
+import com.jhj.prompt.dialog.base.BaseDialogFragment
+import com.jhj.prompt.dialog.base.Constants
 import com.jhj.prompt.dialog.options.interfaces.OnOptionsSelectedListener
 import com.jhj.prompt.dialog.options.utils.DividerType
 import com.jhj.prompt.dialog.options.wheel.OptionsWheel
@@ -251,9 +250,12 @@ class OptionsFragment<T> : BaseDialogFragment() {
     }
 
 
-    class Builder<T>(val mContext: Context) : BaseBuilder<Builder<T>>() {
+    class Builder<T>(val context: Context) : BaseBuilder<Builder<T>>(context) {
 
-        private val fragment = OptionsFragment<T>()
+        private val mFragment = OptionsFragment<T>()
+
+        override val fragment: OptionsFragment<T>
+            get() = mFragment
 
         fun setTitle(title: String): Builder<T> {
             arg.putString(Constants.TITLE, title)
@@ -434,20 +436,6 @@ class OptionsFragment<T> : BaseDialogFragment() {
             arg.putSerializable(Constants.OPTIONS_LINKED_ITEMS_THREE, options3Items)
             arg.putBoolean(Constants.OPTIONS_IS_LINKED, true)
             return this
-        }
-
-        fun isShow(): Boolean {
-            return fragment.isShow() ?: false
-        }
-
-        fun show(): Builder<T> {
-            fragment.arguments = arg
-            fragment.show((mContext as FragmentActivity).supportFragmentManager)
-            return this
-        }
-
-        fun dismiss() {
-            fragment.dismiss()
         }
     }
 }

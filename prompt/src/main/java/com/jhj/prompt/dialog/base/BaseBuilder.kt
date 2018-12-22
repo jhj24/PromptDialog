@@ -1,15 +1,17 @@
-package com.jhj.prompt.base
+package com.jhj.prompt.dialog.base
 
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
 import android.support.annotation.StyleRes
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
+import android.support.v4.app.FragmentActivity
 
-open class BaseBuilder<T : BaseBuilder<T>> {
+abstract class BaseBuilder<T : BaseBuilder<T>>(val mContext: Context) {
 
     val arg = Bundle()
 
+    abstract val fragment: BaseDialogFragment
 
     @Suppress("UNCHECKED_CAST")
     fun setDialogGravity(gravity: Int): T {
@@ -62,9 +64,25 @@ open class BaseBuilder<T : BaseBuilder<T>> {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun setDialogShowOnBackListener(listener: OnDialogShowOnBackListener): T {
+    fun setDialogShowOnBackListener(listener: BaseDialogFragment.OnDialogShowOnBackListener): T {
         arg.putSerializable(Constants.DIALOG_ON_BACK_LISTENER, listener)
         return this as T
     }
+
+    @Suppress("UNCHECKED_CAST")
+    fun show(): T {
+        fragment.arguments = arg
+        fragment.show((mContext as FragmentActivity).supportFragmentManager)
+        return this as T
+    }
+
+    fun isShow(): Boolean {
+        return fragment.isShow() ?: false
+    }
+
+    open fun dismiss() {
+        fragment.dismiss()
+    }
+
 
 }

@@ -8,7 +8,6 @@ import android.os.Parcelable
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
-import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -16,9 +15,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jhj.prompt.R
-import com.jhj.prompt.base.BaseBuilder
-import com.jhj.prompt.base.BaseDialogFragment
-import com.jhj.prompt.base.Constants
+import com.jhj.prompt.dialog.base.BaseBuilder
+import com.jhj.prompt.dialog.base.BaseDialogFragment
+import com.jhj.prompt.dialog.base.Constants
 import kotlinx.android.synthetic.main.layout_alert_dialog.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_body.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_button.view.*
@@ -275,9 +274,12 @@ class AlertFragment : BaseDialogFragment() {
     }
 
 
-    class Builder(val mContext: Context) : BaseBuilder<Builder>() {
+    class Builder(val context: Context) : BaseBuilder<Builder>(context) {
 
-        private val fragment = AlertFragment()
+        private val mFragment = AlertFragment()
+
+        override val fragment: BaseDialogFragment
+            get() = mFragment
 
         fun setDialogBottomSeparate(isSeparate: Boolean): Builder {
             arg.putBoolean(Constants.DIALOG_STYLE, isSeparate)
@@ -397,20 +399,6 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-
-        fun isShow(): Boolean {
-            return fragment.isShow() ?: false
-        }
-
-        fun show(): Builder {
-            fragment.arguments = arg
-            fragment.show((mContext as FragmentActivity).supportFragmentManager)
-            return this
-        }
-
-        fun dismiss() {
-            fragment.dismiss()
-        }
     }
 
     interface OnButtonClickedListener : Serializable {

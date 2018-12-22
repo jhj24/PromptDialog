@@ -1,4 +1,4 @@
-package com.jhj.prompt.base
+package com.jhj.prompt.dialog.base
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -8,8 +8,8 @@ import android.util.DisplayMetrics
 import android.view.*
 import com.jhj.prompt.R
 import com.jhj.prompt.dialog.alert.AlertFragment
-import com.jhj.prompt.listener.OnDialogShowOnBackListener
 import org.jetbrains.anko.padding
+import java.io.Serializable
 
 /**
  * DialogFragment基类
@@ -209,6 +209,11 @@ abstract class BaseDialogFragment : DialogFragment() {
     }
 
     abstract fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+
+
+    interface OnDialogShowOnBackListener : Serializable {
+        fun cancel()
+    }
 
 }
 

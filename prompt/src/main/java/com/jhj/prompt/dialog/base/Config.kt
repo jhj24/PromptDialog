@@ -1,4 +1,4 @@
-package com.jhj.prompt.base
+package com.jhj.prompt.dialog.base
 
 import android.graphics.Color
 import com.jhj.prompt.R

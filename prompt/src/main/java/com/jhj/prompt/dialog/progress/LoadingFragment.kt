@@ -3,16 +3,14 @@ package com.jhj.prompt.dialog.progress
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jhj.prompt.R
-import com.jhj.prompt.base.BaseBuilder
-import com.jhj.prompt.base.BaseDialogFragment
-import com.jhj.prompt.base.Constants
+import com.jhj.prompt.dialog.base.BaseBuilder
+import com.jhj.prompt.dialog.base.BaseDialogFragment
+import com.jhj.prompt.dialog.base.Constants
 import kotlinx.android.synthetic.main.layout_progress_view.view.*
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
@@ -28,6 +26,7 @@ class LoadingFragment : BaseDialogFragment() {
         const val MESSAGE_TEXT_SIZE = 15f
         const val CIRCLE_WIDTH = 6f
         const val CIRCLE_RADIUS = 75
+        val LOADING_STYLE = LoadingStyle.OLD_STYLE
     }
 
     enum class LoadingStyle {
@@ -138,9 +137,12 @@ class LoadingFragment : BaseDialogFragment() {
 
     }
 
-    class Builder(val mContext: Context) : BaseBuilder<Builder>() {
+    class Builder(val context: Context) : BaseBuilder<Builder>(context) {
 
-        private val fragment = LoadingFragment()
+        private val mFragment = LoadingFragment()
+
+        override val fragment: LoadingFragment
+            get() = mFragment
 
         fun setLoadingStyle(style: LoadingStyle): Builder {
             arg.putSerializable(Constants.DIALOG_STYLE, style)
@@ -190,20 +192,6 @@ class LoadingFragment : BaseDialogFragment() {
         fun setDialogBlack(isBlackStyle: Boolean): Builder {
             arg.putBoolean(Constants.IS_BLACK_STYLE, isBlackStyle)
             return this
-        }
-
-        fun isShow(): Boolean {
-            return fragment.isShow() ?: false
-        }
-
-        fun show(): Builder {
-            fragment.arguments = arg
-            fragment.show((mContext as FragmentActivity).supportFragmentManager)
-            return this
-        }
-
-        fun dismiss() {
-            fragment.dismiss()
         }
 
     }
