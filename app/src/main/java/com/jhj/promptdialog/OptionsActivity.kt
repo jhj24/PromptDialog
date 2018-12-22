@@ -5,10 +5,10 @@ import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import com.jhj.prompt.dialog.options.OptionsFragment
-import com.jhj.prompt.dialog.options.TimeFragment
-import com.jhj.prompt.dialog.options.interfaces.OnOptionsSelectedListener
-import com.jhj.prompt.dialog.options.interfaces.OnTimeSelectedListener
+import com.jhj.prompt.fragment.OptionsFragment
+import com.jhj.prompt.fragment.TimeFragment
+import com.jhj.prompt.fragment.options.interfaces.OnOptionsSelectedListener
+import com.jhj.prompt.fragment.options.interfaces.OnTimeSelectedListener
 import kotlinx.android.synthetic.main.activity_progress.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast

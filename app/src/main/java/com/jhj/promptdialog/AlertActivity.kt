@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
-import com.jhj.prompt.dialog.base.BaseDialogFragment
-import com.jhj.prompt.dialog.alert.AlertFragment
+import com.jhj.prompt.fragment.base.BaseDialogFragment
+import com.jhj.prompt.fragment.AlertFragment
 import kotlinx.android.synthetic.main.activity_alert.*
 import kotlinx.android.synthetic.main.layout_image.view.*
 import org.jetbrains.anko.toast

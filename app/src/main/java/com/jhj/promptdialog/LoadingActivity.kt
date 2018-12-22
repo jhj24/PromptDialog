@@ -7,9 +7,9 @@ import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
-import com.jhj.prompt.dialog.base.BaseDialogFragment
-import com.jhj.prompt.dialog.progress.LoadingFragment
-import com.jhj.prompt.dialog.progress.PercentFragment
+import com.jhj.prompt.fragment.base.BaseDialogFragment
+import com.jhj.prompt.fragment.LoadingFragment
+import com.jhj.prompt.fragment.PercentFragment
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast

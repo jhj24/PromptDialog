@@ -3,7 +3,7 @@ package com.jhj.promptdialog
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.jhj.prompt.dialog.options.interfaces.IOptionsData
+import com.jhj.prompt.fragment.options.interfaces.IOptionsData
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.Serializable

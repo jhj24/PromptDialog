@@ -18,14 +18,14 @@
         android:padding="15dp"
         tools:ignore="UselessParent">
 
-        <com.jhj.prompt.dialog.progress.view.PercentView
+        <com.jhj.prompt.fragment.progress.PercentView
             android:id="@+id/circle_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:visibility="gone" />
 
-        <com.jhj.prompt.dialog.progress.view.LoadingOldStyleView
+        <com.jhj.prompt.fragment.progress.LoadingOldStyleView
             android:id="@+id/circle_loading_old_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
 
-        <com.jhj.prompt.dialog.progress.view.LoadingNewStyleView
+        <com.jhj.prompt.fragment.progress.LoadingNewStyleView
             android:id="@+id/circle_loading_new_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
