@@ -5,7 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
+import android.os.Looper
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +15,9 @@ import com.jhj.prompt.R
 import com.jhj.prompt.dialog.base.BaseBuilder
 import com.jhj.prompt.dialog.base.BaseDialogFragment
 import com.jhj.prompt.dialog.base.Constants
-import kotlinx.android.synthetic.main.layout_progress_view.*
 import kotlinx.android.synthetic.main.layout_progress_view.view.*
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
-import java.io.Serializable
 
 /**
  * 处于加载中的dialogFragment
@@ -37,6 +35,7 @@ class PercentFragment : BaseDialogFragment() {
     private var mView: View? = null
     private var isCancel = false
     private var mScaleSize: Float = 0f
+    private var mProgress = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,12 +60,17 @@ class PercentFragment : BaseDialogFragment() {
 
 
     private fun setProgress(i: Int) {
+
         if (mView == null) {
-            throw IllegalStateException("This setProgress() method must be called after show()")
+            mProgress = i
         }
+
         if (!isCancel) {
-            mView?.circle_progress?.progress = i
-            Log.w("xxx", i.toString())
+            mView?.circle_progress?.let {
+                it.post {
+                    it.progress = i
+                }
+            }
         }
     }
 
@@ -87,6 +91,10 @@ class PercentFragment : BaseDialogFragment() {
         val maxProgress = arguments?.getInt(Constants.MAX_PROGRESS, MAX_PROGRESS)
 
         val circleView = view.circle_progress
+
+        if (mProgress != 0) {
+            circleView.progress = mProgress
+        }
 
         //提示
         text?.let {
