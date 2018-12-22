@@ -99,7 +99,7 @@ abstract class BaseDialogFragment : DialogFragment() {
 
         val gravity = if (gravity == -1) {
             if (mGravity == null) {
-                Gravity.BOTTOM
+                Gravity.CENTER
             } else {
                 mGravity
             }

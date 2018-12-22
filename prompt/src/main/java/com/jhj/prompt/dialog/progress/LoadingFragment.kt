@@ -35,36 +35,12 @@ class LoadingFragment : BaseDialogFragment() {
         NEW_STYLE
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mGravity = Gravity.CENTER
-    }
-
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.layout_progress_view, container)
         initView(view)
         return view
     }
 
-
-    override fun initParams(bundle: Bundle?) {
-        super.initParams(bundle)
-        bundle?.let {
-            val text = arguments?.getString(Constants.MESSAGE)
-            val textSize = arguments?.getFloat(Constants.MESSAGE_SIZE, MESSAGE_TEXT_SIZE)
-            val style = arguments?.getSerializable(Constants.DIALOG_STYLE) as? LoadingStyle
-            val isBlackStyle = arguments?.getBoolean(Constants.IS_BLACK_STYLE)
-            val circleWidth = arguments?.getFloat(Constants.CIRCLE_WIDTH, CIRCLE_WIDTH)
-            val circleRadius = arguments?.getInt(Constants.CIRCLE_RADIUS, CIRCLE_RADIUS)
-
-            val textColor = arguments?.getInt(Constants.MESSAGE_COLOR, Color.WHITE)
-            val circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, Color.WHITE)
-            val bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, Color.GRAY)
-            val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_progress_black_dialog)
-
-        }
-    }
 
     private fun initView(view: View) {
         val text = arguments?.getString(Constants.MESSAGE)

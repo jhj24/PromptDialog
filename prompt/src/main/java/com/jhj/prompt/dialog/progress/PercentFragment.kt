@@ -8,7 +8,6 @@ import android.os.Handler
 import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,8 +39,7 @@ class PercentFragment : BaseDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mGravity = Gravity.CENTER
-        mScaleSize = requireActivity().resources.getDimensionPixelSize(R.dimen.textSize_scale).toFloat()
+        mScaleSize = resources.getDimensionPixelSize(R.dimen.textSize_scale).toFloat()
         savedInstanceState?.let {
             if (it.getBoolean(Constants.ACTIVITY_DESTROY)) {
                 dismiss()
@@ -77,7 +75,6 @@ class PercentFragment : BaseDialogFragment() {
     }
 
     private fun initView(view: View) {
-
 
         val isBlackStyle = arguments?.getBoolean(Constants.IS_BLACK_STYLE)
         val text = arguments?.getString(Constants.MESSAGE)

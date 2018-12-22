@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
+import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -143,29 +144,25 @@ class TimeFragment : BaseDialogFragment() {
         view.tv_option_title.setTextColor(titleColor)
         view.tv_option_title.textSize = titleSize
 
-        view.btn_option_submit.let { submit ->
-            submit.text = submitText
-            submit.textSize = buttonSize
-            submit.textColorResource = submitColor
-            submit.setOnClickListener {
-                submitListener?.let {
+        view.btn_option_submit.let { btnSubmit ->
+            btnSubmit.text = submitText
+            btnSubmit.textSize = buttonSize
+            btnSubmit.setTextColor(ContextCompat.getColorStateList(requireContext(),submitColor))
+            btnSubmit.setOnClickListener {
                     val date = TimeWheel.dateFormat.parse(wheel.time)
-                    it.onTimeSelect(date, wheel.getView())
+                    submitListener?.onTimeSelect(date, wheel.getView())
                     dismiss()
-                }
             }
         }
 
-        view.btn_option_cancel.let { cancel ->
-            cancel.text = cancelText
-            cancel.textSize = buttonSize
-            cancel.textColorResource = cancelColor
-            cancel.setOnClickListener {
-                cancelListener?.let {
+        view.btn_option_cancel.let { btnCancel ->
+            btnCancel.text = cancelText
+            btnCancel.textSize = buttonSize
+            btnCancel.setTextColor(ContextCompat.getColorStateList(requireContext(),cancelColor))
+            btnCancel.setOnClickListener {
                     val date = TimeWheel.dateFormat.parse(wheel.time)
-                    it.onTimeSelect(date, wheel.getView())
+                    cancelListener?.onTimeSelect(date, wheel.getView())
                     dismiss()
-                }
             }
 
         }

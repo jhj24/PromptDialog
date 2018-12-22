@@ -182,30 +182,27 @@ class OptionsFragment<T> : BaseDialogFragment() {
         view.tv_option_title.textColor = titleColor
         view.tv_option_title.textSize = titleSize
 
-        cancelListener?.let {
-            view.btn_option_cancel.textSize = buttonSize
-            view.btn_option_cancel.setTextColor(ContextCompat.getColorStateList(requireContext(), cancelColor))
-            view.btn_option_cancel.text = cancelText
-            view.btn_option_cancel.setOnClickListener { view ->
+        view.btn_option_cancel.let { btnCancel ->
+            btnCancel.text = cancelText
+            btnCancel.textSize = buttonSize
+            btnCancel.setTextColor(ContextCompat.getColorStateList(requireContext(), cancelColor))
+            btnCancel.setOnClickListener {
                 val array = wheel.currentItems
-                it.onOptionsSelect(array[0], array[1], array[2])
-                dismiss()
-            }
-
-        }
-
-        submitListener?.let {
-            view.btn_option_submit.textSize = buttonSize
-            view.btn_option_submit.setTextColor(ContextCompat.getColorStateList(requireContext(), submitColor))
-            view.btn_option_submit.text = submitText
-            view.btn_option_submit.setOnClickListener { view ->
-                val array = wheel.currentItems
-                it.onOptionsSelect(array[0], array[1], array[2])
+                cancelListener?.onOptionsSelect(array[0], array[1], array[2])
                 dismiss()
             }
         }
 
-
+        view.btn_option_submit.let { btnSubmit ->
+            btnSubmit.text = submitText
+            btnSubmit.textSize = buttonSize
+            btnSubmit.setTextColor(ContextCompat.getColorStateList(requireContext(), submitColor))
+            btnSubmit.setOnClickListener {
+                val array = wheel.currentItems
+                submitListener?.onOptionsSelect(array[0],array[1],array[2])
+                dismiss()
+            }
+        }
     }
 
 

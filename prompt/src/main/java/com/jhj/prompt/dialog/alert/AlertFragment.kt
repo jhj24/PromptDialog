@@ -219,7 +219,7 @@ class AlertFragment : BaseDialogFragment() {
             cancelButtonShow = true
             view.btn_negative.text = cancel
             view.btn_negative.textSize = buttonSize
-            view.btn_negative.setTextColor(ContextCompat.getColorStateList(requireContext(), cancelColor))
+            view.btn_negative.setTextColor(cancelColor)
             view.btn_negative.setOnClickListener {
                 listener.onClick(view.btn_negative)
                 dismiss()
@@ -230,7 +230,7 @@ class AlertFragment : BaseDialogFragment() {
             submitButtonShow = true
             view.btn_positive.text = submit
             view.btn_positive.textSize = buttonSize
-            view.btn_positive.setTextColor(ContextCompat.getColorStateList(requireContext(), submitColor))
+            view.btn_positive.setTextColor(submitColor)
             view.btn_positive.setOnClickListener {
                 listener.onClick(view.btn_positive)
                 dismiss()
@@ -362,7 +362,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setSubmitListener(text: String?, @DrawableRes textColor: Int, listener: OnButtonClickedListener): Builder {
+        fun setSubmitListener(text: String?, @ColorRes textColor: Int, listener: OnButtonClickedListener): Builder {
             arg.putSerializable(Constants.LISTENER_SUBMIT_CLICK, listener)
             arg.putString(Constants.SUBMIT_TEXT, text)
             arg.putInt(Constants.SUBMIT_TEXT_COLOR, textColor)
@@ -380,7 +380,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setCancelListener(text: String?, @DrawableRes textColor: Int, listener: OnButtonClickedListener): Builder {
+        fun setCancelListener(text: String?, @ColorRes textColor: Int, listener: OnButtonClickedListener): Builder {
             arg.putSerializable(Constants.LISTENER_CANCEL_CLICK, listener)
             arg.putString(Constants.CANCEL_TEXT, text)
             arg.putInt(Constants.CANCEL_TEXT_COLOR, textColor)
