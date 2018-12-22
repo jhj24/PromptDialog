@@ -71,8 +71,6 @@ object Constants {
     const val IS_BLACK_STYLE: String = "is_black_style"
     const val BACKGROUND_RESOURCE: String = "background_resource"
 
-    //dialog弹出时点击返回按钮进行的操作
-
 
     //联动
     const val OPTIONS_BACKGROUND_RESOURCE: String = "options_background_resource" //options背景色

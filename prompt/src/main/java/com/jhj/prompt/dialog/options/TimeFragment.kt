@@ -169,8 +169,6 @@ class TimeFragment : BaseDialogFragment() {
             }
 
         }
-
-
     }
 
 

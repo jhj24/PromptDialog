@@ -211,6 +211,11 @@ class LoadingFragment : BaseDialogFragment() {
             return this
         }
 
+        fun setDialogBlack(isBlackStyle: Boolean): Builder {
+            arg.putBoolean(Constants.IS_BLACK_STYLE, isBlackStyle)
+            return this
+        }
+
         fun isShow(): Boolean {
             return fragment.isShow() ?: false
         }

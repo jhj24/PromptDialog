@@ -52,7 +52,7 @@ class OptionsActivity : FragmentActivity() {
         one.setOnClickListener {
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
                     .setLinkedPicker(provinceList, cityList)
-                    .setPaddingHorizontal(150)
+                    .setMarginHorizontal(150)
                     .setItemNum(9)
                     .setAnimation(R.style.anim_dialog_center)
                     .setDialogGravity(Gravity.CENTER)
@@ -97,7 +97,7 @@ class OptionsActivity : FragmentActivity() {
                     .setDate(selectedDate)
                     .setDialogGravity(Gravity.CENTER)
                     .setAnimation(R.style.anim_dialog_center)
-                    .setPaddingHorizontal(200)
+                    .setMarginHorizontal(200)
                     .setOptionsBackgroundResource(R.drawable.bg_progress_black_dialog)
                     .setDisplayStyle(booleanArrayOf(false, false, false, true, true, false))
                     .setOnlyCenterLabel(false)

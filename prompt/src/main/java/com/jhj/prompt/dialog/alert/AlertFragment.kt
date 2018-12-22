@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
+import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
 import android.support.v4.app.FragmentActivity
@@ -218,7 +219,7 @@ class AlertFragment : BaseDialogFragment() {
             cancelButtonShow = true
             view.btn_negative.text = cancel
             view.btn_negative.textSize = buttonSize
-            view.btn_negative.setTextColor(cancelColor)
+            view.btn_negative.setTextColor(ContextCompat.getColorStateList(requireContext(), cancelColor))
             view.btn_negative.setOnClickListener {
                 listener.onClick(view.btn_negative)
                 dismiss()
@@ -229,7 +230,7 @@ class AlertFragment : BaseDialogFragment() {
             submitButtonShow = true
             view.btn_positive.text = submit
             view.btn_positive.textSize = buttonSize
-            view.btn_positive.setTextColor(submitColor)
+            view.btn_positive.setTextColor(ContextCompat.getColorStateList(requireContext(), submitColor))
             view.btn_positive.setOnClickListener {
                 listener.onClick(view.btn_positive)
                 dismiss()
@@ -293,7 +294,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setTitleColor(titleColor: Int): Builder {
+        fun setTitleColor(@ColorRes titleColor: Int): Builder {
             arg.putInt(Constants.TITLE_COLOR, titleColor)
             return this
         }
@@ -313,7 +314,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setMessageColor(messageColor: Int): Builder {
+        fun setMessageColor(@ColorRes messageColor: Int): Builder {
             arg.putInt(Constants.MESSAGE_COLOR, messageColor)
             return this
         }
@@ -333,7 +334,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setItems(items: ArrayList<String>, textColor: Int): Builder {
+        fun setItems(items: ArrayList<String>, @ColorRes textColor: Int): Builder {
             arg.putStringArrayList(Constants.ITEM_COLOR_LIST, items)
             arg.putInt(Constants.ITEM_TEXT_COLOR, textColor)
             return this
@@ -361,7 +362,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setSubmitListener(text: String?, textColor: Int, listener: OnButtonClickedListener): Builder {
+        fun setSubmitListener(text: String?, @DrawableRes textColor: Int, listener: OnButtonClickedListener): Builder {
             arg.putSerializable(Constants.LISTENER_SUBMIT_CLICK, listener)
             arg.putString(Constants.SUBMIT_TEXT, text)
             arg.putInt(Constants.SUBMIT_TEXT_COLOR, textColor)
@@ -379,7 +380,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setCancelListener(text: String?, textColor: Int, listener: OnButtonClickedListener): Builder {
+        fun setCancelListener(text: String?, @DrawableRes textColor: Int, listener: OnButtonClickedListener): Builder {
             arg.putSerializable(Constants.LISTENER_CANCEL_CLICK, listener)
             arg.putString(Constants.CANCEL_TEXT, text)
             arg.putInt(Constants.CANCEL_TEXT_COLOR, textColor)

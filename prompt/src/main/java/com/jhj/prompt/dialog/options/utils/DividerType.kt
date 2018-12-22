@@ -5,6 +5,6 @@ package com.jhj.prompt.dialog.options.utils
  * Created by jhj on 2018-3-12 0012.
  */
 enum class DividerType {
-    FILL,
-    WRAP
+    FILL, //一条整直线
+    WRAP //仅包裹内容
 }

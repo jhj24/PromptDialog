@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.app.FragmentActivity
+import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,6 @@ import kotlinx.android.synthetic.main.layout_pickerview_options.view.*
 import kotlinx.android.synthetic.main.layout_pickerview_topbar.view.*
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
-import org.jetbrains.anko.textColorResource
 
 
 /**
@@ -184,7 +184,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
 
         cancelListener?.let {
             view.btn_option_cancel.textSize = buttonSize
-            view.btn_option_cancel.textColorResource = cancelColor
+            view.btn_option_cancel.setTextColor(ContextCompat.getColorStateList(requireContext(), cancelColor))
             view.btn_option_cancel.text = cancelText
             view.btn_option_cancel.setOnClickListener { view ->
                 val array = wheel.currentItems
@@ -196,7 +196,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
 
         submitListener?.let {
             view.btn_option_submit.textSize = buttonSize
-            view.btn_option_submit.textColorResource = submitColor
+            view.btn_option_submit.setTextColor(ContextCompat.getColorStateList(requireContext(), submitColor))
             view.btn_option_submit.text = submitText
             view.btn_option_submit.setOnClickListener { view ->
                 val array = wheel.currentItems
@@ -268,7 +268,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        fun setTitleColor(color: Int): Builder<T> {
+        fun setTitleColor(@ColorRes color: Int): Builder<T> {
             arg.putInt(Constants.TITLE_COLOR, color)
             return this
         }

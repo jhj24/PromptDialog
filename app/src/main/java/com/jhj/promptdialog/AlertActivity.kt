@@ -125,8 +125,8 @@ class AlertActivity : FragmentActivity() {
         btn_bottom3.setOnClickListener {
             AlertFragment.Builder(this@AlertActivity)
                     .setDialogGravity(Gravity.BOTTOM)
-                    .setPaddingHorizontal(0)
-                    .setPaddingBottom(0)
+                    .setMarginHorizontal(0)
+                    .setMarginBottom(0)
                     .setBackgroundResource(R.drawable.bg_dialog_no_corner)
                     .setTitle("标题")
                     .setMessage("内容")

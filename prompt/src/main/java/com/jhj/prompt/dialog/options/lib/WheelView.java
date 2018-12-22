@@ -37,6 +37,8 @@ public class WheelView extends View {
         CLICK, FLING, DAGGLE
     }
 
+    int textHeight;
+
     private DividerType dividerType;//分隔线类型
 
     Context context;
@@ -61,7 +63,7 @@ public class WheelView extends View {
     private String label;//附加单位
     int textSize;//选项的文字大小
     int maxTextWidth;
-    int maxTextHeight;
+    private boolean isTimeFragment;
     int addHeight = 2;
     private int textXOffset;
     float itemHeight;//每行高度
@@ -210,7 +212,17 @@ public class WheelView extends View {
             return;
         }
 
-        measureTextWidthHeight();
+        if (dividerType == DividerType.WRAP) {
+            measureTextWidthHeight();
+        }
+
+
+        // 星期的字符编码（以它为标准高度）
+        Rect rectText = new Rect();
+        paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rectText);
+        textHeight = rectText.height() + addHeight;
+
+        itemHeight = lineSpacingMultiplier * textHeight;
 
         //半圆的周长 = item高度乘以item数目-1
         halfCircumference = (int) (itemHeight * (itemsVisible - 1));
@@ -223,7 +235,7 @@ public class WheelView extends View {
         //计算两条横线 和 选中项画笔的基线Y位置
         firstLineY = (measuredHeight - itemHeight) / 2.0F;
         secondLineY = (measuredHeight + itemHeight) / 2.0F;
-        centerY = secondLineY - (itemHeight - maxTextHeight) / 2.0f - CENTERCONTENTOFFSET;
+        centerY = secondLineY - (itemHeight - textHeight) / 2.0f - CENTERCONTENTOFFSET;
 
         //初始化显示的item的position
         if (initPosition == -1) {
@@ -237,7 +249,9 @@ public class WheelView extends View {
     }
 
     /**
-     * 计算最大length的Text的宽高度
+     * 当分割线类型为WRAP时，计算分割线的最大宽高度
+     *
+     * 当是时间选择器时，只计算一个即可，因为每个都相同。
      */
     private void measureTextWidthHeight() {
         Rect rect = new Rect();
@@ -250,12 +264,10 @@ public class WheelView extends View {
             if (textWidth > maxTextWidth) {
                 maxTextWidth = textWidth;
             }
-            paintCenterText.getTextBounds("\u661F\u671F", 0, 2, rect); // 星期的字符编码（以它为标准高度）
-
-            maxTextHeight = rect.height() + addHeight;
-            break;
+            if (isTimeFragment) {
+                break;
+            }
         }
-        itemHeight = lineSpacingMultiplier * maxTextHeight;
     }
 
     void smoothScroll(ACTION action) {//平滑滚动的实现
@@ -464,39 +476,39 @@ public class WheelView extends View {
                 //计算开始绘制的位置
                 measuredCenterContentStart(contentText);
                 measuredOutContentStart(contentText);
-                float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * maxTextHeight) / 2D);
+                float translateY = (float) (radius - Math.cos(radian) * radius - (Math.sin(radian) * textHeight) / 2D);
                 //根据Math.sin(radian)来更改canvas坐标系原点，然后缩放画布，使得文字高度进行缩放，形成弧形3d视觉差
                 canvas.translate(0.0F, translateY);
 //                canvas.scale(1.0F, (float) Math.sin(radian));
-                if (translateY <= firstLineY && maxTextHeight + translateY >= firstLineY) {
+                if (translateY <= firstLineY && textHeight + translateY >= firstLineY) {
                     // 条目经过第一条线
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, firstLineY - translateY);
                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALECONTENT);
-                    canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
+                    canvas.drawText(contentText, drawOutContentStart, textHeight, paintOuterText);
                     canvas.restore();
                     canvas.save();
                     canvas.clipRect(0, firstLineY - translateY, measuredWidth, (int) (itemHeight));
                     canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
-                    canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTERCONTENTOFFSET, paintCenterText);
+                    canvas.drawText(contentText, drawCenterContentStart, textHeight - CENTERCONTENTOFFSET, paintCenterText);
                     canvas.restore();
-                } else if (translateY <= secondLineY && maxTextHeight + translateY >= secondLineY) {
+                } else if (translateY <= secondLineY && textHeight + translateY >= secondLineY) {
                     // 条目经过第二条线
                     canvas.save();
                     canvas.clipRect(0, 0, measuredWidth, secondLineY - translateY);
                     canvas.scale(1.0F, (float) Math.sin(radian) * 1.0F);
-                    canvas.drawText(contentText, drawCenterContentStart, maxTextHeight - CENTERCONTENTOFFSET, paintCenterText);
+                    canvas.drawText(contentText, drawCenterContentStart, textHeight - CENTERCONTENTOFFSET, paintCenterText);
                     canvas.restore();
                     canvas.save();
                     canvas.clipRect(0, secondLineY - translateY, measuredWidth, (int) (itemHeight));
                     canvas.scale(1.0F, (float) Math.sin(radian) * SCALECONTENT);
-                    canvas.drawText(contentText, drawOutContentStart, maxTextHeight, paintOuterText);
+                    canvas.drawText(contentText, drawOutContentStart, textHeight, paintOuterText);
                     canvas.restore();
-                } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
+                } else if (translateY >= firstLineY && textHeight + translateY <= secondLineY) {
                     // 中间条目
-                    //canvas.clipRect(0, 0, measuredWidth,   maxTextHeight);
+                    //canvas.clipRect(0, 0, measuredWidth,   textHeight);
                     //让文字居中
-                    float Y = maxTextHeight - CENTERCONTENTOFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
+                    float Y = textHeight - CENTERCONTENTOFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
 
                     selectedItem = adapter.indexOf(visibles[counter]);
@@ -511,7 +523,7 @@ public class WheelView extends View {
                     // 控制透明度
                     paintOuterText.setAlpha((int) ((1 - offsetCoefficient) * 255));
                     // 控制文字水平便宜距离
-                    canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, maxTextHeight, paintOuterText);
+                    canvas.drawText(contentText, drawOutContentStart + textXOffset * offsetCoefficient, textHeight, paintOuterText);
                     canvas.restore();
                 }
                 canvas.restore();
@@ -783,6 +795,15 @@ public class WheelView extends View {
 
     public void setMaxAddHeight(int height) {
         this.addHeight = height;
+    }
+
+    /**
+     * 当分割线类型设置为DividerType.WRAP时，用for循环计算最长的item时太耗时，并且当是时间选择器时，item长度相等，为避免耗时，只计算一个就跳出for循环
+     *
+     * @param isTimeFragment boolean
+     */
+    public void setTimeFragment(boolean isTimeFragment) {
+        this.isTimeFragment = isTimeFragment;
     }
 
 

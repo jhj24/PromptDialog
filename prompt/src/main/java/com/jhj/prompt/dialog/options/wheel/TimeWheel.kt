@@ -48,6 +48,11 @@ class TimeWheel(private val view: View) {
     private val listLittle = arrayListOf("4", "6", "9", "11")
     private var isLunarCalendar = false
 
+
+    init {
+        setIsTimeFragment()
+    }
+
     fun getView(): View {
         return view
     }
@@ -546,6 +551,15 @@ class TimeWheel(private val view: View) {
             currentItem = wvDay.getAdapter()?.itemsCount as Int - 1
             wvDay.currentItem = currentItem
         }
+    }
+
+    private fun setIsTimeFragment() {
+        wvYear.setTimeFragment(true)
+        wvMonth.setTimeFragment(true)
+        wvDay.setTimeFragment(true)
+        wvHours.setTimeFragment(true)
+        wvMinutes.setTimeFragment(true)
+        wvSeconds.setTimeFragment(true)
     }
 
 

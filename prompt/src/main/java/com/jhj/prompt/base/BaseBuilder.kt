@@ -18,40 +18,26 @@ open class BaseBuilder<T : BaseBuilder<T>> {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun setPaddingHorizontal(@IntRange(from = 0) padding: Int): T {
+    fun setMarginHorizontal(@IntRange(from = 0) padding: Int): T {
         arg.putInt(Constants.MARGIN_HORIZONTAL, padding)
         return this as T
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun setPaddingBottom(@IntRange(from = 0) bottom: Int): T {
+    fun setMarginBottom(@IntRange(from = 0) bottom: Int): T {
         arg.putInt(Constants.MARGIN_BOTTOM, bottom)
         return this as T
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun setPaddingTop(@IntRange(from = 0) top: Int): T {
+    fun setMarginTop(@IntRange(from = 0) top: Int): T {
         arg.putInt(Constants.MARGIN_TOP, top)
         return this as T
     }
 
-
     @Suppress("UNCHECKED_CAST")
     fun setDialogHeight(@IntRange(from = 0) dialogHeight: Int): T {
         arg.putInt(Constants.DIALOG_HEIGHT, dialogHeight)
-        return this as T
-    }
-
-
-    /* @Suppress("UNCHECKED_CAST")
-     fun setBackgroundResource(@DrawableRes resource: Int): T {
-         arg.putInt(Constants.BACKGROUND_RESOURCE, resource)
-         return this as T
-     }*/
-
-    @Suppress("UNCHECKED_CAST")
-    fun setDialogBlack(isBlackStyle: Boolean): T {
-        arg.putBoolean(Constants.IS_BLACK_STYLE, isBlackStyle)
         return this as T
     }
 
