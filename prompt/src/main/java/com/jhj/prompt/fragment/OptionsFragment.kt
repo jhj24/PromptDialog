@@ -92,15 +92,18 @@ class OptionsFragment<T> : BaseDialogFragment() {
     private var optionsLinked3Items: ArrayList<ArrayList<ArrayList<T>>>? = null
 
 
+    override val layoutRes: Int
+        get() = R.layout.layout_pickerview_options
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val view: View = LayoutInflater.from(activity).inflate(R.layout.layout_pickerview_options, null)
-        wheel = OptionsWheel(view)
         mGravity = Gravity.BOTTOM
     }
 
 
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        wheel = OptionsWheel(view)
 
         setButtonStyle(wheel.view)
         if (isLinked) {
@@ -123,8 +126,6 @@ class OptionsFragment<T> : BaseDialogFragment() {
         wheel.isCenterLabel(onlyCenterLabel)
         wheel.setTextGravity(textGravity)
         wheel.setTextXOffset(xOffset)
-
-        return wheel.view
     }
 
 

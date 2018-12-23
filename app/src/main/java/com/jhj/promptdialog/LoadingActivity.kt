@@ -111,7 +111,7 @@ class LoadingActivity : FragmentActivity() {
                     .setScaleColor(ContextCompat.getColor(this@LoadingActivity, R.color.red))
                     .setScaleDisplay()
                     .setScaleColor(ContextCompat.getColor(this@LoadingActivity, R.color.red))
-                    .setScaleSize(resources.displayMetrics.density * 24)
+                    .setScaleSize(24f)
                     .setBottomCircleColor(ContextCompat.getColor(this@LoadingActivity, R.color.red))
                     .setCircleColor(ContextCompat.getColor(this@LoadingActivity, R.color.blue))
                     .setCircleRadius(40 * resources.displayMetrics.density.toInt())

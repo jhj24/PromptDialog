@@ -21,25 +21,74 @@ import org.jetbrains.anko.textColor
  */
 class LoadingFragment : BaseDialogFragment() {
 
+    enum class LoadingStyle {
+        OLD_STYLE,
+        NEW_STYLE
+    }
 
     companion object {
         const val MESSAGE_TEXT_SIZE = 15f
         const val CIRCLE_WIDTH = 6f
         const val CIRCLE_RADIUS = 75
         val LOADING_STYLE = LoadingStyle.OLD_STYLE
+
+        val BLACK_STYLE_TEXT_COLOR = Color.WHITE
+        val BLACK_STYLE_CIRCLE_COLOR = Color.WHITE
+        val BLACK_STYLE_CIRCLE_BOTTOM_COLOR = Color.GRAY
+        val BLACK_STYLE_BACKGROUND = R.drawable.bg_progress_black_dialog
+
+        val WHITE_STYLE_TEXT_COLOR = Color.BLACK
+        val WHITE_STYLE_CIRCLE_COLOR = Color.BLACK
+        val WHITE_STYLE_CIRCLE_BOTTOM_COLOR = Color.LTGRAY
+        val WHITE_STYLE_BACKGROUND = R.drawable.bg_progress_white_dialog
     }
 
-    enum class LoadingStyle {
-        OLD_STYLE,
-        NEW_STYLE
-    }
+    private var mTextColor: Int = -1
+    private var mCircleColor: Int = -1
+    private var mBottomCircleColor: Int = -1
+    private var mBackgroundResource: Int = -1
+    private var mCircleWidth: Float = -1f
+    private var mCircleRadius: Int = -1
 
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.layout_progress_view, container)
+    override val layoutRes: Int
+        get() = R.layout.layout_progress_view
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val isBlackStyle = arguments?.getBoolean(Constants.IS_BLACK_STYLE, false)
+                ?: false
+        val defaultTextColor: Int
+        val defaultCircleColor: Int
+        val defaultBottomCircleColor: Int
+        val defaultBackgroundResource: Int
+
+        if (isBlackStyle) {
+            defaultTextColor = BLACK_STYLE_TEXT_COLOR
+            defaultCircleColor = BLACK_STYLE_CIRCLE_COLOR
+            defaultBottomCircleColor = BLACK_STYLE_CIRCLE_BOTTOM_COLOR
+            defaultBackgroundResource = BLACK_STYLE_BACKGROUND
+        } else {
+            defaultTextColor = WHITE_STYLE_TEXT_COLOR
+            defaultCircleColor = WHITE_STYLE_CIRCLE_COLOR
+            defaultBottomCircleColor = WHITE_STYLE_CIRCLE_BOTTOM_COLOR
+            defaultBackgroundResource = WHITE_STYLE_BACKGROUND
+        }
+
+        mCircleWidth = arguments?.getFloat(Constants.CIRCLE_WIDTH, CIRCLE_WIDTH)
+                ?: CIRCLE_WIDTH
+        mCircleRadius = arguments?.getInt(Constants.CIRCLE_RADIUS, CIRCLE_RADIUS)
+                ?: CIRCLE_RADIUS
+        mTextColor = arguments?.getInt(Constants.MESSAGE_COLOR, defaultTextColor)
+                ?: defaultTextColor
+        mCircleColor = arguments?.getInt(Constants.CIRCLE_COLOR, defaultCircleColor)
+                ?: defaultCircleColor
+        mBottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, defaultBottomCircleColor)
+                ?: defaultBottomCircleColor
+        mBackgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, defaultBackgroundResource)
+                ?: defaultBackgroundResource
+
         initView(view)
-        return view
     }
-
 
     private fun initView(view: View) {
         val text = arguments?.getString(Constants.MESSAGE)
@@ -56,85 +105,29 @@ class LoadingFragment : BaseDialogFragment() {
         } else {
             setOldStyleCircle(view)
         }
-
     }
 
 
     private fun setNewStyleCircle(view: View) {
-
-        val isBlackStyle = arguments?.getBoolean(Constants.IS_BLACK_STYLE)
-        val circleWidth = arguments?.getFloat(Constants.CIRCLE_WIDTH, CIRCLE_WIDTH)
-        val circleRadius = arguments?.getInt(Constants.CIRCLE_RADIUS, CIRCLE_RADIUS)
-
         val circleView = view.circle_loading_new_style
-
         circleView.visibility = View.VISIBLE
-        circleView.circleWidth = circleWidth ?: CIRCLE_WIDTH
-        circleView.layoutParams = LinearLayout.LayoutParams(
-                (circleRadius ?: CIRCLE_RADIUS) * 2,
-                (circleRadius ?: CIRCLE_RADIUS) * 2)
-
-        if (isBlackStyle == true) {
-            val textColor = arguments?.getInt(Constants.MESSAGE_COLOR, Color.WHITE)
-            val circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, Color.WHITE)
-            val bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, Color.GRAY)
-            val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_progress_black_dialog)
-
-            circleView.circleColor = circleColor ?: Color.WHITE
-            circleView.bottomCircleColor = bottomCircleColor ?: Color.GRAY
-            view.tv_loading_msg.textColor = textColor ?: Color.WHITE
-            view.layout_progress_dialog.backgroundResource = backgroundResource ?: R.drawable.bg_progress_black_dialog
-        } else {
-            val textColor = arguments?.getInt(Constants.MESSAGE_COLOR, Color.BLACK)
-            val circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, Color.BLACK)
-            val bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, Color.LTGRAY)
-            val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_progress_white_dialog)
-
-            circleView.circleColor = circleColor ?: Color.WHITE
-            circleView.bottomCircleColor = bottomCircleColor ?: Color.GRAY
-            view.tv_loading_msg.textColor = textColor ?: Color.WHITE
-            view.layout_progress_dialog.backgroundResource = backgroundResource ?: R.drawable.bg_progress_black_dialog
-        }
-
+        circleView.circleWidth = mCircleWidth
+        circleView.layoutParams = LinearLayout.LayoutParams(mCircleRadius * 2, mCircleRadius * 2)
+        circleView.circleColor = mCircleColor
+        circleView.bottomCircleColor = mBottomCircleColor
+        view.tv_loading_msg.textColor = mTextColor
+        view.layout_progress_dialog.backgroundResource = mBackgroundResource
     }
 
     private fun setOldStyleCircle(view: View) {
-        val isBlackStyle = arguments?.getBoolean(Constants.IS_BLACK_STYLE)
-        val circleWidth = arguments?.getFloat(Constants.CIRCLE_WIDTH, CIRCLE_WIDTH)
-        val circleRadius = arguments?.getInt(Constants.CIRCLE_RADIUS, CIRCLE_RADIUS)
-
         val circleView = view.circle_loading_old_style
-
         circleView.visibility = View.VISIBLE
-        circleView.circleWidth = circleWidth ?: CIRCLE_WIDTH
-
-        circleView.layoutParams = LinearLayout.LayoutParams(
-                (circleRadius ?: CIRCLE_RADIUS) * 2,
-                (circleRadius ?: CIRCLE_RADIUS) * 2)
-
-
-        if (isBlackStyle == true) {
-            val textColor = arguments?.getInt(Constants.MESSAGE_COLOR, Color.WHITE)
-            val circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, Color.WHITE)
-            val bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, Color.GRAY)
-            val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_progress_black_dialog)
-
-            circleView.circleColor = circleColor ?: Color.WHITE
-            circleView.bottomCircleColor = bottomCircleColor ?: Color.GRAY
-            view.tv_loading_msg.textColor = textColor ?: Color.WHITE
-            view.layout_progress_dialog.backgroundResource = backgroundResource ?: R.drawable.bg_progress_black_dialog
-        } else {
-            val textColor = arguments?.getInt(Constants.MESSAGE_COLOR, Color.BLACK)
-            val circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, Color.BLACK)
-            val bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, Color.LTGRAY)
-            val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_progress_white_dialog)
-
-            circleView.circleColor = circleColor ?: Color.WHITE
-            circleView.bottomCircleColor = bottomCircleColor ?: Color.GRAY
-            view.tv_loading_msg.textColor = textColor ?: Color.WHITE
-            view.layout_progress_dialog.backgroundResource = backgroundResource ?: R.drawable.bg_progress_black_dialog
-        }
-
+        circleView.circleWidth = mCircleWidth
+        circleView.layoutParams = LinearLayout.LayoutParams(mCircleRadius * 2, mCircleRadius * 2)
+        circleView.circleColor = mCircleColor
+        circleView.bottomCircleColor = mBottomCircleColor
+        view.tv_loading_msg.textColor = mTextColor
+        view.layout_progress_dialog.backgroundResource = mBackgroundResource
     }
 
     class Builder(val context: Context) : BaseBuilder<Builder>(context) {
@@ -193,6 +186,5 @@ class LoadingFragment : BaseDialogFragment() {
             arg.putBoolean(Constants.IS_BLACK_STYLE, isBlackStyle)
             return this
         }
-
     }
 }

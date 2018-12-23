@@ -30,6 +30,9 @@ abstract class BaseDialogFragment : DialogFragment() {
     private var isTouchWindow = false
     private var backListener: OnDialogShowOnBackListener? = null
 
+    lateinit var inflater: LayoutInflater
+    abstract val layoutRes: Int
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +42,10 @@ abstract class BaseDialogFragment : DialogFragment() {
         } else {
             initParams(savedInstanceState)
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        this.inflater = inflater
         dialog.setCanceledOnTouchOutside(cancelOut)
         //去掉dialog默认样式中的Title
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -51,7 +54,7 @@ abstract class BaseDialogFragment : DialogFragment() {
         //设置dialog背景透明
         dialog.window?.setBackgroundDrawableResource(R.drawable.transition)
         dialog.window?.let { setAttributes(it) }
-        return createView(inflater, container, savedInstanceState)
+        return inflater.inflate(layoutRes, container, false)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -204,9 +207,6 @@ abstract class BaseDialogFragment : DialogFragment() {
     fun isShow(): Boolean? {
         return dialog?.isShowing
     }
-
-    abstract fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-
 
     interface OnDialogShowOnBackListener : Serializable {
         fun cancel()

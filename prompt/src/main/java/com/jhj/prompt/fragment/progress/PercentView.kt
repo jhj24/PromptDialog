@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.TypedValue
 import com.jhj.prompt.R
 
 /**
@@ -34,6 +35,7 @@ class PercentView(mContext: Context, attrs: AttributeSet?, defStyleAttr: Int) : 
         /**
          * 底层圆环
          */
+        mPaint.reset()
         mPaint.isAntiAlias = true // 消除锯齿
         mPaint.color = bottomCircleColor //
         mPaint.style = Paint.Style.STROKE // 设置空心
@@ -52,13 +54,13 @@ class PercentView(mContext: Context, attrs: AttributeSet?, defStyleAttr: Int) : 
          * 写字
          */
         if (showScale) {
+            val scaleDensity = resources.displayMetrics.scaledDensity
             val text = progress.toString() + "%"
             mPaint.reset()
-            mPaint.textSize = scaleSize
+            mPaint.textSize = scaleDensity * scaleSize
             mPaint.isAntiAlias = true
             mPaint.color = scaleColor
             mPaint.strokeWidth = 2 * density
-            mPaint.style = Paint.Style.FILL
             mPaint.getTextBounds(text, 0, text.length, minRect)
             val baseLine = height / 2 - (mPaint.fontMetrics.bottom + mPaint.fontMetrics.top) / 2
             val textWidth = minRect.width()
@@ -112,7 +114,7 @@ class PercentView(mContext: Context, attrs: AttributeSet?, defStyleAttr: Int) : 
         }
 
     @get:Synchronized
-    var scaleSize: Float = resources.getDimensionPixelSize(R.dimen.textSize_scale).toFloat()
+    var scaleSize: Float = 12f
         @Synchronized set(value) {
             field = value
         }

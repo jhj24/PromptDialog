@@ -52,7 +52,7 @@ open class BaseLoadingView<T : BaseLoadingView<T>>(private val mContext: Context
     var circleWidth: Float = 2 * density
         @Synchronized set(value) {
             if (value < 0) {
-                throw IllegalArgumentException("circleWidth not less than 0")
+                throw IllegalArgumentException("mCircleWidth not less than 0")
             }
             field = value
         }

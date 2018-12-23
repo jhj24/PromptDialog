@@ -82,11 +82,23 @@ class TimeFragment : BaseDialogFragment() {
     private var isLunarCalendar: Boolean = false
 
 
+
+
+
+    override val layoutRes: Int
+        get() = R.layout.layout_pickerview_time
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val view = LayoutInflater.from(activity).inflate(R.layout.layout_pickerview_time, null)
-        wheel = TimeWheel(view)
         mGravity = Gravity.BOTTOM
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        wheel = TimeWheel(view)
+        setButtonStyle(wheel.getView())
+        setOptionsStyle()
+        setLunar()
     }
 
 
@@ -126,14 +138,6 @@ class TimeFragment : BaseDialogFragment() {
     }
 
 
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        setButtonStyle(wheel.getView())
-        setOptionsStyle()
-        setLunar()
-        return wheel.getView()
-    }
-
 
     private fun setButtonStyle(view: View) {
         view.layout_picker.backgroundResource = backgroundResource
@@ -162,7 +166,6 @@ class TimeFragment : BaseDialogFragment() {
                     cancelListener?.onTimeSelect(date, wheel.getView())
                     dismiss()
             }
-
         }
     }
 

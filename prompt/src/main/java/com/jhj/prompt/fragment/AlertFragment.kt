@@ -47,14 +47,13 @@ class AlertFragment : BaseDialogFragment() {
     private var density = 3f
     private var isCustomLayoutShow = false
     private var isButtonSeparate: Boolean = false//内容与按钮是否分离
-    private lateinit var inflater: LayoutInflater
 
+    override val layoutRes: Int
+        get() = R.layout.layout_alert_dialog
 
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        this.inflater = inflater
-        this.density = requireActivity().resources.displayMetrics.density
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         this.isButtonSeparate = arguments?.getBoolean(Constants.DIALOG_STYLE) ?: false
-        val view = inflater.inflate(R.layout.layout_alert_dialog, container)
         val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, R.drawable.bg_dialog_corner)
                 ?: R.drawable.bg_dialog_corner
         view.layout_alert_dialog.setBackgroundResource(backgroundResource)
@@ -92,7 +91,6 @@ class AlertFragment : BaseDialogFragment() {
         setItemsView(view)
         setCustomLayout(view)
         setButtonView(view)
-        return view
     }
 
 
@@ -173,7 +171,7 @@ class AlertFragment : BaseDialogFragment() {
             view.layout_items.visibility = View.GONE
             val layout = inflater.inflate(layoutRes, view.layout_view)
             view.layout_view.visibility = View.VISIBLE
-            listener?.onLayout(layout,this)
+            listener?.onLayout(layout, this)
         }
     }
 
