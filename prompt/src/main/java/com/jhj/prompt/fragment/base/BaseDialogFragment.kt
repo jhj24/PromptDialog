@@ -31,12 +31,14 @@ abstract class BaseDialogFragment : DialogFragment() {
     private var backListener: OnDialogShowOnBackListener? = null
 
     lateinit var inflater: LayoutInflater
+    lateinit var config: PromptConfig
     abstract val layoutRes: Int
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.dialog_style)
+        config = PromptConfig.getInstance()
         if (savedInstanceState == null) {
             initParams(arguments)
         } else {

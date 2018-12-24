@@ -35,6 +35,7 @@ class OptionsActivity : FragmentActivity() {
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
                     .setTitle("地区选择")
                     .setSelectOptions(3)
+                    .setShowItemNum(11)
                     .setLabels("1", "2", null)
                     .setLinkedPicker(provinceList, cityList)
                     .setSelectOptions(1, 1)
@@ -53,7 +54,7 @@ class OptionsActivity : FragmentActivity() {
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
                     .setLinkedPicker(provinceList, cityList)
                     .setMarginHorizontal(150)
-                    .setItemNum(9)
+                    .setShowItemNum(9)
                     .setAnimation(R.style.anim_dialog_center)
                     .setDialogGravity(Gravity.CENTER)
                     .setSubmitListener(object : OnOptionsSelectedListener {

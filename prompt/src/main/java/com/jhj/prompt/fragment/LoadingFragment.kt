@@ -1,11 +1,8 @@
 package com.jhj.prompt.fragment
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.jhj.prompt.R
 import com.jhj.prompt.fragment.base.BaseBuilder
@@ -26,23 +23,6 @@ class LoadingFragment : BaseDialogFragment() {
         NEW_STYLE
     }
 
-    companion object {
-        const val MESSAGE_TEXT_SIZE = 15f
-        const val CIRCLE_WIDTH = 6f
-        const val CIRCLE_RADIUS = 75
-        val LOADING_STYLE = LoadingStyle.OLD_STYLE
-
-        val BLACK_STYLE_TEXT_COLOR = Color.WHITE
-        val BLACK_STYLE_CIRCLE_COLOR = Color.WHITE
-        val BLACK_STYLE_CIRCLE_BOTTOM_COLOR = Color.GRAY
-        val BLACK_STYLE_BACKGROUND = R.drawable.bg_progress_black_dialog
-
-        val WHITE_STYLE_TEXT_COLOR = Color.BLACK
-        val WHITE_STYLE_CIRCLE_COLOR = Color.BLACK
-        val WHITE_STYLE_CIRCLE_BOTTOM_COLOR = Color.LTGRAY
-        val WHITE_STYLE_BACKGROUND = R.drawable.bg_progress_white_dialog
-    }
-
     private var mTextColor: Int = -1
     private var mCircleColor: Int = -1
     private var mBottomCircleColor: Int = -1
@@ -55,29 +35,30 @@ class LoadingFragment : BaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val isBlackStyle = arguments?.getBoolean(Constants.IS_BLACK_STYLE, false)
-                ?: false
+
         val defaultTextColor: Int
         val defaultCircleColor: Int
         val defaultBottomCircleColor: Int
         val defaultBackgroundResource: Int
+        val isBlackStyle = arguments?.getBoolean(Constants.IS_BLACK_STYLE, false)
+                ?: false
 
         if (isBlackStyle) {
-            defaultTextColor = BLACK_STYLE_TEXT_COLOR
-            defaultCircleColor = BLACK_STYLE_CIRCLE_COLOR
-            defaultBottomCircleColor = BLACK_STYLE_CIRCLE_BOTTOM_COLOR
-            defaultBackgroundResource = BLACK_STYLE_BACKGROUND
+            defaultTextColor = config.blackStyleTextColor
+            defaultCircleColor = config.blackStyleCircleColor
+            defaultBottomCircleColor = config.blackStyleCircleBottomColor
+            defaultBackgroundResource = config.blackStyleBackground
         } else {
-            defaultTextColor = WHITE_STYLE_TEXT_COLOR
-            defaultCircleColor = WHITE_STYLE_CIRCLE_COLOR
-            defaultBottomCircleColor = WHITE_STYLE_CIRCLE_BOTTOM_COLOR
-            defaultBackgroundResource = WHITE_STYLE_BACKGROUND
+            defaultTextColor = config.whiteStyleTextColor
+            defaultCircleColor = config.whiteStyleCircleColor
+            defaultBottomCircleColor = config.whiteStyleCircleBottomColor
+            defaultBackgroundResource = config.whiteStyleBackground
         }
 
-        mCircleWidth = arguments?.getFloat(Constants.CIRCLE_WIDTH, CIRCLE_WIDTH)
-                ?: CIRCLE_WIDTH
-        mCircleRadius = arguments?.getInt(Constants.CIRCLE_RADIUS, CIRCLE_RADIUS)
-                ?: CIRCLE_RADIUS
+        mCircleWidth = arguments?.getFloat(Constants.CIRCLE_WIDTH, config.circleWidth)
+                ?: config.circleWidth
+        mCircleRadius = arguments?.getInt(Constants.CIRCLE_RADIUS, config.circleRadius)
+                ?: config.circleRadius
         mTextColor = arguments?.getInt(Constants.MESSAGE_COLOR, defaultTextColor)
                 ?: defaultTextColor
         mCircleColor = arguments?.getInt(Constants.CIRCLE_COLOR, defaultCircleColor)
@@ -87,19 +68,17 @@ class LoadingFragment : BaseDialogFragment() {
         mBackgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, defaultBackgroundResource)
                 ?: defaultBackgroundResource
 
-        initView(view)
-    }
-
-    private fun initView(view: View) {
-        val text = arguments?.getString(Constants.MESSAGE)
-        val textSize = arguments?.getFloat(Constants.MESSAGE_SIZE, MESSAGE_TEXT_SIZE)
         val style = arguments?.getSerializable(Constants.DIALOG_STYLE) as? LoadingStyle
+                ?: config.loadingStyle
 
-        text?.let {
+        arguments?.getString(Constants.MESSAGE)?.let {
             view.tv_loading_msg.visibility = View.VISIBLE
             view.tv_loading_msg.text = it
-            view.tv_loading_msg.textSize = textSize ?: MESSAGE_TEXT_SIZE
+            view.tv_loading_msg.textSize = arguments?.getFloat(Constants.MESSAGE_SIZE, config.textSizeMessage)
+                    ?: config.textSizeMessage
         }
+
+
         if (style == LoadingStyle.NEW_STYLE) {
             setNewStyleCircle(view)
         } else {

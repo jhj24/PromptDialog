@@ -22,7 +22,6 @@ object Constants {
     const val TITLE = "title"
     const val TITLE_COLOR: String = "title_color"
     const val TITLE_SIZE: String = "title_size"
-    const val TOPBAR_BACKGROUND_RESOURCE: String = "topBar_background_resource"
     const val TITLE_GRAVITY = "title_gravity"
 
     //提示信息（alertFragment）
@@ -41,10 +40,12 @@ object Constants {
     const val BUTTON_SIZE: String = "button_size"
 
     //自定义布局
+    const val IS_HAS_CUSTOM_LAYOUT = "is_has_custom_layout"
     const val CUSTOM_LAYOUT = "custom_layout"
     const val CUSTOM_LISTENER = "custom_listener"
 
     //列表数据
+    const val is_HAS_ITEM_LAYOUT = "is_has_item_layout"
     const val ITEM_COMMON_LIST = "item_common_list"
     const val ITEM_COLOR_LIST = "item_color_list"
     const val ITEM_TEXT_COLOR = "item_text_color"
@@ -73,6 +74,7 @@ object Constants {
 
 
     //联动
+    const val TOPBAR_BACKGROUND_RESOURCE: String = "topBar_background_resource"
     const val OPTIONS_BACKGROUND_RESOURCE: String = "options_background_resource" //options背景色
     const val OPTIONS_TEXT_SIZE: String = "options_text_size" //options 的字体大小
     const val ONLY_CENTER_LABEL: String = "only_center_label_display" //只显示中间itme的单位

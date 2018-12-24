@@ -52,7 +52,7 @@ class AlertActivity : FragmentActivity() {
             AlertFragment.Builder(this@AlertActivity)
                     .setTitle("列表")
                     .setItems(arrayListOf("1111", "2222"))
-                    .setItems(arrayListOf("3333", "4444"), Color.BLACK)
+                    .setItems(arrayListOf("3333", "4444"), Color.RED)
                     .setItemClickedListener(object : AlertFragment.OnItemClickListener {
                         override fun onItemClick(view: View, position: Int) {
                             toast("position-->$position")
@@ -69,7 +69,7 @@ class AlertActivity : FragmentActivity() {
         btn_custom_layout.setOnClickListener {
           AlertFragment.Builder(this@AlertActivity)
                     .setTitle("自定义")
-                    .setLayoutRes(R.layout.layout_image, object : AlertFragment.OnCustomListener {
+                    .setCustomLayoutRes(R.layout.layout_image, object : AlertFragment.OnCustomListener {
                         override fun onLayout(view: View, alertFragment: AlertFragment) {
                             view.image.setOnClickListener {
                                 toast("自定义样式")

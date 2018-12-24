@@ -46,7 +46,7 @@ class PromptPopWindow() {
 
     fun build(): PopupWindow? {
         val view = LayoutInflater.from(mContext).inflate(layoutRes, null)
-                ?: throw NullPointerException("layoutRes cannot be null,please call on setLayoutRes()")
+                ?: throw NullPointerException("layoutRes cannot be null,please call on setCustomLayoutRes()")
 
         popupWindow = if (width != 0 && height != 0) {
             PopupWindow(view, width, height)

@@ -297,7 +297,7 @@ public class WheelView extends View {
     }
 
     public final void setItemNum(int num) {
-        this.itemsVisible = num;
+        this.itemsVisible = num + 2;
     }
 
     /**

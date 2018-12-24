@@ -1,19 +1,18 @@
 package com.jhj.prompt.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.jhj.prompt.R
 import com.jhj.prompt.fragment.base.BaseBuilder
 import com.jhj.prompt.fragment.base.BaseDialogFragment
 import com.jhj.prompt.fragment.base.Constants
+import com.jhj.prompt.fragment.base.PromptConfig
 import com.jhj.prompt.fragment.options.interfaces.OnOptionsSelectedListener
 import com.jhj.prompt.fragment.options.utils.DividerType
 import com.jhj.prompt.fragment.options.wheel.OptionsWheel
@@ -30,53 +29,32 @@ import org.jetbrains.anko.textColor
 
 class OptionsFragment<T> : BaseDialogFragment() {
 
-    companion object {
-        val TITLE_TEXT_SIZE = 21f
-        val TITLE_TEXT_COLOR = Color.BLACK
-        val BUTTON_COLOR = R.drawable.selector_pickerview_btn
-        val BUTTON_SIZE = 18f
-        val TOP_BAR_BACKGROUND = R.color.pickerview_bg_topbar
-        val BACKGROUND_RESOURCE = R.drawable.bg_dialog_no_corner
-        val OPTION_TEXT_SIZE = 20f
-        val OPTION_TEXT_COLOR_CENTER = 0xFF2a2a2a.toInt()
-        val OPTION_TEXT_COLOR_OUT = 0xFFa8a8a8.toInt()
-        val DIVIDER_TYPE = DividerType.FILL
-        val DIVIDER_COLOR = 0xFFd5d5d5.toInt()
-        val ITEM_NUM = 11
-        val LINE_SPACEING_MULTIPLIER = 1.6f
-        val EXTRA_HEIGHT = 2;
-        val X_OFFSET = 0
-        val TEXT_GRAVITY = Gravity.CENTER
-    }
-
-
     private lateinit var wheel: OptionsWheel<T>
 
-
     private var titleText: String = ""
-    private var titleColor: Int = TITLE_TEXT_COLOR
-    private var titleSize: Float = TITLE_TEXT_SIZE
+    private var titleSize: Float = PromptConfig.PICKER_TEXT_SIZE_TITLE
+    private var titleColor: Int = PromptConfig.PICKER_TEXT_COLOR_TITLE
     private var submitText: String? = "确定"
-    private var submitColor: Int = BUTTON_COLOR
-    private var cancelColor: Int = BUTTON_COLOR
+    private var submitColor: Int = PromptConfig.PICKER_TEXT_COLOR_BUTTON
+    private var cancelColor: Int = PromptConfig.PICKER_TEXT_COLOR_BUTTON
     private var cancelText: String? = "取消"
-    private var buttonSize: Float = BUTTON_SIZE
-    private var topBarBackground: Int = TOP_BAR_BACKGROUND
-    private var backgroundResource: Int = BACKGROUND_RESOURCE
-    private var optionsTextSize: Float = OPTION_TEXT_SIZE
+    private var buttonSize: Float = PromptConfig.PICKER_TEXT_SIZE_BOTTON
+    private var topBarBackground: Int = PromptConfig.PICKER_TOP_BAR_BACKGROUND
+    private var backgroundResource: Int = PromptConfig.PICKER_OPTIONS_BACKGROUND
+    private var optionsTextSize: Float = PromptConfig.PICKER_TEXT_SIZE_CENTER
     private var onlyCenterLabel: Boolean = false
-    private var colorOut: Int = OPTION_TEXT_COLOR_OUT
-    private var colorCenter: Int = OPTION_TEXT_COLOR_CENTER
-    private var dividerColor: Int = DIVIDER_COLOR
-    private var dividerType: DividerType? = DIVIDER_TYPE
-    private var itemNum: Int = ITEM_NUM
+    private var colorOut: Int = PromptConfig.PICKER_TEXT_COLOR_OUT
+    private var colorCenter: Int = PromptConfig.PICKER_TEXT_COLOR_CENTER
+    private var dividerColor: Int = PromptConfig.PICKER_DIVIDER_COLOR
+    private var dividerType: DividerType? = PromptConfig.PICKER_DIVIDER_TYPE
+    private var itemNum: Int = PromptConfig.PICKER_SHOW_ITEM_NUM
     private var optionsLabels: Array<out String>? = arrayOf()
     private var isCyclic: Boolean = true
-    private var textGravity: Int = TEXT_GRAVITY
+    private var textGravity: Int = PromptConfig.PICKER_OPTIONS_TEXT_GRAVITY
     private var displayStyle: BooleanArray? = booleanArrayOf()
-    private var xOffset: Int = X_OFFSET
-    private var spacingRatio: Float = LINE_SPACEING_MULTIPLIER
-    private var extraHeight: Int = EXTRA_HEIGHT
+    private var xOffset: Int = PromptConfig.PICKER_X_OFFSET
+    private var spacingRatio: Float = PromptConfig.PICKER_LINE_SPACEING_RATIO
+    private var extraHeight: Int = PromptConfig.PICKER_EXTRA_HEIGHT
     private var cancelListener: OnOptionsSelectedListener? = null
     private var submitListener: OnOptionsSelectedListener? = null
 
@@ -115,7 +93,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
         wheel.setTextContentSize(optionsTextSize)
         wheel.setCyclic(isCyclic)
         wheel.setDividerColor(dividerColor)
-        wheel.setDividerType(dividerType ?: DIVIDER_TYPE)
+        wheel.setDividerType(dividerType ?: config.pickerDividerType)
         wheel.setItemNum(itemNum)
         wheel.setLabels(optionsLabels?.get(0), optionsLabels?.get(1), optionsLabels?.get(2))
         wheel.setLineSpacingMultiplier(spacingRatio)
@@ -133,31 +111,31 @@ class OptionsFragment<T> : BaseDialogFragment() {
         super.initParams(bundle)
         bundle?.let {
             titleText = it.getString(Constants.TITLE, "")
-            titleSize = it.getFloat(Constants.TITLE_SIZE, TITLE_TEXT_SIZE)
-            titleColor = it.getInt(Constants.TITLE_COLOR, TITLE_TEXT_COLOR)
+            titleSize = it.getFloat(Constants.TITLE_SIZE, config.pickerTextSizeTitle)
+            titleColor = it.getInt(Constants.TITLE_COLOR, config.pickerTextColorTitle)
             submitText = it.getString(Constants.SUBMIT_TEXT, "确定")
-            submitColor = it.getInt(Constants.SUBMIT_TEXT_COLOR, BUTTON_COLOR)
-            cancelColor = it.getInt(Constants.CANCEL_TEXT_COLOR, BUTTON_COLOR)
+            submitColor = it.getInt(Constants.SUBMIT_TEXT_COLOR, config.pickerTextColorButton)
+            cancelColor = it.getInt(Constants.CANCEL_TEXT_COLOR, config.pickerTextColorButton)
             cancelText = it.getString(Constants.CANCEL_TEXT, "取消")
-            buttonSize = it.getFloat(Constants.BUTTON_SIZE, BUTTON_SIZE)
-            topBarBackground = it.getInt(Constants.TOPBAR_BACKGROUND_RESOURCE, TOP_BAR_BACKGROUND)
-            backgroundResource = it.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, BACKGROUND_RESOURCE)
+            buttonSize = it.getFloat(Constants.BUTTON_SIZE, config.pickerTextSizeButton)
+            topBarBackground = it.getInt(Constants.TOPBAR_BACKGROUND_RESOURCE, config.pickerTopBarBackground)
+            backgroundResource = it.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, config.pickerContentBackground)
             cancelListener = it.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnOptionsSelectedListener
             submitListener = it.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnOptionsSelectedListener
-            optionsTextSize = it.getFloat(Constants.OPTIONS_TEXT_SIZE, OPTION_TEXT_SIZE)
+            optionsTextSize = it.getFloat(Constants.OPTIONS_TEXT_SIZE, config.pickerTextSizeCenter)
             onlyCenterLabel = it.getBoolean(Constants.ONLY_CENTER_LABEL, false)
-            colorOut = it.getInt(Constants.TEXT_COLOR_OUT, OPTION_TEXT_COLOR_OUT)
-            colorCenter = it.getInt(Constants.TEXT_COLOR_CENTER, OPTION_TEXT_COLOR_CENTER)
-            dividerColor = it.getInt(Constants.DIVIDER_COLOR, DIVIDER_COLOR)
+            colorOut = it.getInt(Constants.TEXT_COLOR_OUT, config.pickerTextColorOUT)
+            colorCenter = it.getInt(Constants.TEXT_COLOR_CENTER, config.pickerTextColorCenter)
+            dividerColor = it.getInt(Constants.DIVIDER_COLOR, config.pickerDividerColor)
             dividerType = it.getSerializable(Constants.DIVIDER_TYPE) as? DividerType
-            itemNum = it.getInt(Constants.ITEM_NUM, ITEM_NUM)
+            itemNum = it.getInt(Constants.ITEM_NUM, config.pickerItemNum)
             optionsLabels = it.getStringArray(Constants.OPTIONS_LABELS)
             isCyclic = it.getBoolean(Constants.IS_CYCLIC, true)
             displayStyle = it.getBooleanArray(Constants.DISPLAY_STYLE)
-            xOffset = it.getInt(Constants.X_OFFSET, X_OFFSET)
-            spacingRatio = it.getFloat(Constants.SPACING_RATIO, LINE_SPACEING_MULTIPLIER)
-            extraHeight = it.getInt(Constants.EXTRA_HEIGHT, EXTRA_HEIGHT)
-            textGravity = it.getInt(Constants.MESSAGE_GRAVITY, TEXT_GRAVITY)
+            xOffset = it.getInt(Constants.X_OFFSET, config.pickerXOffset)
+            spacingRatio = it.getFloat(Constants.SPACING_RATIO, config.pickerLineSpacingRatio)
+            extraHeight = it.getInt(Constants.EXTRA_HEIGHT, config.pickerExtraHeight)
+            textGravity = it.getInt(Constants.MESSAGE_GRAVITY, config.pickerOptionsTextGravity)
             options1 = it.getInt(Constants.OPTIONS_SELECT_ONE, 0)
             options2 = it.getInt(Constants.OPTIONS_SELECT_TWO, 0)
             options3 = it.getInt(Constants.OPTIONS_SELECT_THREE, 0)
@@ -174,10 +152,10 @@ class OptionsFragment<T> : BaseDialogFragment() {
         }
     }
 
+    @SuppressLint("ResourceType")
     private fun setButtonStyle(view: View) {
-
         view.rv_topbar.backgroundResource = topBarBackground
-        view.layout_picker.backgroundResource = backgroundResource
+        view.optionspicker.backgroundResource = backgroundResource
         view.tv_option_title.text = titleText
         view.tv_option_title.textColor = titleColor
         view.tv_option_title.textSize = titleSize
@@ -309,7 +287,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        fun setOptionsSize(size: Float): Builder<T> {
+        fun setOptionsTextSize(size: Float): Builder<T> {
             arg.putFloat(Constants.OPTIONS_TEXT_SIZE, size)
             return this
         }
@@ -334,7 +312,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        fun setTextGravity(gravity: Int): Builder<T> {
+        fun setOptionsTextGravity(gravity: Int): Builder<T> {
             arg.putInt(Constants.MESSAGE_GRAVITY, gravity)
             return this
         }
@@ -344,7 +322,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        fun setItemNum(num: Int): Builder<T> {
+        fun setShowItemNum(num: Int): Builder<T> {
             arg.putInt(Constants.ITEM_NUM, num)
             return this
         }
