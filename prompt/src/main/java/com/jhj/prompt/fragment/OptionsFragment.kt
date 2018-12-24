@@ -119,7 +119,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             cancelText = it.getString(Constants.CANCEL_TEXT, "取消")
             buttonSize = it.getFloat(Constants.BUTTON_SIZE, config.pickerTextSizeButton)
             topBarBackground = it.getInt(Constants.TOPBAR_BACKGROUND_RESOURCE, config.pickerTopBarBackground)
-            backgroundResource = it.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, config.pickerContentBackground)
+            backgroundResource = it.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, config.pickerOptionsBackground)
             cancelListener = it.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnOptionsSelectedListener
             submitListener = it.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnOptionsSelectedListener
             optionsTextSize = it.getFloat(Constants.OPTIONS_TEXT_SIZE, config.pickerTextSizeCenter)

@@ -7,42 +7,47 @@ import com.jhj.prompt.R;
 import com.jhj.prompt.fragment.LoadingFragment;
 import com.jhj.prompt.fragment.options.utils.DividerType;
 
+/**
+ * 各个Fragment都有默认样式，但不能满足不同App的需求，可以Application中进行设置，
+ * 设置LoadingFragment和PercentFragment样式保持一致，
+ * 而OptionsFragment和TimeFragment设置样式一致。
+ */
 public class PromptConfig {
 
 
-    public static final float ALERT_TEXT_SIZE_TITLE = 22f;
-    public static final float ALERT_TEXT_SIZE_ITEM_TITLE = 15f;
-    public static final float ALERT_TEXT_SIZE_BUTTON = 18f;
-    public static final int ALERT_TEXT_COLOR_TITLE = Color.BLACK;
-    public static final int ALERT_TEXT_COLOR_MSG = Color.BLACK;
-    public static final int ALERT_TEXT_COLOR_SUBMIT = Color.RED;
-    public static final int ALERT_TEXT_COLOR_CANCEL = Color.BLUE;
-    public static final int ALERT_TEXT_COLOR_ITEM = Color.BLUE;
-    public static final int ALERT_TEXT_GRAVITY_TITLE = Gravity.CENTER;
-    public static final int ALERT_TEXT_GRAVITY_MSG = Gravity.CENTER;
-    public static final int ALERT_BACKGROUND_RESOURCE = R.drawable.bg_dialog_corner;
-    public static final int ALERT_TEXT_COLOR_ITEM_TITLE = Color.GRAY;
+    private static final float ALERT_TEXT_SIZE_TITLE = 22f;
+    private static final float ALERT_TEXT_SIZE_ITEM_TITLE = 15f;
+    private static final float ALERT_TEXT_SIZE_BUTTON = 18f;
+    private static final int ALERT_TEXT_COLOR_TITLE = Color.BLACK;
+    private static final int ALERT_TEXT_COLOR_MSG = Color.BLACK;
+    private static final int ALERT_TEXT_COLOR_SUBMIT = Color.RED;
+    private static final int ALERT_TEXT_COLOR_CANCEL = Color.BLUE;
+    private static final int ALERT_TEXT_COLOR_ITEM = Color.BLUE;
+    private static final int ALERT_TEXT_GRAVITY_TITLE = Gravity.CENTER;
+    private static final int ALERT_TEXT_GRAVITY_MSG = Gravity.CENTER;
+    private static final int ALERT_BACKGROUND_RESOURCE = R.drawable.bg_dialog_corner;
+    private static final int ALERT_TEXT_COLOR_ITEM_TITLE = Color.GRAY;
 
 
-    public static final float SCALE_SIZE = 12f;
-    public static final int MAX_PROGRESS = 100;
+    private static final float SCALE_SIZE = 12f;
+    private static final int MAX_PROGRESS = 100;
 
-    public static final float MESSAGE_TEXT_SIZE = 15f;
-    public static final float CIRCLE_WIDTH = 6f;
-    public static final int CIRCLE_RADIUS = 75;
-    public static final LoadingFragment.LoadingStyle LOADING_STYLE = LoadingFragment.LoadingStyle.OLD_STYLE;
+    private static final float MESSAGE_TEXT_SIZE = 15f;
+    private static final float CIRCLE_WIDTH = 6f;
+    private static final int CIRCLE_RADIUS = 75;
+    private static final LoadingFragment.LoadingStyle LOADING_STYLE = LoadingFragment.LoadingStyle.OLD_STYLE;
 
-    public static final int BLACK_STYLE_TEXT_COLOR = Color.WHITE;
-    public static final int BLACK_STYLE_SCALE_COLOR = Color.WHITE;
-    public static final int BLACK_STYLE_CIRCLE_COLOR = Color.WHITE;
-    public static final int BLACK_STYLE_CIRCLE_BOTTOM_COLOR = Color.GRAY;
-    public static final int BLACK_STYLE_BACKGROUND = R.drawable.bg_progress_black_dialog;
+    private static final int BLACK_STYLE_TEXT_COLOR = Color.WHITE;
+    private static final int BLACK_STYLE_SCALE_COLOR = Color.WHITE;
+    private static final int BLACK_STYLE_CIRCLE_COLOR = Color.WHITE;
+    private static final int BLACK_STYLE_CIRCLE_BOTTOM_COLOR = Color.GRAY;
+    private static final int BLACK_STYLE_BACKGROUND = R.drawable.bg_progress_black_dialog;
 
-    public static final int WHITE_STYLE_TEXT_COLOR = Color.BLACK;
-    public static final int WHITE_STYLE_CIRCLE_COLOR = Color.BLACK;
-    public static final int WHITE_STYLE_SCALE_COLOR = Color.BLACK;
-    public static final int WHITE_STYLE_CIRCLE_BOTTOM_COLOR = Color.LTGRAY;
-    public static final int WHITE_STYLE_BACKGROUND = R.drawable.bg_progress_white_dialog;
+    private static final int WHITE_STYLE_TEXT_COLOR = Color.BLACK;
+    private static final int WHITE_STYLE_CIRCLE_COLOR = Color.BLACK;
+    private static final int WHITE_STYLE_SCALE_COLOR = Color.BLACK;
+    private static final int WHITE_STYLE_CIRCLE_BOTTOM_COLOR = Color.LTGRAY;
+    private static final int WHITE_STYLE_BACKGROUND = R.drawable.bg_progress_white_dialog;
 
 
     public static final float PICKER_TEXT_SIZE_TITLE = 21f;
@@ -106,14 +111,14 @@ public class PromptConfig {
 
     //OptionsFragment 和 TimeFragment 共同属性
     private float pickerTextSizeTitle = PICKER_TEXT_SIZE_TITLE;
+    private float pickerTextSizeButton = PICKER_TEXT_SIZE_BOTTON;
+    private float pickerTextSizeCenter = PICKER_TEXT_SIZE_CENTER;
     private int pickerTextColorTitle = PICKER_TEXT_COLOR_TITLE;
     private int pickerTextColorButton = PICKER_TEXT_COLOR_BUTTON;
-    private float pickerTextSizeButton = PICKER_TEXT_SIZE_BOTTON;
-    private int pickerTopBarBackground = PICKER_TOP_BAR_BACKGROUND;
-    private int pickerContentBackground = PICKER_OPTIONS_BACKGROUND;
-    private float pickerTextSizeCenter = PICKER_TEXT_SIZE_CENTER;
     private int pickerTextColorCenter = PICKER_TEXT_COLOR_CENTER;
     private int pickerTextColorOUT = PICKER_TEXT_COLOR_OUT;
+    private int pickerTopBarBackground = PICKER_TOP_BAR_BACKGROUND;
+    private int pickerOptionsBackground = PICKER_OPTIONS_BACKGROUND;
     private DividerType pickerDividerType = PICKER_DIVIDER_TYPE;
     private int pickerDividerColor = PICKER_DIVIDER_COLOR;
     private int pickerItemNum = PICKER_SHOW_ITEM_NUM;
@@ -452,12 +457,12 @@ public class PromptConfig {
         return this;
     }
 
-    public int getPickerContentBackground() {
-        return pickerContentBackground;
+    public int getPickerOptionsBackground() {
+        return pickerOptionsBackground;
     }
 
-    public PromptConfig setPickerContentBackground(int pickerContentBackground) {
-        this.pickerContentBackground = pickerContentBackground;
+    public PromptConfig setPickerOptionsBackground(int pickerOptionsBackground) {
+        this.pickerOptionsBackground = pickerOptionsBackground;
         return this;
     }
 

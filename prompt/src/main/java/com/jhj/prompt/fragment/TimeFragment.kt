@@ -90,7 +90,7 @@ class TimeFragment : BaseDialogFragment() {
             topBarBackground = it.getInt(Constants.TOPBAR_BACKGROUND_RESOURCE, config.pickerTopBarBackground)
             cancelListener = it.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnTimeSelectedListener
             submitListener = it.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnTimeSelectedListener
-            backgroundResource = it.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, config.pickerContentBackground)
+            backgroundResource = it.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, config.pickerOptionsBackground)
             optionsTextSize = it.getFloat(Constants.OPTIONS_TEXT_SIZE, config.pickerTextSizeCenter)
             onlyCenterLabel = it.getBoolean(Constants.ONLY_CENTER_LABEL, false)
             colorOut = it.getInt(Constants.TEXT_COLOR_OUT, config.pickerTextColorOUT)
