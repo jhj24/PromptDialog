@@ -10,7 +10,7 @@ import android.widget.PopupWindow
  *
  * Created by jhj on 18-7-16.
  */
-class PromptPopWindow() {
+class PopWindow() {
 
     private var mContext: Context? = null
     private var popupWindow: PopupWindow? = null
@@ -166,7 +166,7 @@ class PromptPopWindow() {
 
     class Builder(mContext: Context) {
 
-        private val popWindow = PromptPopWindow(mContext)
+        private val popWindow = PopWindow(mContext)
 
         fun setPopWindowSize(height: Int, width: Int): Builder {
             popWindow.height = height
@@ -265,7 +265,7 @@ class PromptPopWindow() {
             return this
         }
 
-        fun build(): PromptPopWindow {
+        fun build(): PopWindow {
             popWindow.build()
             return popWindow
         }

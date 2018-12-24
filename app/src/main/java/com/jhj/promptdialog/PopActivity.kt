@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.PopupWindow
-import com.jhj.prompt.pop.PromptPopWindow
+import com.jhj.prompt.pop.PopWindow
 import kotlinx.android.synthetic.main.activity_pop.*
 import kotlinx.android.synthetic.main.layout_pop_item.view.*
 import org.jetbrains.anko.toast
@@ -22,7 +22,7 @@ class PopActivity : AppCompatActivity() {
         setContentView(R.layout.activity_pop)
 
         btn_0.setOnClickListener {
-            PromptPopWindow.Builder(this@PopActivity)
+            PopWindow.Builder(this@PopActivity)
                     .setLayoutRes(R.layout.layout_pop_item)
                     .build()
                     .showAsDropDown(btn_0)
@@ -30,7 +30,7 @@ class PopActivity : AppCompatActivity() {
 
 
         btn_1.setOnClickListener {
-            val pop = PromptPopWindow.Builder(this@PopActivity)
+            val pop = PopWindow.Builder(this@PopActivity)
                     .setLayoutRes(R.layout.layout_pop_item)
                     .setBackgroundAlpha(0.7f)
                     .build()
@@ -38,9 +38,9 @@ class PopActivity : AppCompatActivity() {
         }
 
         btn_2.setOnClickListener {
-            val pop = PromptPopWindow.Builder(this@PopActivity)
+            val pop = PopWindow.Builder(this@PopActivity)
                     .setCanceledOnTouchOutSide(false)
-                    .setLayoutRes(R.layout.layout_pop_item, object : PromptPopWindow.OnCustomListener {
+                    .setLayoutRes(R.layout.layout_pop_item, object : PopWindow.OnCustomListener {
                         override fun onLayout(view: View, popupWindow: PopupWindow?) {
                             view.tv_1.setOnClickListener {
                                 popupWindow?.dismiss()
@@ -61,7 +61,7 @@ class PopActivity : AppCompatActivity() {
             pop.showAsDropDown(btn_2, 0, -(btn_2.height + pop.getHeight()))
         }
         btn_3.setOnClickListener {
-            PromptPopWindow.Builder(this@PopActivity)
+            PopWindow.Builder(this@PopActivity)
                     .setLayoutRes(R.layout.layout_pop_item)
                     .setOnDismissListener(PopupWindow.OnDismissListener {
                         toast("popupWindow消失")
