@@ -24,6 +24,8 @@ public class PromptConfig {
     private static final int ALERT_TEXT_COLOR_SUBMIT = Color.RED;
     private static final int ALERT_TEXT_COLOR_CANCEL = Color.BLUE;
     private static final int ALERT_TEXT_COLOR_ITEM = Color.BLUE;
+    private static final int ALERT_ITEM_IMAGE_SELECTED = R.drawable.icon_choice;
+    private static final int ALERT_ITEM_IMAGE_UNSELECTED = R.drawable.icon_choice_no;
     private static final int ALERT_TEXT_GRAVITY_TITLE = Gravity.CENTER;
     private static final int ALERT_TEXT_GRAVITY_MSG = Gravity.CENTER;
     private static final int ALERT_BACKGROUND_RESOURCE = R.drawable.bg_dialog_corner;
@@ -81,6 +83,8 @@ public class PromptConfig {
     private int alertTextColorSubmit = ALERT_TEXT_COLOR_SUBMIT;
     private int alertTextColorCancel = ALERT_TEXT_COLOR_CANCEL;
     private int alertTextColorItem = ALERT_TEXT_COLOR_ITEM;
+    private int alertItemImageSelected = ALERT_ITEM_IMAGE_SELECTED;
+    private int alertItemImageUnselected = ALERT_ITEM_IMAGE_UNSELECTED;
     private int alertTextGravityTitle = ALERT_TEXT_GRAVITY_TITLE;
     private int alertTextGravityMessage = ALERT_TEXT_GRAVITY_MSG;
     private int alertBackgroundResource = ALERT_BACKGROUND_RESOURCE;
@@ -226,6 +230,25 @@ public class PromptConfig {
 
     public int getAlertTextColorItem() {
         return alertTextColorItem;
+    }
+
+
+    public int getAlertItemImageSelected() {
+        return alertItemImageSelected;
+    }
+
+    public PromptConfig setAlertItemImageSelected(int alertItemImageSelected) {
+        this.alertItemImageSelected = alertItemImageSelected;
+        return this;
+    }
+
+    public int getAlertItemImageUnselected() {
+        return alertItemImageUnselected;
+    }
+
+    public PromptConfig setAlertItemImageUnselected(int alertItemImageUnselected) {
+        this.alertItemImageUnselected = alertItemImageUnselected;
+        return this;
     }
 
     public PromptConfig setAlertTextColorItem(int alertTextColorItem) {

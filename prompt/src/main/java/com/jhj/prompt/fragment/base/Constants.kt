@@ -38,6 +38,7 @@ object Constants {
     const val CANCEL_TEXT = "cancel_text"
     const val CANCEL_TEXT_COLOR = "cancel_text_color"
     const val BUTTON_SIZE: String = "button_size"
+    const val LISTENER_SELECTED_CLICK = "listener_selected_click"
 
     //自定义布局
     const val IS_HAS_CUSTOM_LAYOUT = "is_has_custom_layout"
@@ -46,9 +47,16 @@ object Constants {
 
     //列表数据
     const val is_HAS_ITEM_LAYOUT = "is_has_item_layout"
+    const val IS_HAS_ITEM_SELECTED = "is_has_item_selected"
     const val ITEM_COMMON_LIST = "item_common_list"
     const val ITEM_COLOR_LIST = "item_color_list"
+    const val ITEM_SELECTED_LIST = "item_selected_list"
+    const val ITEM_SELECTED_DATA_LIST = "item_selected_data_list"
+    const val ITEM_SELECTED_MAX = "item_selected_max"
+    const val ITEM_SELECTED_MIN = "item_selected_min"
     const val ITEM_TEXT_COLOR = "item_text_color"
+    const val ITEM_SELECTED_IMAGE = "item_selected_image"
+    const val ITEM_UNSELECTED_IMAGE = "item_unselected_image"
     const val LISTENER_ITEM_CLICK = "listener_item_click"
 
     //alertFragment样式

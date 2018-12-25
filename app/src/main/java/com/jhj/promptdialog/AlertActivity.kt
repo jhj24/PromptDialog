@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
-import com.jhj.prompt.fragment.base.BaseDialogFragment
 import com.jhj.prompt.fragment.AlertFragment
+import com.jhj.prompt.fragment.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.activity_alert.*
 import kotlinx.android.synthetic.main.layout_image.view.*
 import org.jetbrains.anko.toast
@@ -51,8 +51,8 @@ class AlertActivity : FragmentActivity() {
         btn_items.setOnClickListener {
             AlertFragment.Builder(this@AlertActivity)
                     .setTitle("列表")
-                    .setItems(arrayListOf("1111", "2222"))
-                    .setItems(arrayListOf("3333", "4444"), Color.RED)
+                    .setDataList(arrayListOf("1111", "2222"))
+                    .setDataList(arrayListOf("3333", "4444"), Color.RED)
                     .setItemClickedListener(object : AlertFragment.OnItemClickListener {
                         override fun onItemClick(view: View, position: Int) {
                             toast("position-->$position")
@@ -107,8 +107,8 @@ class AlertActivity : FragmentActivity() {
                     .setDialogGravity(Gravity.BOTTOM)
                     .setDialogBottomSeparate(true)
                     .setTitle("列表")
-                    .setItems(arrayListOf("1111", "2222"))
-                    .setItems(arrayListOf("3333", "4444"), Color.BLACK)
+                    .setDataList(arrayListOf("1111", "2222"))
+                    .setDataList(arrayListOf("3333", "4444"), Color.BLACK)
                     .setItemClickedListener(object : AlertFragment.OnItemClickListener {
                         override fun onItemClick(view: View, position: Int) {
                             toast("position-->$position")
@@ -148,6 +148,29 @@ class AlertActivity : FragmentActivity() {
                     .show()
         }
 
+        var selected = listOf<Int>()
+        btn_bottom4.setOnClickListener {
+            val a = AlertFragment.Builder(this@AlertActivity)
+                    .setDialogGravity(Gravity.BOTTOM)
+                    .setSelectedDataList(arrayListOf("1111", "2222", "3333", "44444", "5555", "6666"))
+                    .setTitle("选择")
+                    .setSelectedItemMax(3)
+                    .setSelectedItemMin(1)
+                    .setItemSelectedListener(object : AlertFragment.OnItemSelectedListener {
+                        override fun onSelected(selectedList: List<Int>) {
+                            val a: StringBuilder = java.lang.StringBuilder()
+                            selectedList.forEach { a.append(it.toString()) }
+                            toast(a)
+                            selected = selectedList;
+                        }
+                    })
+                    .show()
+            a.setSelectedItem(selected.toArrayList())
+        }
+    }
+
+    fun <T> List<T>.toArrayList() : ArrayList<T>{
+        return ArrayList(this)
     }
 
 }
