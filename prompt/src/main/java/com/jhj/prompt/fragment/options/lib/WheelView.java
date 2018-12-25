@@ -177,7 +177,13 @@ public class WheelView extends View {
     private void initLoopView(Context context) {
         this.context = context;
         handler = new MessageHandler(this);
-        gestureDetector = new GestureDetector(context, new LoopViewGestureListener(this));
+        gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                scrollBy(velocityY);
+                return true;
+            }
+        });
         gestureDetector.setIsLongpressEnabled(false);
         isLoop = true;
 
@@ -351,7 +357,13 @@ public class WheelView extends View {
 
     protected final void onItemSelected() {
         if (onItemSelectedListener != null) {
-            postDelayed(new OnItemSelectedRunnable(this), 200L);
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onItemSelectedListener.onItemSelected(getCurrentItem());
+                }
+            },200);
+
         }
     }
 

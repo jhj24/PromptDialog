@@ -4,14 +4,7 @@ package com.jhj.prompt.fragment.options.adapter
 /**
  * 简单的适配器
  */
-class CommonWheelAdapter<T> constructor(private val items: List<T>?, private val length: Int = DEFAULT_LENGTH) : WheelAdapter<T> {
-
-    constructor(items: List<T>?) : this(items, DEFAULT_LENGTH)
-
-    companion object {
-        // 默认item长度
-        const val DEFAULT_LENGTH = 4
-    }
+class CommonWheelAdapter<T> constructor(private val items: List<T>?) : WheelAdapter<T> {
 
     override val itemsCount: Int
         get() = items?.size ?: 0

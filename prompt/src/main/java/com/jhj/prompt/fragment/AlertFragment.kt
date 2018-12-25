@@ -268,7 +268,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setBackgroundResource(@DrawableRes resource: Int): Builder {
+        fun setBackgroundResource(resource: Int): Builder {
             arg.putInt(Constants.BACKGROUND_RESOURCE, resource)
             return this
         }
@@ -278,7 +278,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setTitleColor(@ColorInt titleColor: Int): Builder {
+        fun setTitleColor(titleColor: Int): Builder {
             arg.putInt(Constants.TITLE_COLOR, titleColor)
             return this
         }
@@ -298,7 +298,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setMessageColor(@ColorRes messageColor: Int): Builder {
+        fun setMessageColor(messageColor: Int): Builder {
             arg.putInt(Constants.MESSAGE_COLOR, messageColor)
             return this
         }
@@ -319,7 +319,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setItems(items: ArrayList<String>, @ColorInt textColor: Int): Builder {
+        fun setItems(items: ArrayList<String>, textColor: Int): Builder {
             arg.putBoolean(Constants.is_HAS_ITEM_LAYOUT, true)
             arg.putStringArrayList(Constants.ITEM_COLOR_LIST, items)
             arg.putInt(Constants.ITEM_TEXT_COLOR, textColor)
@@ -350,7 +350,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setSubmitListener(text: String?, @ColorRes textColor: Int, listener: OnButtonClickedListener): Builder {
+        fun setSubmitListener(text: String?, textColor: Int, listener: OnButtonClickedListener): Builder {
             arg.putSerializable(Constants.LISTENER_SUBMIT_CLICK, listener)
             arg.putString(Constants.SUBMIT_TEXT, text)
             arg.putInt(Constants.SUBMIT_TEXT_COLOR, textColor)
@@ -368,7 +368,7 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setCancelListener(text: String?, @ColorRes textColor: Int, listener: OnButtonClickedListener): Builder {
+        fun setCancelListener(text: String?, textColor: Int, listener: OnButtonClickedListener): Builder {
             arg.putSerializable(Constants.LISTENER_CANCEL_CLICK, listener)
             arg.putString(Constants.CANCEL_TEXT, text)
             arg.putInt(Constants.CANCEL_TEXT_COLOR, textColor)

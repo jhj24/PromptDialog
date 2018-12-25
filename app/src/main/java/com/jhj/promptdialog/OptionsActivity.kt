@@ -141,6 +141,7 @@ class OptionsActivity : FragmentActivity() {
             TimeFragment.Builder(this@OptionsActivity)
                     .setDate(selectedDate)
                     .setCyclic(false)
+                    .setTitle("日历")
                     .setRangDate(startDate, endDate)
                     .setDisplayStyle(booleanArrayOf(true, true, true, true, true, true))
                     .setOnlyCenterLabel(false)

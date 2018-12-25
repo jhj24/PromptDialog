@@ -68,36 +68,31 @@ class OptionsWheel<in T>(val view: View) {
         this.mOptions1Items = options1Items
         this.mOptions2Items = options2Items
         this.mOptions3Items = options3Items
-        var len = CommonWheelAdapter.DEFAULT_LENGTH
-        if (this.mOptions3Items == null)
-            len = 8
-        if (this.mOptions2Items == null)
-            len = 12
         // 选项1
-        wvOptions1.setAdapter(CommonWheelAdapter(mOptions1Items, len))// 设置显示数据
+        wvOptions1.setAdapter(CommonWheelAdapter(mOptions1Items))// 设置显示数据
         wvOptions1.currentItem = 0// 初始化时显示的数据
         // 选项2
-        if (mOptions2Items != null)
-            wvOptions2.setAdapter(CommonWheelAdapter(mOptions2Items?.get(0)))// 设置显示数据
-        wvOptions2.currentItem = wvOptions1.currentItem// 初始化时显示的数据
-        // 选项3
-        if (mOptions3Items != null)
-            wvOptions3.setAdapter(CommonWheelAdapter(mOptions3Items?.get(0)?.get(0)))// 设置显示数据
-        wvOptions3.currentItem = wvOptions3.currentItem
-        wvOptions1.setIsOptions(true)
-        wvOptions2.setIsOptions(true)
-        wvOptions3.setIsOptions(true)
-
         if (this.mOptions2Items == null) {
             wvOptions2.visibility = View.GONE
         } else {
             wvOptions2.visibility = View.VISIBLE
+            wvOptions2.setAdapter(CommonWheelAdapter(mOptions2Items?.get(0)))// 设置显示数据
+            wvOptions2.currentItem = wvOptions2.currentItem// 初始化时显示的数据
         }
+
+        // 选项3
         if (this.mOptions3Items == null) {
             wvOptions3.visibility = View.GONE
         } else {
             wvOptions3.visibility = View.VISIBLE
+            wvOptions3.setAdapter(CommonWheelAdapter(mOptions3Items?.get(0)?.get(0)))// 设置显示数据
+            wvOptions3.currentItem = wvOptions3.currentItem
         }
+
+        wvOptions1.setIsOptions(true)
+        wvOptions2.setIsOptions(true)
+        wvOptions3.setIsOptions(true)
+
 
         val wheelListenerOptions2 = object : OnItemSelectedListener {
             override fun onItemSelected(index: Int) {
@@ -153,36 +148,32 @@ class OptionsWheel<in T>(val view: View) {
         this.mOptions1Items = options1Items
         this.nOptions2Items = options2Items
         this.nOptions3Items = options3Items
-        var len = CommonWheelAdapter.DEFAULT_LENGTH
-        if (this.nOptions3Items == null)
-            len = 8
-        if (this.nOptions2Items == null)
-            len = 12
         // 选项1
-        wvOptions1.setAdapter(CommonWheelAdapter(mOptions1Items, len))// 设置显示数据
+        wvOptions1.setAdapter(CommonWheelAdapter(mOptions1Items))// 设置显示数据
         wvOptions1.currentItem = 0// 初始化时显示的数据
         // 选项2
-        if (nOptions2Items != null)
-            wvOptions2.setAdapter(CommonWheelAdapter(nOptions2Items))// 设置显示数据
-        wvOptions2.currentItem = wvOptions1.currentItem// 初始化时显示的数据
-        // 选项3
-        if (nOptions3Items != null)
-            wvOptions3.setAdapter(CommonWheelAdapter(nOptions3Items))// 设置显示数据
-        wvOptions3.currentItem = wvOptions3.currentItem
-        wvOptions1.setIsOptions(true)
-        wvOptions2.setIsOptions(true)
-        wvOptions3.setIsOptions(true)
-
         if (this.nOptions2Items == null) {
             wvOptions2.visibility = View.GONE
         } else {
             wvOptions2.visibility = View.VISIBLE
+            wvOptions2.setAdapter(CommonWheelAdapter(nOptions2Items))// 设置显示数据
+            wvOptions2.currentItem = wvOptions2.currentItem// 初始化时显示的数据
         }
+
+        // 选项3
         if (this.nOptions3Items == null) {
             wvOptions3.visibility = View.GONE
         } else {
             wvOptions3.visibility = View.VISIBLE
+            wvOptions3.setAdapter(CommonWheelAdapter(nOptions3Items))// 设置显示数据
+            wvOptions3.currentItem = wvOptions3.currentItem
         }
+
+        wvOptions1.setIsOptions(true)
+        wvOptions2.setIsOptions(true)
+        wvOptions3.setIsOptions(true)
+
+
     }
 
 

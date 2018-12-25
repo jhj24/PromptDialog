@@ -1,6 +1,7 @@
 package com.jhj.prompt.fragment.base;
 
 import android.graphics.Color;
+import android.support.annotation.FloatRange;
 import android.view.Gravity;
 
 import com.jhj.prompt.R;
@@ -524,7 +525,7 @@ public class PromptConfig {
         return pickerLineSpacingRatio;
     }
 
-    public PromptConfig setPickerLineSpacingRatio(float pickerLineSpacingRatio) {
+    public PromptConfig setPickerLineSpacingRatio(@FloatRange(from = 1.0, to = 2.0)float pickerLineSpacingRatio) {
         this.pickerLineSpacingRatio = pickerLineSpacingRatio;
         return this;
     }

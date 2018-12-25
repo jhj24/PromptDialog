@@ -14,5 +14,7 @@ public class MyApplication extends Application {
                 .setAlertTextColorTitle(Color.BLUE)
                 .setAlertTextColorItemTitle(Color.GREEN)
                 .setBlackStyleScaleColor(Color.RED);
+
+
     }
 }

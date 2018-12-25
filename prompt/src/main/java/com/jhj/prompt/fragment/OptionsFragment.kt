@@ -3,8 +3,8 @@ package com.jhj.prompt.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
+import android.support.annotation.FloatRange
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
@@ -51,7 +51,6 @@ class OptionsFragment<T> : BaseDialogFragment() {
     private var optionsLabels: Array<out String>? = arrayOf()
     private var isCyclic: Boolean = true
     private var textGravity: Int = PromptConfig.PICKER_OPTIONS_TEXT_GRAVITY
-    private var displayStyle: BooleanArray? = booleanArrayOf()
     private var xOffset: Int = PromptConfig.PICKER_X_OFFSET
     private var spacingRatio: Float = PromptConfig.PICKER_LINE_SPACEING_RATIO
     private var extraHeight: Int = PromptConfig.PICKER_EXTRA_HEIGHT
@@ -131,7 +130,6 @@ class OptionsFragment<T> : BaseDialogFragment() {
             itemNum = it.getInt(Constants.ITEM_NUM, config.pickerItemNum)
             optionsLabels = it.getStringArray(Constants.OPTIONS_LABELS)
             isCyclic = it.getBoolean(Constants.IS_CYCLIC, true)
-            displayStyle = it.getBooleanArray(Constants.DISPLAY_STYLE)
             xOffset = it.getInt(Constants.X_OFFSET, config.pickerXOffset)
             spacingRatio = it.getFloat(Constants.SPACING_RATIO, config.pickerLineSpacingRatio)
             extraHeight = it.getInt(Constants.EXTRA_HEIGHT, config.pickerExtraHeight)
@@ -188,17 +186,17 @@ class OptionsFragment<T> : BaseDialogFragment() {
         super.onSaveInstanceState(outState)
         outState.let {
             it.putString(Constants.TITLE, titleText)
-            it.putInt(Constants.TITLE_COLOR, titleColor)
             it.putFloat(Constants.TITLE_SIZE, titleSize)
+            it.putInt(Constants.TITLE_COLOR, titleColor)
             it.putString(Constants.SUBMIT_TEXT, submitText)
             it.putInt(Constants.SUBMIT_TEXT_COLOR, submitColor)
             it.putString(Constants.CANCEL_TEXT, cancelText)
             it.putInt(Constants.CANCEL_TEXT_COLOR, cancelColor)
             it.putFloat(Constants.BUTTON_SIZE, buttonSize)
             it.putInt(Constants.TOPBAR_BACKGROUND_RESOURCE, topBarBackground)
+            it.putInt(Constants.OPTIONS_BACKGROUND_RESOURCE, backgroundResource)
             it.putSerializable(Constants.LISTENER_SUBMIT_CLICK, submitListener)
             it.putSerializable(Constants.LISTENER_CANCEL_CLICK, cancelListener)
-            it.putInt(Constants.OPTIONS_BACKGROUND_RESOURCE, backgroundResource)
             it.putFloat(Constants.OPTIONS_TEXT_SIZE, optionsTextSize)
             it.putBoolean(Constants.ONLY_CENTER_LABEL, onlyCenterLabel)
             it.putInt(Constants.TEXT_COLOR_OUT, colorOut)
@@ -208,10 +206,10 @@ class OptionsFragment<T> : BaseDialogFragment() {
             it.putInt(Constants.ITEM_NUM, itemNum)
             it.putStringArray(Constants.OPTIONS_LABELS, optionsLabels)
             it.putBoolean(Constants.IS_CYCLIC, isCyclic)
-            it.putBooleanArray(Constants.DISPLAY_STYLE, displayStyle)
             it.putInt(Constants.X_OFFSET, xOffset)
             it.putFloat(Constants.SPACING_RATIO, spacingRatio)
             it.putInt(Constants.EXTRA_HEIGHT, extraHeight)
+            it.putInt(Constants.MESSAGE_GRAVITY, textGravity)
             it.putInt(Constants.OPTIONS_SELECT_ONE, wheel.currentItems[0])
             it.putInt(Constants.OPTIONS_SELECT_TWO, wheel.currentItems[1])
             it.putInt(Constants.OPTIONS_SELECT_THREE, wheel.currentItems[2])
@@ -246,7 +244,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        fun setTitleColor(@ColorRes color: Int): Builder<T> {
+        fun setTitleColor(color: Int): Builder<T> {
             arg.putInt(Constants.TITLE_COLOR, color)
             return this
         }
@@ -277,12 +275,12 @@ class OptionsFragment<T> : BaseDialogFragment() {
         }
 
 
-        fun setTopBarBackgroundResource(@DrawableRes resource: Int): Builder<T> {
+        fun setTopBarBackgroundResource(resource: Int): Builder<T> {
             arg.putInt(Constants.TOPBAR_BACKGROUND_RESOURCE, resource)
             return this
         }
 
-        fun setOptionsBackgroundResource(@DrawableRes resource: Int): Builder<T> {
+        fun setOptionsBackgroundResource(resource: Int): Builder<T> {
             arg.putInt(Constants.OPTIONS_BACKGROUND_RESOURCE, resource)
             return this
         }
@@ -297,7 +295,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        fun setDividerColor(@ColorRes color: Int): Builder<T> {
+        fun setDividerColor(color: Int): Builder<T> {
             arg.putInt(Constants.DIVIDER_COLOR, color)
             return this
         }
@@ -342,7 +340,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        fun setItemsSpacingRatio(spacingRatio: Float): Builder<T> {
+        fun setItemsSpacingRatio(@FloatRange(from = 1.0, to = 2.0) spacingRatio: Float): Builder<T> {
             arg.putFloat(Constants.SPACING_RATIO, spacingRatio)
             return this
         }

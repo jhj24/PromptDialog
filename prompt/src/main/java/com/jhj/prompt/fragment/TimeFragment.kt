@@ -3,6 +3,7 @@ package com.jhj.prompt.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.support.annotation.FloatRange
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
@@ -59,6 +60,7 @@ class TimeFragment : BaseDialogFragment() {
     private var startDateMillis: Long = -1
     private var endDateMillis: Long = -1
     private var isLunarCalendar: Boolean = false
+    private var textGravity = Gravity.CENTER
 
     override val layoutRes: Int
         get() = R.layout.layout_pickerview_time
@@ -108,6 +110,7 @@ class TimeFragment : BaseDialogFragment() {
             startDateMillis = it.getLong(Constants.START_DATE_MILLS, -1)
             endDateMillis = it.getLong(Constants.END_DATE_MILLS, -1)
             isLunarCalendar = it.getBoolean(Constants.LUNAR_CALENDAR, false)
+            textGravity = it.getInt(Constants.MESSAGE_GRAVITY, config.pickerOptionsTextGravity)
         }
     }
 
@@ -154,6 +157,7 @@ class TimeFragment : BaseDialogFragment() {
         wheel.setDividerType(dividerType ?: config.pickerDividerType)
         wheel.setCyclic(isCyclic)
         wheel.isCenterLabel(onlyCenterLabel)
+        wheel.setTextGravity(textGravity)
 
         optionsLabels?.let {
             if (it.size == 6) {
@@ -243,6 +247,7 @@ class TimeFragment : BaseDialogFragment() {
             it.putLong(Constants.START_DATE_MILLS, startDateMillis)
             it.putLong(Constants.END_DATE_MILLS, endDateMillis)
             it.putBoolean(Constants.LUNAR_CALENDAR, isLunarCalendar)
+            it.putInt(Constants.MESSAGE_GRAVITY, textGravity)
         }
     }
 
@@ -364,7 +369,7 @@ class TimeFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setItemsSpacingRatio(spacingRatio: Float): Builder {
+        fun setItemsSpacingRatio(@FloatRange(from = 1.0, to = 2.0)spacingRatio: Float): Builder {
             arg.putFloat(Constants.SPACING_RATIO, spacingRatio)
             return this
         }
