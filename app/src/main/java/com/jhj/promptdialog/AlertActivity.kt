@@ -152,7 +152,8 @@ class AlertActivity : FragmentActivity() {
         btn_bottom4.setOnClickListener {
             val a = AlertFragment.Builder(this@AlertActivity)
                     .setDialogGravity(Gravity.BOTTOM)
-                    .setSelectedDataList(arrayListOf("1111", "2222", "3333", "44444", "5555", "6666"))
+                    .setSelectedDataList(arrayListOf("1111", "2222", "3333", "44444", "5555", "6666","1111", "2222", "3333", "44444", "5555", "6666"))
+                    .setDialogHeight(1200)
                     .setTitle("选择")
                     .setSelectedItemMax(3)
                     .setSelectedItemMin(1)

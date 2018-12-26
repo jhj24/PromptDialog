@@ -33,11 +33,17 @@
         android:textSize="@dimen/textSize_alert_msg" />
 
     <!-- body为item -->
-    <LinearLayout
-        android:id="@+id/layout_items"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/layout_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </android.support.v4.widget.NestedScrollView>
 
     <!-- body为自定义View -->
     <LinearLayout
