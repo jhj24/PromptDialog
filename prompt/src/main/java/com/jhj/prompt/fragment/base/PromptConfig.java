@@ -8,6 +8,8 @@ import com.jhj.prompt.R;
 import com.jhj.prompt.fragment.LoadingFragment;
 import com.jhj.prompt.fragment.options.utils.DividerType;
 
+import java.util.Calendar;
+
 /**
  * 各个Fragment都有默认样式，但不能满足不同App的需求，可以Application中进行设置，
  * 设置LoadingFragment和PercentFragment样式保持一致，
@@ -70,6 +72,7 @@ public class PromptConfig {
     public static final int PICKER_X_OFFSET = 0;
     public static final int PICKER_OPTIONS_TEXT_GRAVITY = Gravity.CENTER;
 
+
     private static volatile PromptConfig singleton;
 
 
@@ -131,6 +134,9 @@ public class PromptConfig {
     private int pickerExtraHeight = PICKER_EXTRA_HEIGHT;
     private int pickerXOffset = PICKER_X_OFFSET;
     private int pickerOptionsTextGravity = PICKER_OPTIONS_TEXT_GRAVITY;
+
+    private Calendar timeStartCalendar;
+    private Calendar timeEndCalendar;
 
 
     private PromptConfig() {
@@ -578,5 +584,31 @@ public class PromptConfig {
     public PromptConfig setPickerOptionsTextGravity(int pickerOptionsTextGravity) {
         this.pickerOptionsTextGravity = pickerOptionsTextGravity;
         return this;
+    }
+
+    public Calendar getTimeStartCalendar() {
+        if (timeStartCalendar == null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(1999, 0, 1);
+            return calendar;
+        }
+        return timeStartCalendar;
+    }
+
+    public void setTimeStartCalendar(Calendar timeStartCalendar) {
+        this.timeStartCalendar = timeStartCalendar;
+    }
+
+    public Calendar getTimeEndCalendar() {
+        if (timeEndCalendar == null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(2099, 11, 31);
+            return calendar;
+        }
+        return timeEndCalendar;
+    }
+
+    public void setTimeEndCalendar(Calendar timeEndCalendar) {
+        this.timeEndCalendar = timeEndCalendar;
     }
 }

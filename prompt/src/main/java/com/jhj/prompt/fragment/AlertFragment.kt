@@ -482,18 +482,18 @@ class AlertFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setItemSelectedListener(listener: OnItemSelectedListener): Builder {
-            setItemSelectedListener(null, listener)
+        fun setListSelectedListener(listener: OnItemSelectedListener): Builder {
+            setListSelectedListener(null, listener)
             return this
         }
 
 
-        fun setItemSelectedListener(text: String?, listener: OnItemSelectedListener): Builder {
-            setItemSelectedListener(text, Color.RED, listener)
+        fun setListSelectedListener(text: String?, listener: OnItemSelectedListener): Builder {
+            setListSelectedListener(text, Color.RED, listener)
             return this
         }
 
-        fun setItemSelectedListener(text: String?, textColor: Int, listener: OnItemSelectedListener): Builder {
+        fun setListSelectedListener(text: String?, textColor: Int, listener: OnItemSelectedListener): Builder {
             arg.putString(Constants.SUBMIT_TEXT, text)
             arg.putInt(Constants.SUBMIT_TEXT_COLOR, textColor)
             arg.putSerializable(Constants.LISTENER_SELECTED_CLICK, listener)

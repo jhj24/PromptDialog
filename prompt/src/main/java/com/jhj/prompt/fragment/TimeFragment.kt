@@ -176,9 +176,8 @@ class TimeFragment : BaseDialogFragment() {
             startCalendar.timeInMillis = startDateMillis
             endCalendar.timeInMillis = endDateMillis
             wheel.setRangDate(startCalendar, endCalendar)
-            if (dateMillis in startDateMillis..endDateMillis) {
-                dateMillis = startDateMillis
-            }
+        } else if (config.timeEndDate.timeInMillis > config.timeStartDate.timeInMillis) {
+            wheel.setRangDate(config.timeStartDate, config.timeEndDate)
         }
         setTime(dateMillis)
 

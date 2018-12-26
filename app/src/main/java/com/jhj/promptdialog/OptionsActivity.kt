@@ -161,9 +161,9 @@ class OptionsActivity : FragmentActivity() {
             val a = System.nanoTime()
             val selectedDate = Calendar.getInstance()//系统当前时间
             val startDate = Calendar.getInstance()
-            startDate.set(2014, 0, 1)
+            startDate.set(2014, 0, 1,12,12)
             val endDate = Calendar.getInstance()
-            endDate.set(2015, 11, 31)
+            endDate.set(2015, 11, 31,8,8)
             TimeFragment.Builder(this@OptionsActivity)
                     .setDate(selectedDate)
                     .setCyclic(false)

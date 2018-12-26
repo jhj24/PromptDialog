@@ -156,7 +156,7 @@ class AlertActivity : FragmentActivity() {
                     .setTitle("选择")
                     .setSelectedItemMax(3)
                     .setSelectedItemMin(1)
-                    .setItemSelectedListener(object : AlertFragment.OnItemSelectedListener {
+                    .setListSelectedListener(object : AlertFragment.OnItemSelectedListener {
                         override fun onSelected(selectedList: List<Int>) {
                             val a: StringBuilder = java.lang.StringBuilder()
                             selectedList.forEach { a.append(it.toString()) }
