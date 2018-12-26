@@ -55,6 +55,7 @@ object Constants {
     const val ITEM_SELECTED_MAX = "item_selected_max"
     const val ITEM_SELECTED_MIN = "item_selected_min"
     const val ITEM_TEXT_COLOR = "item_text_color"
+    const val ITEM_TEXT_SIZE = "item_text_size"
     const val ITEM_SELECTED_IMAGE = "item_selected_image"
     const val ITEM_UNSELECTED_IMAGE = "item_unselected_image"
     const val LISTENER_ITEM_CLICK = "listener_item_click"

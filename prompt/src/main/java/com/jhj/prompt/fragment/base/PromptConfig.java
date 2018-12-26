@@ -1,6 +1,7 @@
 package com.jhj.prompt.fragment.base;
 
 import android.graphics.Color;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.view.Gravity;
 
@@ -21,6 +22,7 @@ public class PromptConfig {
     private static final float ALERT_TEXT_SIZE_TITLE = 22f;
     private static final float ALERT_TEXT_SIZE_ITEM_TITLE = 15f;
     private static final float ALERT_TEXT_SIZE_BUTTON = 18f;
+    private static final float ALERT_TEXT_SIZE_ITEM = 18f;
     private static final int ALERT_TEXT_COLOR_TITLE = Color.BLACK;
     private static final int ALERT_TEXT_COLOR_MSG = Color.BLACK;
     private static final int ALERT_TEXT_COLOR_SUBMIT = Color.RED;
@@ -81,6 +83,7 @@ public class PromptConfig {
     private float alertTextSizeItemTitle = ALERT_TEXT_SIZE_ITEM_TITLE;
     private float alertTextSizeMessage = MESSAGE_TEXT_SIZE;
     private float alertTextSizeButton = ALERT_TEXT_SIZE_BUTTON;
+    private float alertTextSizeItem = ALERT_TEXT_SIZE_ITEM;
     private int alertTextColorTitle = ALERT_TEXT_COLOR_TITLE;
     private int alertTextColorMessage = ALERT_TEXT_COLOR_MSG;
     private int alertTextColorSubmit = ALERT_TEXT_COLOR_SUBMIT;
@@ -122,7 +125,8 @@ public class PromptConfig {
     private float pickerTextSizeButton = PICKER_TEXT_SIZE_BOTTON;
     private float pickerTextSizeCenter = PICKER_TEXT_SIZE_CENTER;
     private int pickerTextColorTitle = PICKER_TEXT_COLOR_TITLE;
-    private int pickerTextColorButton = PICKER_TEXT_COLOR_BUTTON;
+    private int pickerTextColorSubmit = PICKER_TEXT_COLOR_BUTTON;
+    private int pickerTextColorCancel = PICKER_TEXT_COLOR_BUTTON;
     private int pickerTextColorCenter = PICKER_TEXT_COLOR_CENTER;
     private int pickerTextColorOUT = PICKER_TEXT_COLOR_OUT;
     private int pickerTopBarBackground = PICKER_TOP_BAR_BACKGROUND;
@@ -198,6 +202,15 @@ public class PromptConfig {
         return this;
     }
 
+    public float getAlertTextSizeItem() {
+        return alertTextSizeItem;
+    }
+
+    public PromptConfig setAlertTextSizeItem(float alertTextSizeItem) {
+        this.alertTextSizeItem = alertTextSizeItem;
+        return this;
+    }
+
     public int getAlertTextColorTitle() {
         return alertTextColorTitle;
     }
@@ -243,7 +256,7 @@ public class PromptConfig {
         return alertItemImageSelected;
     }
 
-    public PromptConfig setAlertItemImageSelected(int alertItemImageSelected) {
+    public PromptConfig setAlertItemImageSelected(@DrawableRes  int alertItemImageSelected) {
         this.alertItemImageSelected = alertItemImageSelected;
         return this;
     }
@@ -252,7 +265,7 @@ public class PromptConfig {
         return alertItemImageUnselected;
     }
 
-    public PromptConfig setAlertItemImageUnselected(int alertItemImageUnselected) {
+    public PromptConfig setAlertItemImageUnselected(@DrawableRes int alertItemImageUnselected) {
         this.alertItemImageUnselected = alertItemImageUnselected;
         return this;
     }
@@ -460,12 +473,21 @@ public class PromptConfig {
         return this;
     }
 
-    public int getPickerTextColorButton() {
-        return pickerTextColorButton;
+    public int getPickerTextColorSubmit() {
+        return pickerTextColorSubmit;
     }
 
-    public PromptConfig setPickerTextColorButton(int pickerTextColorButton) {
-        this.pickerTextColorButton = pickerTextColorButton;
+    public PromptConfig setPickerTextColorSubmit(int pickerTextColorSubmit) {
+        this.pickerTextColorSubmit = pickerTextColorSubmit;
+        return this;
+    }
+
+    public int getPickerTextColorCancel() {
+        return pickerTextColorCancel;
+    }
+
+    public PromptConfig setPickerTextColorCancel(int pickerTextColorCancel) {
+        this.pickerTextColorCancel = pickerTextColorCancel;
         return this;
     }
 

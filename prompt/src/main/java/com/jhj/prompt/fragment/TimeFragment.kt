@@ -3,7 +3,9 @@ package com.jhj.prompt.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.support.annotation.DrawableRes
 import android.support.annotation.FloatRange
+import android.support.annotation.Size
 import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
@@ -85,8 +87,8 @@ class TimeFragment : BaseDialogFragment() {
             titleColor = it.getInt(Constants.TITLE_COLOR, config.pickerTextColorTitle)
             titleSize = it.getFloat(Constants.TITLE_SIZE, config.pickerTextSizeTitle)
             submitText = it.getString(Constants.SUBMIT_TEXT, "确定")
-            submitColor = it.getInt(Constants.SUBMIT_TEXT_COLOR, config.pickerTextColorButton)
-            cancelColor = it.getInt(Constants.CANCEL_TEXT_COLOR, config.pickerTextColorButton)
+            submitColor = it.getInt(Constants.SUBMIT_TEXT_COLOR, config.pickerTextColorSubmit)
+            cancelColor = it.getInt(Constants.CANCEL_TEXT_COLOR, config.pickerTextColorCancel)
             cancelText = it.getString(Constants.CANCEL_TEXT, "取消")
             buttonSize = it.getFloat(Constants.BUTTON_SIZE, config.pickerTextSizeButton)
             topBarBackground = it.getInt(Constants.TOPBAR_BACKGROUND_RESOURCE, config.pickerTopBarBackground)
@@ -176,8 +178,8 @@ class TimeFragment : BaseDialogFragment() {
             startCalendar.timeInMillis = startDateMillis
             endCalendar.timeInMillis = endDateMillis
             wheel.setRangDate(startCalendar, endCalendar)
-        } else if (config.timeEndDate.timeInMillis > config.timeStartDate.timeInMillis) {
-            wheel.setRangDate(config.timeStartDate, config.timeEndDate)
+        } else if (config.timeEndCalendar.timeInMillis > config.timeStartCalendar.timeInMillis) {
+            wheel.setRangDate(config.timeStartCalendar, config.timeEndCalendar)
         }
         setTime(dateMillis)
 
@@ -278,7 +280,7 @@ class TimeFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setCancelColor(color: Int): Builder {
+        fun setCancelColor(@DrawableRes color: Int): Builder {
             arg.putInt(Constants.CANCEL_TEXT_COLOR, color)
             return this
         }
@@ -288,7 +290,7 @@ class TimeFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setSubmitColor(color: Int): Builder {
+        fun setSubmitColor(@DrawableRes color: Int): Builder {
             arg.putInt(Constants.SUBMIT_TEXT_COLOR, color)
             return this
         }
@@ -358,7 +360,7 @@ class TimeFragment : BaseDialogFragment() {
             return this
         }
 
-        fun setDisplayStyle(booleanArray: BooleanArray): Builder {
+        fun setDisplayStyle(@Size(6) booleanArray: BooleanArray): Builder {
             arg.putBooleanArray(Constants.DISPLAY_STYLE, booleanArray)
             return this
         }

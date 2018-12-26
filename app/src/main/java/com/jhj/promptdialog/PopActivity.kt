@@ -66,11 +66,6 @@ class PopActivity : AppCompatActivity() {
                     .setOnDismissListener(PopupWindow.OnDismissListener {
                         toast("popupWindow消失")
                     })
-                    .setOnTouchListener(View.OnTouchListener { p0, p1 ->
-                        if (p1.action == KeyEvent.ACTION_DOWN)
-                            toast("触摸了popupWindow")
-                        false
-                    })
                     .build()
                     .showAsDropDown(btn_3)
         }

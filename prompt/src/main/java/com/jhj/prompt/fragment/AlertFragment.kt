@@ -160,13 +160,18 @@ class AlertFragment : BaseDialogFragment() {
                 ?: config.alertItemImageSelected
         val imageUnselectedRes = arguments?.getInt(Constants.ITEM_UNSELECTED_IMAGE, config.alertItemImageUnselected)
                 ?: config.alertItemImageUnselected
+        val itemTextSize = arguments?.getFloat(Constants.ITEM_TEXT_SIZE, config.alertTextSizeItem)
+                ?: config.alertTextSizeItem
+        val itemTextColor = arguments?.getInt(Constants.ITEM_TEXT_COLOR, config.alertTextColorItem)
+                ?: config.alertTextColorItem
 
 
 
         selectedDataList.forEachIndexed { index, text ->
             val itemView = inflater.inflate(R.layout.layout_alert_dialog_item_selected, view.layout_items, false)
             itemView.tv_item_text.text = text
-            itemView.tv_item_text.textColor = Color.BLACK
+            itemView.tv_item_text.textSize = itemTextSize
+            itemView.tv_item_text.textColor = itemTextColor
 
             //没有标题并且是第一个时,没有顶部分割线
             if (index == 0 && title.isNullOrBlank()) {
@@ -218,11 +223,14 @@ class AlertFragment : BaseDialogFragment() {
      */
     private fun setItemStyle(view: View, text: String, textColor: Int, position: Int, size: Int) {
         val listener = arguments?.getSerializable(Constants.LISTENER_ITEM_CLICK) as? OnItemClickListener
+        val itemTextSize = arguments?.getFloat(Constants.ITEM_TEXT_SIZE, config.alertTextSizeItem)
+                ?: config.alertTextSizeItem
         val itemView = inflater.inflate(R.layout.layout_alert_dialog_item, view.layout_items, false)
         val textView = itemView.tv_item_text
         textView.tag = position
         textView.text = text
         textView.setTextColor(textColor)
+        textView.textSize = itemTextSize
 
         //没有标题并且是第一个时,没有顶部分割线
         if (position == 0 && title.isNullOrBlank()) {
@@ -446,6 +454,11 @@ class AlertFragment : BaseDialogFragment() {
 
         fun setSelectedItem(list: ArrayList<Int>): Builder {
             arg.putIntegerArrayList(Constants.ITEM_SELECTED_LIST, list)
+            return this
+        }
+
+        fun setListItemTextSize(textSize: Float): Builder {
+            arg.putFloat(Constants.ITEM_TEXT_SIZE, textSize)
             return this
         }
 
