@@ -165,8 +165,8 @@ class AlertActivity : FragmentActivity() {
                             selected = selectedList;
                         }
                     })
+                    .setSelectedItem(selected.toArrayList())
                     .show()
-            a.setSelectedItem(selected.toArrayList())
         }
     }
 
