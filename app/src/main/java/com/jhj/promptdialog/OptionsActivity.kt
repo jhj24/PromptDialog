@@ -41,8 +41,8 @@ class OptionsActivity : FragmentActivity() {
                     .setSelectOptions(1, 1)
                     .setOptionsBackgroundResource(R.drawable.bg_progress_black_dialog)
                     .setCyclic(false)
-                    .setSubmitListener(object : OnOptionsSelectedListener {
-                        override fun onOptionsSelect(options1: Int?, options2: Int?, options3: Int?) {
+                    .setSubmitListener(object : OnOptionsSelectedListener<AreaUtil.AreaNode> {
+                        override fun onOptionsSelect(options: OptionsFragment<AreaUtil.AreaNode>, options1: Int?, options2: Int?, options3: Int?) {
                             toast(options1.toString())
                         }
                     })
@@ -57,8 +57,8 @@ class OptionsActivity : FragmentActivity() {
                     .setShowItemNum(9)
                     .setAnimation(R.style.anim_dialog_center)
                     .setDialogGravity(Gravity.CENTER)
-                    .setSubmitListener(object : OnOptionsSelectedListener {
-                        override fun onOptionsSelect(options1: Int?, options2: Int?, options3: Int?) {
+                    .setSubmitListener(object : OnOptionsSelectedListener<AreaUtil.AreaNode> {
+                        override fun onOptionsSelect(options: OptionsFragment<AreaUtil.AreaNode>, options1: Int?, options2: Int?, options3: Int?) {
                             toast(options1.toString())
                         }
                     })
@@ -68,8 +68,8 @@ class OptionsActivity : FragmentActivity() {
         two.setOnClickListener {
             OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
                     .setLinkedPicker(provinceList, cityList, districtList)
-                    .setSubmitListener(object : OnOptionsSelectedListener {
-                        override fun onOptionsSelect(options1: Int?, options2: Int?, options3: Int?) {
+                    .setSubmitListener(object : OnOptionsSelectedListener<AreaUtil.AreaNode> {
+                        override fun onOptionsSelect(options: OptionsFragment<AreaUtil.AreaNode>, options1: Int?, options2: Int?, options3: Int?) {
                             toast(options1.toString())
                         }
                     })

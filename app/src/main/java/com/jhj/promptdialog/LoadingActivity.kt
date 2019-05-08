@@ -29,7 +29,7 @@ class LoadingActivity : FragmentActivity() {
                     .setDialogGravity(Gravity.TOP)
                     .setCancelOnTouchOut(false)
                     .setDialogShowOnBackListener(object : BaseDialogFragment.OnDialogShowOnBackListener {
-                        override fun cancel() {
+                        override fun cancel(baseDialogFragment: BaseDialogFragment) {
                             toast("Dialog弹出时，我进行了back操作")
                         }
                     })
@@ -53,7 +53,7 @@ class LoadingActivity : FragmentActivity() {
                     .setCircleColor(Color.RED)
                     .setCircleWidth(4 * resources.displayMetrics.density)
                     .setDialogShowOnBackListener(object : BaseDialogFragment.OnDialogShowOnBackListener {
-                        override fun cancel() {
+                        override fun cancel(baseDialogFragment: BaseDialogFragment) {
                             toast("Dialog弹出时，我进行了back操作")
                         }
                     })

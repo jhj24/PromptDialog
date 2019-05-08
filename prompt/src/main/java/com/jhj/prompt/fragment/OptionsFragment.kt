@@ -54,8 +54,8 @@ class OptionsFragment<T> : BaseDialogFragment() {
     private var xOffset: Int = PromptConfig.PICKER_X_OFFSET
     private var spacingRatio: Float = PromptConfig.PICKER_LINE_SPACEING_RATIO
     private var extraHeight: Int = PromptConfig.PICKER_EXTRA_HEIGHT
-    private var cancelListener: OnOptionsSelectedListener? = null
-    private var submitListener: OnOptionsSelectedListener? = null
+    private var cancelListener: OnOptionsSelectedListener<T>? = null
+    private var submitListener: OnOptionsSelectedListener<T>? = null
 
     private var options1 = 0
     private var options2 = 0
@@ -119,8 +119,8 @@ class OptionsFragment<T> : BaseDialogFragment() {
             buttonSize = it.getFloat(Constants.BUTTON_SIZE, config.pickerTextSizeButton)
             topBarBackground = it.getInt(Constants.TOPBAR_BACKGROUND_RESOURCE, config.pickerTopBarBackground)
             backgroundResource = it.getInt(Constants.OPTIONS_BACKGROUND_RESOURCE, config.pickerOptionsBackground)
-            cancelListener = it.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnOptionsSelectedListener
-            submitListener = it.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnOptionsSelectedListener
+            cancelListener = it.getSerializable(Constants.LISTENER_CANCEL_CLICK) as? OnOptionsSelectedListener<T>
+            submitListener = it.getSerializable(Constants.LISTENER_SUBMIT_CLICK) as? OnOptionsSelectedListener<T>
             optionsTextSize = it.getFloat(Constants.OPTIONS_TEXT_SIZE, config.pickerTextSizeCenter)
             onlyCenterLabel = it.getBoolean(Constants.ONLY_CENTER_LABEL, false)
             colorOut = it.getInt(Constants.TEXT_COLOR_OUT, config.pickerTextColorOUT)
@@ -161,10 +161,10 @@ class OptionsFragment<T> : BaseDialogFragment() {
         view.btn_option_cancel.let { btnCancel ->
             btnCancel.text = cancelText
             btnCancel.textSize = buttonSize
-            btnCancel.setTextColor(ContextCompat.getColorStateList(requireContext(), cancelColor))
+            btnCancel.setTextColor(ContextCompat.getColorStateList(mActivity, cancelColor))
             btnCancel.setOnClickListener {
                 val array = wheel.currentItems
-                cancelListener?.onOptionsSelect(array[0], array[1], array[2])
+                cancelListener?.onOptionsSelect(this,array[0], array[1], array[2])
                 dismiss()
             }
         }
@@ -172,10 +172,10 @@ class OptionsFragment<T> : BaseDialogFragment() {
         view.btn_option_submit.let { btnSubmit ->
             btnSubmit.text = submitText
             btnSubmit.textSize = buttonSize
-            btnSubmit.setTextColor(ContextCompat.getColorStateList(requireContext(), submitColor))
+            btnSubmit.setTextColor(ContextCompat.getColorStateList(mActivity, submitColor))
             btnSubmit.setOnClickListener {
                 val array = wheel.currentItems
-                submitListener?.onOptionsSelect(array[0],array[1],array[2])
+                submitListener?.onOptionsSelect(this,array[0],array[1],array[2])
                 dismiss()
             }
         }
@@ -368,12 +368,12 @@ class OptionsFragment<T> : BaseDialogFragment() {
             return this
         }
 
-        fun setSubmitListener(listener: OnOptionsSelectedListener): Builder<T> {
+        fun setSubmitListener(listener: OnOptionsSelectedListener<T>): Builder<T> {
             arg.putSerializable(Constants.LISTENER_SUBMIT_CLICK, listener)
             return this
         }
 
-        fun setCancelListener(listener: OnOptionsSelectedListener): Builder<T> {
+        fun setCancelListener(listener: OnOptionsSelectedListener<T>): Builder<T> {
             arg.putSerializable(Constants.LISTENER_CANCEL_CLICK, listener)
             return this
         }

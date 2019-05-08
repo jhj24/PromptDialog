@@ -127,7 +127,7 @@ class TimeFragment : BaseDialogFragment() {
         view.btn_option_submit.let { btnSubmit ->
             btnSubmit.text = submitText
             btnSubmit.textSize = buttonSize
-            btnSubmit.setTextColor(ContextCompat.getColorStateList(requireContext(),submitColor))
+            btnSubmit.setTextColor(ContextCompat.getColorStateList(mActivity,submitColor))
             btnSubmit.setOnClickListener {
                 val date = TimeWheel.dateFormat.parse(wheel.time)
                 submitListener?.onTimeSelect(date, wheel.getView())
@@ -138,7 +138,7 @@ class TimeFragment : BaseDialogFragment() {
         view.btn_option_cancel.let { btnCancel ->
             btnCancel.text = cancelText
             btnCancel.textSize = buttonSize
-            btnCancel.setTextColor(ContextCompat.getColorStateList(requireContext(),cancelColor))
+            btnCancel.setTextColor(ContextCompat.getColorStateList(mActivity,cancelColor))
             btnCancel.setOnClickListener {
                 val date = TimeWheel.dateFormat.parse(wheel.time)
                 cancelListener?.onTimeSelect(date, wheel.getView())

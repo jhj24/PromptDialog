@@ -1,5 +1,7 @@
 package com.jhj.prompt.fragment.base
 
+import android.app.Activity
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -32,8 +34,14 @@ abstract class BaseDialogFragment : DialogFragment() {
 
     lateinit var inflater: LayoutInflater
     lateinit var config: PromptConfig
+    lateinit var mActivity: Activity
     abstract val layoutRes: Int
 
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mActivity = context as Activity
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +105,7 @@ abstract class BaseDialogFragment : DialogFragment() {
         val attr = window.attributes
         val dm = DisplayMetrics()
         window.windowManager.defaultDisplay.getMetrics(dm)
-        val density = requireActivity().resources.displayMetrics.density
+        val density = mActivity.resources.displayMetrics.density
 
         val gravity = if (gravity == -1) {
             if (mGravity == null) {
@@ -111,14 +119,11 @@ abstract class BaseDialogFragment : DialogFragment() {
 
 
         //是否有自定义动画，没有根据 Gravity 设置动画
-        val anim = if (anim != -1) {
-            anim
-        } else if (gravity == Gravity.TOP) {
-            R.style.anim_dialog_top
-        } else if (gravity == Gravity.BOTTOM) {
-            R.style.anim_dialog_bottom
-        } else {
-            R.style.anim_dialog_center
+        val anim = when {
+            anim != -1 -> anim
+            gravity == Gravity.TOP -> R.style.anim_dialog_top
+            gravity == Gravity.BOTTOM -> R.style.anim_dialog_bottom
+            else -> R.style.anim_dialog_center
         }
 
 
@@ -160,12 +165,13 @@ abstract class BaseDialogFragment : DialogFragment() {
             }
 
             //透明度
-            if (dim != -1f) { //自定义了透明度
-                it.dimAmount = dim
-            } else if (isBlackStyle) { //设置了黑色样式时，完全透明
-                it.dimAmount = 0f
-            } else { //默认透明度
-                it.dimAmount = 0.3f
+            when {
+                dim != -1f -> //自定义了透明度
+                    it.dimAmount = dim
+                isBlackStyle -> //设置了黑色样式时，完全透明
+                    it.dimAmount = 0f
+                else -> //默认透明度
+                    it.dimAmount = 0.3f
             }
 
             window.attributes = it
@@ -177,13 +183,6 @@ abstract class BaseDialogFragment : DialogFragment() {
             false
         }
 
-    }
-
-    override fun onCancel(dialog: DialogInterface?) {
-        super.onCancel(dialog)
-        if (!isTouchWindow) {
-            backListener?.cancel()
-        }
     }
 
 
@@ -210,8 +209,28 @@ abstract class BaseDialogFragment : DialogFragment() {
         return dialog?.isShowing
     }
 
+
+    override fun onCancel(dialog: DialogInterface?) {
+        super.onCancel(dialog)
+        if (!isTouchWindow) {
+            backListener?.cancel(this)
+        }
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        if (!mActivity.isFinishing) {
+            super.onDismiss(dialog)
+        }
+    }
+
+    override fun dismiss() {
+        if (!mActivity.isFinishing) {
+            super.dismiss()
+        }
+    }
+
     interface OnDialogShowOnBackListener : Serializable {
-        fun cancel()
+        fun cancel(baseDialogFragment: BaseDialogFragment)
     }
 
 }

@@ -81,8 +81,8 @@ abstract class BaseBuilder<T : BaseBuilder<T>>(val mContext: Context) {
     }
 
     open fun dismiss() {
-        fragment.dismiss()
+        if(!fragment.mActivity.isFinishing){
+            fragment.dismiss()
+        }
     }
-
-
 }

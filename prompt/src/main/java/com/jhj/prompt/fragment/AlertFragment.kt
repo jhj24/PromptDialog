@@ -121,9 +121,11 @@ class AlertFragment : BaseDialogFragment() {
 
     override fun initParams(bundle: Bundle?) {
         super.initParams(bundle)
-        selectedDataList = bundle?.getStringArrayList(Constants.ITEM_SELECTED_DATA_LIST) ?: arrayListOf<String>()
+        selectedDataList = bundle?.getStringArrayList(Constants.ITEM_SELECTED_DATA_LIST)
+                ?: arrayListOf<String>()
         selectedStatedArray = bundle?.getIntArray("array") ?: IntArray(selectedDataList.size)
-        selectedMaxNum = bundle?.getInt(Constants.ITEM_SELECTED_MAX, selectedDataList.size) ?: selectedDataList.size
+        selectedMaxNum = bundle?.getInt(Constants.ITEM_SELECTED_MAX, selectedDataList.size)
+                ?: selectedDataList.size
         selectedMinNum = bundle?.getInt(Constants.ITEM_SELECTED_MIN, 1) ?: 1
     }
 
@@ -245,7 +247,7 @@ class AlertFragment : BaseDialogFragment() {
 
         //item点击监听事件
         itemView.setOnClickListener {
-            listener?.onItemClick(textView, textView.tag as Int)
+            listener?.onItemClick(this,textView, textView.tag as Int)
             dismiss()
         }
 
@@ -258,7 +260,7 @@ class AlertFragment : BaseDialogFragment() {
         val listener = arguments?.getParcelable(Constants.CUSTOM_LISTENER) as? OnCustomListener
         if (layoutRes != -1) {
             val layout = inflater.inflate(layoutRes, view.layout_view)
-            listener?.onLayout(layout, this)
+            listener?.onLayout(this,layout, this)
         }
     }
 
@@ -307,7 +309,7 @@ class AlertFragment : BaseDialogFragment() {
             view.btn_negative.textSize = buttonSize
             view.btn_negative.setTextColor(cancelColor)
             view.btn_negative.setOnClickListener {
-                listener.onClick(view.btn_negative)
+                listener.onClick(this,view.btn_negative)
                 dismiss()
             }
         }
@@ -330,9 +332,9 @@ class AlertFragment : BaseDialogFragment() {
                         toast("最少选择${selectedMinNum}个")
                         return@setOnClickListener
                     }
-                    selectedListener.onSelected(intList)
+                    selectedListener.onSelected(this,intList)
                 } else {
-                    submitListener?.onClick(view.btn_positive)
+                    submitListener?.onClick(this,view.btn_positive)
                 }
                 dismiss()
             }
@@ -560,20 +562,20 @@ class AlertFragment : BaseDialogFragment() {
     }
 
     interface OnItemSelectedListener : Serializable {
-        fun onSelected(selectedList: List<Int>)
+        fun onSelected(alert: AlertFragment, selectedList: List<Int>)
     }
 
     interface OnButtonClickedListener : Serializable {
-        fun onClick(view: View?)
+        fun onClick(alert: AlertFragment, view: View?)
     }
 
     interface OnItemClickListener : Serializable {
-        fun onItemClick(view: View, position: Int)
+        fun onItemClick(alert: AlertFragment, view: View, position: Int)
     }
 
     interface OnCustomListener : Parcelable {
 
-        fun onLayout(view: View, alertFragment: AlertFragment)
+        fun onLayout(alert: AlertFragment, view: View, alertFragment: AlertFragment)
 
         override fun writeToParcel(dest: Parcel?, flags: Int) {
         }
