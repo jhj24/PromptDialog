@@ -27,7 +27,7 @@ import org.jetbrains.anko.textColor
  * Created by jhj on 2018-3-6 0006.
  */
 
-class OptionsFragment<T> : BaseDialogFragment() {
+class OptionsFragment<T> : BaseDialogFragment<OptionsFragment<T>>() {
 
     private lateinit var wheel: OptionsWheel<T>
 
@@ -227,7 +227,7 @@ class OptionsFragment<T> : BaseDialogFragment() {
     }
 
 
-    class Builder<T>(val context: Context) : BaseBuilder<Builder<T>>(context) {
+    class Builder<T>(val context: Context) : BaseBuilder<OptionsFragment<T>,Builder<T>>(context) {
 
         private val mFragment = OptionsFragment<T>()
 

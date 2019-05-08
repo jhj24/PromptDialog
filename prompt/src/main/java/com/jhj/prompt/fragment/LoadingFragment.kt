@@ -16,7 +16,7 @@ import org.jetbrains.anko.textColor
  * 处于加载中的dialogFragment
  * Created by jhj on 2018-3-15 0015.
  */
-class LoadingFragment : BaseDialogFragment() {
+class LoadingFragment : BaseDialogFragment<LoadingFragment>() {
 
     enum class LoadingStyle {
         OLD_STYLE,
@@ -109,7 +109,7 @@ class LoadingFragment : BaseDialogFragment() {
         view.layout_progress_dialog.backgroundResource = mBackgroundResource
     }
 
-    class Builder(val context: Context) : BaseBuilder<Builder>(context) {
+    class Builder(val context: Context) : BaseBuilder<LoadingFragment,Builder>(context) {
 
         private val mFragment = LoadingFragment()
 

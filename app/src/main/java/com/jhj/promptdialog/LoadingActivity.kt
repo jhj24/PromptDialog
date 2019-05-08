@@ -10,6 +10,7 @@ import android.view.KeyEvent
 import com.jhj.prompt.fragment.base.BaseDialogFragment
 import com.jhj.prompt.fragment.LoadingFragment
 import com.jhj.prompt.fragment.PercentFragment
+import com.jhj.prompt.fragment.base.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.activity_loading.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
@@ -28,8 +29,8 @@ class LoadingActivity : FragmentActivity() {
                     .setText("111")
                     .setDialogGravity(Gravity.TOP)
                     .setCancelOnTouchOut(false)
-                    .setDialogShowOnBackListener(object : BaseDialogFragment.OnDialogShowOnBackListener {
-                        override fun cancel(baseDialogFragment: BaseDialogFragment) {
+                    .setDialogShowOnBackListener(object : OnDialogShowOnBackListener<LoadingFragment> {
+                        override fun cancel(fragment: LoadingFragment) {
                             toast("Dialog弹出时，我进行了back操作")
                         }
                     })
@@ -52,8 +53,8 @@ class LoadingActivity : FragmentActivity() {
                     .setCircleRadius((40 * resources.displayMetrics.density).toInt())
                     .setCircleColor(Color.RED)
                     .setCircleWidth(4 * resources.displayMetrics.density)
-                    .setDialogShowOnBackListener(object : BaseDialogFragment.OnDialogShowOnBackListener {
-                        override fun cancel(baseDialogFragment: BaseDialogFragment) {
+                    .setDialogShowOnBackListener(object : OnDialogShowOnBackListener<LoadingFragment> {
+                        override fun cancel(fragment: LoadingFragment) {
                             toast("Dialog弹出时，我进行了back操作")
                         }
                     })

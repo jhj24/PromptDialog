@@ -27,7 +27,7 @@ import java.io.Serializable
  * 提示框
  * Created by jhj on 2018-3-14 0014.
  */
-class AlertFragment : BaseDialogFragment() {
+class AlertFragment : BaseDialogFragment<AlertFragment>() {
 
     private var title: String? = null
     private var density = 3f
@@ -247,7 +247,7 @@ class AlertFragment : BaseDialogFragment() {
 
         //item点击监听事件
         itemView.setOnClickListener {
-            listener?.onItemClick(this,textView, textView.tag as Int)
+            listener?.onItemClick(this, textView, textView.tag as Int)
             dismiss()
         }
 
@@ -260,7 +260,7 @@ class AlertFragment : BaseDialogFragment() {
         val listener = arguments?.getParcelable(Constants.CUSTOM_LISTENER) as? OnCustomListener
         if (layoutRes != -1) {
             val layout = inflater.inflate(layoutRes, view.layout_view)
-            listener?.onLayout(this,layout, this)
+            listener?.onLayout(this, layout, this)
         }
     }
 
@@ -309,7 +309,7 @@ class AlertFragment : BaseDialogFragment() {
             view.btn_negative.textSize = buttonSize
             view.btn_negative.setTextColor(cancelColor)
             view.btn_negative.setOnClickListener {
-                listener.onClick(this,view.btn_negative)
+                listener.onClick(this, view.btn_negative)
                 dismiss()
             }
         }
@@ -332,9 +332,9 @@ class AlertFragment : BaseDialogFragment() {
                         toast("最少选择${selectedMinNum}个")
                         return@setOnClickListener
                     }
-                    selectedListener.onSelected(this,intList)
+                    selectedListener.onSelected(this, intList)
                 } else {
-                    submitListener?.onClick(this,view.btn_positive)
+                    submitListener?.onClick(this, view.btn_positive)
                 }
                 dismiss()
             }
@@ -378,11 +378,11 @@ class AlertFragment : BaseDialogFragment() {
     }
 
 
-    class Builder(val context: Context) : BaseBuilder<Builder>(context) {
+    class Builder(val context: Context) : BaseBuilder<AlertFragment, Builder>(context) {
 
         private val mFragment = AlertFragment()
 
-        override val fragment: BaseDialogFragment
+        override val fragment: AlertFragment
             get() = mFragment
 
         fun setDialogBottomSeparate(isSeparate: Boolean): Builder {

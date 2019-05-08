@@ -11,13 +11,12 @@ import android.view.*
 import com.jhj.prompt.R
 import com.jhj.prompt.fragment.AlertFragment
 import org.jetbrains.anko.padding
-import java.io.Serializable
 
 /**
  * DialogFragment基类
  * Created by jhj on 2018-3-14 0014.
  */
-abstract class BaseDialogFragment : DialogFragment() {
+abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() {
 
     var mGravity: Int? = null
     private var cancelOut = true
@@ -30,7 +29,7 @@ abstract class BaseDialogFragment : DialogFragment() {
     private var anim = -1
     private var gravity = -1
     private var isTouchWindow = false
-    private var backListener: OnDialogShowOnBackListener? = null
+    private var backListener: OnDialogShowOnBackListener<T>? = null
 
     lateinit var inflater: LayoutInflater
     lateinit var config: PromptConfig
@@ -96,7 +95,7 @@ abstract class BaseDialogFragment : DialogFragment() {
             anim = it.getInt(Constants.ANIMATION, -1)
             gravity = it.getInt(Constants.DIALOG_GRAVITY, -1)
             cancelOut = it.getBoolean(Constants.OUT_SIDE_CANCEL, true)
-            backListener = it.getSerializable(Constants.DIALOG_ON_BACK_LISTENER) as? OnDialogShowOnBackListener
+            backListener = it.getSerializable(Constants.DIALOG_ON_BACK_LISTENER) as? OnDialogShowOnBackListener<T>
         }
     }
 
@@ -213,7 +212,7 @@ abstract class BaseDialogFragment : DialogFragment() {
     override fun onCancel(dialog: DialogInterface?) {
         super.onCancel(dialog)
         if (!isTouchWindow) {
-            backListener?.cancel(this)
+            backListener?.cancel(this as T)
         }
     }
 
@@ -229,9 +228,6 @@ abstract class BaseDialogFragment : DialogFragment() {
         }
     }
 
-    interface OnDialogShowOnBackListener : Serializable {
-        fun cancel(baseDialogFragment: BaseDialogFragment)
-    }
 
 }
 

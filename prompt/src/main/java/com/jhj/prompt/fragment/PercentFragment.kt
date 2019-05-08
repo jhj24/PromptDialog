@@ -19,7 +19,7 @@ import org.jetbrains.anko.textColor
  * 处于加载中的dialogFragment
  * Created by jhj on 2018-3-15 0015.
  */
-class PercentFragment : BaseDialogFragment() {
+class PercentFragment : BaseDialogFragment<PercentFragment>() {
 
     private var mView: View? = null
     private var isCancel = false
@@ -92,17 +92,27 @@ class PercentFragment : BaseDialogFragment() {
                 ?: config.maxProgress
         //黑色主题
         if (isBlackStyle) {
-            textColor = arguments?.getInt(Constants.MESSAGE_COLOR, config.blackStyleTextColor) ?: config.blackStyleTextColor
-            scaleColor = arguments?.getInt(Constants.SCALE_COLOR, config.blackStyleScaleColor) ?: config.blackStyleScaleColor
-            circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, config.blackStyleCircleColor) ?: config.blackStyleCircleColor
-            bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, config.blackStyleCircleBottomColor) ?: config.blackStyleCircleBottomColor
-            backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, config.blackStyleBackground) ?: config.blackStyleBackground
+            textColor = arguments?.getInt(Constants.MESSAGE_COLOR, config.blackStyleTextColor)
+                    ?: config.blackStyleTextColor
+            scaleColor = arguments?.getInt(Constants.SCALE_COLOR, config.blackStyleScaleColor)
+                    ?: config.blackStyleScaleColor
+            circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, config.blackStyleCircleColor)
+                    ?: config.blackStyleCircleColor
+            bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, config.blackStyleCircleBottomColor)
+                    ?: config.blackStyleCircleBottomColor
+            backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, config.blackStyleBackground)
+                    ?: config.blackStyleBackground
         } else {
-            textColor = arguments?.getInt(Constants.MESSAGE_COLOR, config.whiteStyleTextColor) ?: config.whiteStyleTextColor
-            scaleColor = arguments?.getInt(Constants.SCALE_COLOR, config.whiteStyleScaleColor) ?: config.whiteStyleScaleColor
-            circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, config.whiteStyleCircleColor) ?: config.whiteStyleCircleColor
-            bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, config.whiteStyleCircleBottomColor) ?: config.whiteStyleCircleBottomColor
-            backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, config.whiteStyleBackground) ?: config.whiteStyleBackground
+            textColor = arguments?.getInt(Constants.MESSAGE_COLOR, config.whiteStyleTextColor)
+                    ?: config.whiteStyleTextColor
+            scaleColor = arguments?.getInt(Constants.SCALE_COLOR, config.whiteStyleScaleColor)
+                    ?: config.whiteStyleScaleColor
+            circleColor = arguments?.getInt(Constants.CIRCLE_COLOR, config.whiteStyleCircleColor)
+                    ?: config.whiteStyleCircleColor
+            bottomCircleColor = arguments?.getInt(Constants.CIRCLE_BOTTOM_COLOR, config.whiteStyleCircleBottomColor)
+                    ?: config.whiteStyleCircleBottomColor
+            backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, config.whiteStyleBackground)
+                    ?: config.whiteStyleBackground
         }
 
         val circleView = view.circle_progress
@@ -135,7 +145,7 @@ class PercentFragment : BaseDialogFragment() {
         view.layout_progress_dialog.backgroundResource = backgroundResource
     }
 
-    class Builder(val context: Context) : BaseBuilder<Builder>(context) {
+    class Builder(val context: Context) : BaseBuilder<PercentFragment, Builder>(context) {
 
         private var maxProgress = 100
         private val mFragment = PercentFragment()

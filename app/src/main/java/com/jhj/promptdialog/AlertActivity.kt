@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.view.Gravity
 import android.view.View
 import com.jhj.prompt.fragment.AlertFragment
-import com.jhj.prompt.fragment.base.BaseDialogFragment
+import com.jhj.prompt.fragment.base.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.activity_alert.*
 import kotlinx.android.synthetic.main.layout_image.view.*
 import org.jetbrains.anko.toast
@@ -118,6 +118,11 @@ class AlertActivity : FragmentActivity() {
                         }
 
                     })
+                    .setDialogShowOnBackListener(object : OnDialogShowOnBackListener<AlertFragment> {
+                        override fun cancel(fragment: AlertFragment) {
+
+                        }
+                    })
                     .setCancelListener(object : AlertFragment.OnButtonClickedListener {
                         override fun onClick(alert: AlertFragment, view: View?) {
                             toast("取消")
@@ -145,10 +150,11 @@ class AlertActivity : FragmentActivity() {
                             toast("取消")
                         }
                     })
-                    .setDialogShowOnBackListener(object : BaseDialogFragment.OnDialogShowOnBackListener {
-                        override fun cancel(baseDialogFragment: BaseDialogFragment) {
+                    .setDialogShowOnBackListener(object : OnDialogShowOnBackListener<AlertFragment> {
+                        override fun cancel(fragment: AlertFragment) {
                             toast("点击了返回按钮")
                         }
+
                     })
                     .show()
         }
@@ -172,11 +178,10 @@ class AlertActivity : FragmentActivity() {
                         }
                     })
                     .setSelectedItem(selected.toArrayList())
-                    .setDialogShowOnBackListener(object : BaseDialogFragment.OnDialogShowOnBackListener {
-                        override fun cancel(baseDialogFragment: BaseDialogFragment) {
+                    .setDialogShowOnBackListener(object : OnDialogShowOnBackListener<AlertFragment> {
+                        override fun cancel(fragment: AlertFragment) {
 
                         }
-
                     })
                     .show()
         }

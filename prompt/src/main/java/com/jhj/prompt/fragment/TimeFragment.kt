@@ -29,7 +29,7 @@ import java.util.*
  * Created by jhj on 2018-3-6 0006.
  */
 
-class TimeFragment : BaseDialogFragment() {
+class TimeFragment : BaseDialogFragment<TimeFragment>() {
 
     private lateinit var wheel: TimeWheel
 
@@ -253,7 +253,7 @@ class TimeFragment : BaseDialogFragment() {
     }
 
 
-    class Builder(val context: Context) : BaseBuilder<Builder>(context) {
+    class Builder(val context: Context) : BaseBuilder<TimeFragment,Builder>(context) {
 
         private val mFragment = TimeFragment()
 
