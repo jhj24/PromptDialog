@@ -72,10 +72,10 @@ class AlertActivity : FragmentActivity() {
             AlertFragment.Builder(this@AlertActivity)
                     .setTitle("自定义")
                     .setCustomLayoutRes(R.layout.layout_image, object : AlertFragment.OnCustomListener {
-                        override fun onLayout(alert: AlertFragment, view: View, alertFragment: AlertFragment) {
+                        override fun onLayout(alert: AlertFragment, view: View) {
                             view.image.setOnClickListener {
                                 toast("自定义样式")
-                                alertFragment.dismiss()
+                                alert.dismiss()
                             }
                         }
 

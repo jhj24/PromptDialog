@@ -260,7 +260,7 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
         val listener = arguments?.getParcelable(Constants.CUSTOM_LISTENER) as? OnCustomListener
         if (layoutRes != -1) {
             val layout = inflater.inflate(layoutRes, view.layout_view)
-            listener?.onLayout(this, layout, this)
+            listener?.onLayout(this, layout)
         }
     }
 
@@ -575,7 +575,7 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
 
     interface OnCustomListener : Parcelable {
 
-        fun onLayout(alert: AlertFragment, view: View, alertFragment: AlertFragment)
+        fun onLayout(alert: AlertFragment, view: View)
 
         override fun writeToParcel(dest: Parcel?, flags: Int) {
         }
