@@ -228,6 +228,9 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
         }
     }
 
-
+    override fun onPause() {
+        super.onPause()
+        dismiss()
+    }
 }
 
