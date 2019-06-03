@@ -45,6 +45,7 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
     private var isHasItemSelected: Boolean = false
     private var isHasCustomLayout: Boolean = false
     private var listItemSize = 7
+    private var isSetMaxItemSize = true
 
     override val layoutRes: Int
         get() = R.layout.layout_alert_dialog
@@ -53,7 +54,7 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
     override fun setAttributes(window: Window) {
         super.setAttributes(window)
 
-        if ((isHasItemCommon || isHasItemSelected) && !isHasCustomLayout) { //显示Item
+        if ((isHasItemCommon || isHasItemSelected) && !isHasCustomLayout && isSetMaxItemSize) { //显示Item
             val size = selectedDataList.size
             if (size > listItemSize) {
                 val attr = window.attributes
@@ -157,6 +158,8 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
                 ?: false
         listItemSize = arguments?.getInt(Constants.SHOW_MAX_ITEM_SIZE, 7)
                 ?: 7
+        isSetMaxItemSize = arguments?.getBoolean(Constants.IS_SET_MAX_ITEM_SIZE, true)
+                ?: true
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -534,6 +537,11 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
 
         fun setShowMaxItemSize(itemSize: Int): Builder {
             arg.putInt(Constants.SHOW_MAX_ITEM_SIZE, itemSize)
+            return this
+        }
+
+        fun setMaxItemSize(isSetMaxItemSize: Boolean): Builder {
+            arg.putBoolean(Constants.IS_SET_MAX_ITEM_SIZE, isSetMaxItemSize)
             return this
         }
 

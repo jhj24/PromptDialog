@@ -58,6 +58,7 @@ object Constants {
     const val ITEM_UNSELECTED_IMAGE = "item_unselected_image"
     const val LISTENER_ITEM_CLICK = "listener_item_click"
     const val SHOW_MAX_ITEM_SIZE = "list_item_size"
+    const val IS_SET_MAX_ITEM_SIZE = "is_set_max_item_size"
 
     //alertFragment样式
     const val DIALOG_STYLE = "dialog_style"
