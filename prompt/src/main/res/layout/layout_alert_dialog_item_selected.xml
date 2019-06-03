@@ -12,7 +12,7 @@
         android:layout_height="@dimen/height_alert_item"
         android:layout_toLeftOf="@+id/iv_alert_selected"
         android:gravity="left|center_vertical"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:textSize="@dimen/textSize_alert_item"
         tools:text="内容" />
 
@@ -23,7 +23,7 @@
         android:layout_height="18dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="15dp"
         android:src="@drawable/icon_choice_no" />
 
     <View

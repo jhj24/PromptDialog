@@ -84,7 +84,6 @@ class AlertActivity : FragmentActivity() {
                             toast("取消")
                         }
                     })
-                    .setDialogHeight(700)
                     .show()
         }
         btn_bottom.setOnClickListener {
@@ -164,7 +163,6 @@ class AlertActivity : FragmentActivity() {
             val a = AlertFragment.Builder(this@AlertActivity)
                     .setDialogGravity(Gravity.BOTTOM)
                     .setSelectedDataList(arrayListOf("1111", "2222", "3333", "44444", "5555", "6666", "1111", "2222", "3333", "44444", "5555", "6666"))
-                    .setDialogHeight(1200)
                     .setDialogBottomSeparate(true)
                     .setTitle("选择")
                     .setSelectedItemMax(3)
