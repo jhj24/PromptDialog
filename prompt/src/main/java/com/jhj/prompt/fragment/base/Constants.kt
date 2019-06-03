@@ -7,8 +7,6 @@ package com.jhj.prompt.fragment.base
 object Constants {
 
     //============dialog属性==============
-
-    const val DIALOG_HEIGHT = "dialog_height" //设置dialog固定高度
     const val DIM_AMOUNT = "dim_amount" // 设置透明度
     const val ANIMATION = "animation" //设置动画
     const val DIALOG_GRAVITY = "dialog_gravity" //设置位置
@@ -59,6 +57,7 @@ object Constants {
     const val ITEM_SELECTED_IMAGE = "item_selected_image"
     const val ITEM_UNSELECTED_IMAGE = "item_unselected_image"
     const val LISTENER_ITEM_CLICK = "listener_item_click"
+    const val SHOW_MAX_ITEM_SIZE = "list_item_size"
 
     //alertFragment样式
     const val DIALOG_STYLE = "dialog_style"

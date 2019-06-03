@@ -38,13 +38,6 @@ abstract class BaseBuilder<F:BaseDialogFragment<F>,T : BaseBuilder<F,T>>(val mCo
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun setDialogHeight(@IntRange(from = 0) dialogHeight: Int): T {
-        arg.putInt(Constants.DIALOG_HEIGHT, dialogHeight)
-        return this as T
-    }
-
-
-    @Suppress("UNCHECKED_CAST")
     fun setCancelOnTouchOut(isCancel: Boolean): T {
         arg.putBoolean(Constants.OUT_SIDE_CANCEL, isCancel)
         return this as T

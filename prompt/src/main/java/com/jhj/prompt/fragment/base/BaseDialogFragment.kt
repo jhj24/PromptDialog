@@ -11,6 +11,7 @@ import android.view.*
 import com.jhj.prompt.R
 import com.jhj.prompt.fragment.AlertFragment
 import org.jetbrains.anko.padding
+import org.jetbrains.anko.support.v4.dimen
 
 /**
  * DialogFragment基类
@@ -20,9 +21,8 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
 
     var mGravity: Int? = null
     private var cancelOut = true
-    private var dialogHeight = -1
     private var marginTop = -1
-    private var marginBottom = -1
+    protected var marginBottom = -1
     private var marginHorizontal = -1
     private var dim = 0.3f
     private var isBlackStyle = false
@@ -69,7 +69,6 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.let {
-            it.putInt(Constants.DIALOG_HEIGHT, dialogHeight)
             it.putInt(Constants.MARGIN_TOP, marginTop)
             it.putInt(Constants.MARGIN_BOTTOM, marginBottom)
             it.putInt(Constants.MARGIN_HORIZONTAL, marginHorizontal)
@@ -80,13 +79,11 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
             it.putBoolean(Constants.OUT_SIDE_CANCEL, cancelOut)
             it.putSerializable(Constants.DIALOG_ON_BACK_LISTENER, backListener)
         }
-
-
     }
 
     open fun initParams(bundle: Bundle?) {
         bundle?.let {
-            dialogHeight = it.getInt(Constants.DIALOG_HEIGHT, -1)
+
             marginTop = it.getInt(Constants.MARGIN_TOP, -1)
             marginBottom = it.getInt(Constants.MARGIN_BOTTOM, -1)
             marginHorizontal = it.getInt(Constants.MARGIN_HORIZONTAL, -1)
@@ -99,8 +96,7 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
         }
     }
 
-
-    private fun setAttributes(window: Window) {
+    open fun setAttributes(window: Window) {
         val attr = window.attributes
         val dm = DisplayMetrics()
         window.windowManager.defaultDisplay.getMetrics(dm)
@@ -137,7 +133,7 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
             } else if (gravity == Gravity.TOP && marginTop != -1) {  //dialog 在顶部时设置Margin Top 才起作用
                 it.y = marginTop
             } else if (this is AlertFragment && gravity == Gravity.BOTTOM && marginBottom == -1) { //dialog 是AlertFragment，并且在底部，则默认5dp的偏移
-                it.y = (density * 5).toInt()
+                it.y = dimen(R.dimen.margin_button_separate)
             }
 
             // 设置 Dialog 宽度
@@ -153,14 +149,6 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
                 } else { //默认 Dialog 宽度
                     WindowManager.LayoutParams.WRAP_CONTENT
                 }
-            }
-
-
-            //设置 Dialog 高度
-            it.height = if (dialogHeight == -1) {
-                WindowManager.LayoutParams.WRAP_CONTENT
-            } else {
-                dialogHeight
             }
 
             //透明度
@@ -200,7 +188,8 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
              *      出现一个AlertFragment后，屏幕旋转（没有设置配置文件，Activity生命周期方法重新运行），
              * 点击确认/取消安全，想弹出另一个提示框时，出现异常
              */
-            throw IllegalStateException("Activity has been destroyed")
+            // throw IllegalStateException("Activity has been destroyed")
+            e.printStackTrace()
         }
     }
 

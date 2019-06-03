@@ -8,7 +8,9 @@ import android.os.Parcelable
 import android.support.annotation.DrawableRes
 import android.support.annotation.IntRange
 import android.support.annotation.LayoutRes
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.LinearLayout
 import com.jhj.prompt.R
 import com.jhj.prompt.fragment.base.BaseBuilder
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.layout_alert_dialog_body.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_button.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_item_selected.view.*
 import org.jetbrains.anko.imageResource
+import org.jetbrains.anko.support.v4.dimen
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.textColor
 import java.io.Serializable
@@ -29,8 +32,8 @@ import java.io.Serializable
  */
 class AlertFragment : BaseDialogFragment<AlertFragment>() {
 
+
     private var title: String? = null
-    private var density = 3f
     var submitButtonShow = false//是否有确定按钮
     var cancelButtonShow = false//是否有取消按钮
     private var isButtonSeparate: Boolean = false//内容与按钮是否分离
@@ -38,21 +41,38 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
     private lateinit var selectedDataList: ArrayList<String>
     private var selectedMaxNum = -1
     private var selectedMinNum = 1
+    private var isHasItemCommon: Boolean = false
+    private var isHasItemSelected: Boolean = false
+    private var isHasCustomLayout: Boolean = false
+    private var listItemSize = 7
 
     override val layoutRes: Int
         get() = R.layout.layout_alert_dialog
+
+
+    override fun setAttributes(window: Window) {
+        super.setAttributes(window)
+
+        if ((isHasItemCommon || isHasItemSelected) && !isHasCustomLayout) { //显示Item
+            val size = selectedDataList.size
+            if (size > listItemSize) {
+                val attr = window.attributes
+                val buttonHeight = dimen(R.dimen.height_alert_button)
+                attr.height = if (attr.gravity == Gravity.BOTTOM && marginBottom == -1) {
+                    buttonHeight + dimen(R.dimen.margin_button_separate) + dimen(R.dimen.height_alert_item) * 8 + dimen(R.dimen.height_bottom_item_title)
+                } else {
+                    buttonHeight + dimen(R.dimen.height_alert_item) * 6 + dimen(R.dimen.height_bottom_item_title)
+                }
+                window.attributes = attr
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.isButtonSeparate = arguments?.getBoolean(Constants.DIALOG_STYLE) ?: false
         val backgroundResource = arguments?.getInt(Constants.BACKGROUND_RESOURCE, config.alertBackgroundResource)
                 ?: config.alertBackgroundResource
-        val isHasItemCommon = arguments?.getBoolean(Constants.is_HAS_ITEM_LAYOUT, false)
-                ?: false
-        val isHasItemSelected = arguments?.getBoolean(Constants.IS_HAS_ITEM_SELECTED, false)
-                ?: false
-        val isHasCustomLayout = arguments?.getBoolean(Constants.IS_HAS_CUSTOM_LAYOUT, false)
-                ?: false
         val selectedItemList = arguments?.getIntegerArrayList(Constants.ITEM_SELECTED_LIST)
         selectedItemList?.let {
             selectedStatedArray.forEachIndexed { index, i ->
@@ -73,7 +93,7 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
         } else if ((isHasItemCommon || isHasItemSelected) && !isHasCustomLayout) {
             //显示数组时，标题栏高度
             val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.height = (density * 40).toInt()
+            params.height = dimen(R.dimen.height_bottom_item_title)
             view.tv_alert_title.layoutParams = params
             view.tv_alert_title.textSize = config.alertTextSizeItemTitle
             view.tv_alert_title.setTextColor(arguments?.getInt(Constants.TITLE_COLOR, config.alertTextColorItemTitle)
@@ -123,10 +143,20 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
         super.initParams(bundle)
         selectedDataList = bundle?.getStringArrayList(Constants.ITEM_SELECTED_DATA_LIST)
                 ?: arrayListOf<String>()
-        selectedStatedArray = bundle?.getIntArray("array") ?: IntArray(selectedDataList.size)
+        selectedStatedArray = bundle?.getIntArray("array")
+                ?: IntArray(selectedDataList.size)
         selectedMaxNum = bundle?.getInt(Constants.ITEM_SELECTED_MAX, selectedDataList.size)
                 ?: selectedDataList.size
-        selectedMinNum = bundle?.getInt(Constants.ITEM_SELECTED_MIN, 1) ?: 1
+        selectedMinNum = bundle?.getInt(Constants.ITEM_SELECTED_MIN, 1)
+                ?: 1
+        isHasItemCommon = arguments?.getBoolean(Constants.is_HAS_ITEM_LAYOUT, false)
+                ?: false
+        isHasItemSelected = arguments?.getBoolean(Constants.IS_HAS_ITEM_SELECTED, false)
+                ?: false
+        isHasCustomLayout = arguments?.getBoolean(Constants.IS_HAS_CUSTOM_LAYOUT, false)
+                ?: false
+        listItemSize = arguments?.getInt(Constants.SHOW_MAX_ITEM_SIZE, 7)
+                ?: 7
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -276,7 +306,7 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
 
             //内容与按钮分开的中间间距为 5dp
             val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.setMargins(0, (5 * density).toInt(), 0, 0)
+            params.setMargins(0, dimen(R.dimen.margin_button_separate), 0, 0)
             view.layout_button_separate.layoutParams = params
 
         } else {
@@ -499,6 +529,11 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
 
         fun setListSelectedListener(listener: OnItemSelectedListener): Builder {
             setListSelectedListener(null, listener)
+            return this
+        }
+
+        fun setShowMaxItemSize(itemSize: Int): Builder {
+            arg.putInt(Constants.SHOW_MAX_ITEM_SIZE, itemSize)
             return this
         }
 

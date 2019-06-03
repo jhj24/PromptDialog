@@ -25,6 +25,7 @@
     <dimen name="height_alert_button">48dp</dimen>
 
     <dimen name="marginBottom_alert_msg">15dp</dimen>
+    <dimen name="margin_button_separate">5dp</dimen><!--按钮上下的间距-->
 
     <!--progress-->
     ====================================================
