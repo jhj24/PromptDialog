@@ -59,9 +59,9 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
                 val attr = window.attributes
                 val buttonHeight = dimen(R.dimen.height_alert_button)
                 attr.height = if (attr.gravity == Gravity.BOTTOM && marginBottom == -1) {
-                    buttonHeight + dimen(R.dimen.margin_button_separate) + dimen(R.dimen.height_alert_item) * 8 + dimen(R.dimen.height_bottom_item_title)
+                    buttonHeight + dimen(R.dimen.margin_button_separate) + dimen(R.dimen.height_alert_item) * listItemSize + dimen(R.dimen.height_bottom_item_title)
                 } else {
-                    buttonHeight + dimen(R.dimen.height_alert_item) * 6 + dimen(R.dimen.height_bottom_item_title)
+                    buttonHeight + dimen(R.dimen.height_alert_item) * listItemSize + dimen(R.dimen.height_bottom_item_title)
                 }
                 window.attributes = attr
             }
