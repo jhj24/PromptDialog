@@ -70,7 +70,6 @@ class AlertActivity : FragmentActivity() {
 
         btn_custom_layout.setOnClickListener {
             AlertFragment.Builder(this@AlertActivity)
-                    .setTitle("自定义")
                     .setCustomLayoutRes(R.layout.layout_image, object : AlertFragment.OnCustomListener {
                         override fun onLayout(alert: AlertFragment, view: View) {
                             view.image.setOnClickListener {
@@ -79,10 +78,6 @@ class AlertActivity : FragmentActivity() {
                             }
                         }
 
-                    }).setCancelListener(object : AlertFragment.OnButtonClickedListener {
-                        override fun onClick(alert: AlertFragment, view: View?) {
-                            toast("取消")
-                        }
                     })
                     .show()
         }

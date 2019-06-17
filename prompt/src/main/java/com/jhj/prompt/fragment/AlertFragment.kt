@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.layout_alert_dialog.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_body.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_button.view.*
 import kotlinx.android.synthetic.main.layout_alert_dialog_item_selected.view.*
+import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.support.v4.dimen
 import org.jetbrains.anko.support.v4.toast
@@ -128,6 +129,7 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
             view.tv_alert_msg.visibility = View.GONE
             view.layout_items.visibility = View.GONE
             view.layout_view.visibility = View.VISIBLE
+            view.layout_alert_dialog.backgroundResource = Color.TRANSPARENT
         } else if (isHasItemSelected) {
             setSelectItem(view)
             view.tv_alert_msg.visibility = View.GONE//显示列表时，不显示msg布局
