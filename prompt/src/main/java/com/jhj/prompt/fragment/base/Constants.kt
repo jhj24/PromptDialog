@@ -15,6 +15,7 @@ object Constants {
     const val MARGIN_BOTTOM = "margin_bottom" //底部边距
     const val MARGIN_TOP = "margin_top" //头部边距
     const val DIALOG_ON_BACK_LISTENER: String = "dialog_cancel_listener" //dialog弹出后点击返回按钮监听
+    const val DIALOG_ON_DISMISS_LISTENER: String = "dialog_cancel_listener" //dialog弹出后点击返回按钮监听
 
     //标题
     const val TITLE = "title"

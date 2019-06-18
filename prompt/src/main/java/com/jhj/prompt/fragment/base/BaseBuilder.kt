@@ -7,7 +7,7 @@ import android.support.annotation.IntRange
 import android.support.annotation.StyleRes
 import android.support.v4.app.FragmentActivity
 
-abstract class BaseBuilder<F:BaseDialogFragment<F>,T : BaseBuilder<F,T>>(val mContext: Context) {
+abstract class BaseBuilder<F : BaseDialogFragment<F>, T : BaseBuilder<F, T>>(val mContext: Context) {
 
     val arg = Bundle()
 
@@ -63,6 +63,12 @@ abstract class BaseBuilder<F:BaseDialogFragment<F>,T : BaseBuilder<F,T>>(val mCo
     }
 
     @Suppress("UNCHECKED_CAST")
+    fun setOnDialogDismissListener(listener: OnDialogDismissListener): T {
+        arg.putSerializable(Constants.DIALOG_ON_DISMISS_LISTENER, listener)
+        return this as T
+    }
+
+    @Suppress("UNCHECKED_CAST")
     fun show(): T {
         fragment.arguments = arg
         fragment.show((mContext as FragmentActivity).supportFragmentManager)
@@ -74,8 +80,6 @@ abstract class BaseBuilder<F:BaseDialogFragment<F>,T : BaseBuilder<F,T>>(val mCo
     }
 
     open fun dismiss() {
-        if(!fragment.mActivity.isFinishing){
-            fragment.dismiss()
-        }
+        fragment.dismiss()
     }
 }

@@ -30,6 +30,7 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
     private var gravity = -1
     private var isTouchWindow = false
     private var backListener: OnDialogShowOnBackListener<T>? = null
+    private var dismissListener: OnDialogDismissListener? = null
 
     lateinit var inflater: LayoutInflater
     lateinit var config: PromptConfig
@@ -63,6 +64,7 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
         //设置dialog背景透明
         dialog.window?.setBackgroundDrawableResource(R.drawable.transition)
         dialog.window?.let { setAttributes(it) }
+        setOnDialogDismissListener()
         return inflater.inflate(layoutRes, container, false)
     }
 
@@ -78,6 +80,7 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
             it.putInt(Constants.DIALOG_GRAVITY, gravity)
             it.putBoolean(Constants.OUT_SIDE_CANCEL, cancelOut)
             it.putSerializable(Constants.DIALOG_ON_BACK_LISTENER, backListener)
+            it.putSerializable(Constants.DIALOG_ON_DISMISS_LISTENER, dismissListener)
         }
     }
 
@@ -93,6 +96,7 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
             gravity = it.getInt(Constants.DIALOG_GRAVITY, -1)
             cancelOut = it.getBoolean(Constants.OUT_SIDE_CANCEL, true)
             backListener = it.getSerializable(Constants.DIALOG_ON_BACK_LISTENER) as? OnDialogShowOnBackListener<T>
+            dismissListener = it.getSerializable(Constants.DIALOG_ON_DISMISS_LISTENER) as? OnDialogDismissListener
         }
     }
 
@@ -197,6 +201,9 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
         return dialog?.isShowing
     }
 
+    fun setOnDialogDismissListener() {
+        dismissListener?.callback(isShow() == true)
+    }
 
     override fun onCancel(dialog: DialogInterface?) {
         super.onCancel(dialog)
@@ -206,16 +213,10 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
     }
 
     override fun onDismiss(dialog: DialogInterface?) {
-        if (!mActivity.isFinishing) {
+            dismissListener?.callback(true)
             super.onDismiss(dialog)
-        }
     }
 
-    override fun dismiss() {
-        if (!mActivity.isFinishing) {
-            super.dismiss()
-        }
-    }
 
     override fun onPause() {
         super.onPause()

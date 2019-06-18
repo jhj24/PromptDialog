@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import com.jhj.prompt.fragment.AlertFragment
+import com.jhj.prompt.fragment.base.OnDialogDismissListener
 import com.jhj.prompt.fragment.base.OnDialogShowOnBackListener
 import kotlinx.android.synthetic.main.activity_alert.*
 import kotlinx.android.synthetic.main.layout_image.view.*
@@ -26,6 +28,11 @@ class AlertActivity : FragmentActivity() {
                     .setTitle("标题")
                     .setDialogGravity(Gravity.TOP)
                     .setMessage("内容")
+                    .setOnDialogDismissListener(object : OnDialogDismissListener {
+                        override fun callback(isDismiss: Boolean) {
+                            Log.w("dialog", "isDismiss --> $isDismiss")
+                        }
+                    })
                     .setSubmitListener(object : AlertFragment.OnButtonClickedListener {
                         override fun onClick(alert: AlertFragment, view: View?) {
                             toast("确定")
