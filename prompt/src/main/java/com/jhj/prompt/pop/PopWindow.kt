@@ -2,8 +2,10 @@ package com.jhj.prompt.pop
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.view.*
 import android.widget.PopupWindow
+
 
 /**
  * 自定义弹出popWindow
@@ -71,8 +73,8 @@ class PopWindow() {
             if (!canceledOnTouchOutSide) {
                 //注意这三个属性必须同时设置，不然不能disMiss，以下三行代码在Android 4.4 上是可以，然后在Android 6.0以上，下面的三行代码就不起作用了，就得用下面的方法
                 it.isFocusable = true
-                it.isOutsideTouchable = false
-                it.setBackgroundDrawable(null)
+                it.isOutsideTouchable = true
+                it.setBackgroundDrawable(ColorDrawable())
                 //注意下面这三个是contentView 不是PopupWindow
                 it.contentView.isFocusable = true
                 it.contentView.isFocusableInTouchMode = true
