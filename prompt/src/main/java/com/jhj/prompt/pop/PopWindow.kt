@@ -2,54 +2,47 @@ package com.jhj.prompt.pop
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
+import android.os.Handler
+import android.util.DisplayMetrics
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.PopupWindow
 
-
 /**
- * 自定义弹出popWindow
- *
- * Created by jhj on 18-7-16.
+ * 自定义PopWindow
+ * Created by jhj on 19-1-19.
  */
-class PopWindow() {
+class PopWindow(private val mContext: Context) : PopupWindow() {
 
-    private var mContext: Context? = null
-    private var popupWindow: PopupWindow? = null
+    private var isDismiss = false
+    private var view: View? = null
+
+    private var layoutRes: Int? = null
+    private var animIn: Int? = null
+    private var animOut: Int? = null
+    private var dimAmount = 0.7f// 背景变暗的值，0 - 1
     private var mWindow: Window? = null//当前Activity 的窗口
+    private var body: (View, PopWindow) -> Unit = { v, popWindow -> }
 
-    private var width: Int = 0
-    private var height: Int = 0
-    private var anim = -1
-    private var layoutRes = -1
-    private var isClipEnable = true
-    private var backgroundAlpha = 0f// 背景变暗的值，0 - 1
-    private var canceledOnTouchOutSide = true
-    private var dismissListener: PopupWindow.OnDismissListener? = null
-    private var customListener: OnCustomListener? = null
+    private fun build() {
+        val localDisplayMetrics = DisplayMetrics()
+        (mContext as Activity).windowManager.defaultDisplay.getMetrics(localDisplayMetrics)
+        if (layoutRes == null) {
+            throw NullPointerException("layoutRes cannot null")
+        }
 
+        view = LayoutInflater.from(mContext).inflate(layoutRes!!, null)
+        contentView = view
+        width = ViewGroup.LayoutParams.WRAP_CONTENT
+        height = ViewGroup.LayoutParams.WRAP_CONTENT
 
-    private constructor(context: Context) : this() {
-        this.mContext = context
-    }
-
-    fun getHeight(): Int {
-        return height
-    }
-
-    fun getWidth(): Int {
-        return width
-    }
-
-    private fun build(): PopupWindow? {
-        val view = LayoutInflater.from(mContext).inflate(layoutRes, null)
-                ?: throw NullPointerException("layoutRes cannot be null,please call on setCustomLayoutRes()")
-        popupWindow = PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-        customListener?.onLayout(view, popupWindow)
-
-        val activity = view.context as? Activity
-        val alpha = if (backgroundAlpha > 0 && backgroundAlpha < 1) backgroundAlpha else 0f
+        val activity = view?.context as? Activity
+        val alpha = if (dimAmount > 0 && dimAmount < 1) dimAmount else 0f
         if (activity != null && alpha != 0f) {
             mWindow = activity.window
             val params = mWindow?.attributes
@@ -57,95 +50,89 @@ class PopWindow() {
             mWindow?.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             mWindow?.attributes = params
         }
-
-        popupWindow?.let {
-            apply()
-            if (anim != -1) {
-                it.animationStyle = anim
-            }
-
-
-            it.contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-            height = it.contentView.measuredHeight
-            width = it.contentView.measuredWidth
-
-            // 判断是否点击PopupWindow之外的地方关闭 popWindow
-            if (!canceledOnTouchOutSide) {
-                //注意这三个属性必须同时设置，不然不能disMiss，以下三行代码在Android 4.4 上是可以，然后在Android 6.0以上，下面的三行代码就不起作用了，就得用下面的方法
-                it.isFocusable = true
-                it.isOutsideTouchable = true
-                it.setBackgroundDrawable(ColorDrawable())
-                //注意下面这三个是contentView 不是PopupWindow
-                it.contentView.isFocusable = true
-                it.contentView.isFocusableInTouchMode = true
-                it.contentView.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        it.dismiss()
-                        return@OnKeyListener true
-                    }
-                    false
-                })
-                //在Android 6.0以上 ，通过拦截事件来解决
-                it.setTouchInterceptor(View.OnTouchListener { v, event ->
-                    val x = event.x.toInt()
-                    val y = event.y.toInt()
-
-                    if (event.action == MotionEvent.ACTION_DOWN && (x < 0 || x >= width || y < 0 || y >= height)) {
-                        return@OnTouchListener true
-                    } else if (event.action == MotionEvent.ACTION_OUTSIDE) {
-                        return@OnTouchListener true
-                    }
-                    false
-                })
-            }
-
+        isFocusable = true
+        isOutsideTouchable = true
+        update()
+        setBackgroundDrawable(ColorDrawable(Color.argb(0, 0, 0, 0)))
+        view?.setOnClickListener {
+            dismiss()
         }
-        popupWindow?.update()
-        return popupWindow
+        mWindow?.decorView?.setOnClickListener {
+            dismiss()
+        }
+        body(view as View, this)
     }
 
-
-    fun showAsDropDown(view: View, xOff: Int, yOff: Int) {
-        popupWindow?.showAsDropDown(view, xOff, yOff)
+    override fun showAsDropDown(anchor: View, xoff: Int, yoff: Int) {
+        try {
+            if (Build.VERSION.SDK_INT >= 24) {
+                val rect = Rect()
+                anchor.getGlobalVisibleRect(rect)
+                val h = anchor.resources.displayMetrics.heightPixels - rect.bottom
+                height = h
+            }
+            super.showAsDropDown(anchor, xoff, yoff)
+            isDismiss = false
+            if (animIn != null) {
+                val animationIn = AnimationUtils.loadAnimation(mContext, animIn!!)
+                view?.startAnimation(animationIn)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    fun showAsDropDown(view: View) {
-        popupWindow?.showAsDropDown(view)
+    override fun showAsDropDown(anchor: View) {
+        try {
+            if (Build.VERSION.SDK_INT >= 24) {
+                val rect = Rect()
+                anchor.getGlobalVisibleRect(rect)
+                val h = anchor.resources.displayMetrics.heightPixels - rect.bottom
+                height = h
+            }
+            super.showAsDropDown(anchor)
+            isDismiss = false
+            if (animIn != null) {
+                val animationIn = AnimationUtils.loadAnimation(mContext, animIn!!)
+                view?.startAnimation(animationIn)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-    fun setAtLocation(view: View, gravity: Int, x: Int, y: Int) {
-        popupWindow?.showAtLocation(view, gravity, x, y)
-    }
+    override fun dismiss() {
+        if (animOut != null) {
+            if (isDismiss) {
+                return
+            }
+            isDismiss = true
+            val animationOut = AnimationUtils.loadAnimation(mContext, animOut!!)
+            view?.startAnimation(animationOut)
+            dismiss()
+            if (mWindow != null) {
+                val params = mWindow?.attributes
+                params?.alpha = 1.0f
+                mWindow?.attributes = params
+            }
+            animationOut.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {}
 
-    private fun apply() {
-        popupWindow?.let {
-            if (dismissListener == null) {
-                it.setOnDismissListener {
-                    onDismiss()
+                override fun onAnimationEnd(animation: Animation) {
+                    isDismiss = false
+                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
+                        Handler().post { super@PopWindow.dismiss() }
+                    } else {
+                        super@PopWindow.dismiss()
+                    }
                 }
-            } else {
-                it.setOnDismissListener(dismissListener)
-            }
 
-            it.isClippingEnabled = isClipEnable
-            it.isTouchable = true
-            it.isFocusable = true
+                override fun onAnimationRepeat(animation: Animation) {}
+            })
+        } else {
+            super@PopWindow.dismiss()
         }
     }
-
-    private fun onDismiss() {
-        dismissListener?.onDismiss()
-        //如果设置了背景变暗，那么在dismiss的时候需要还原
-        if (mWindow != null) {
-            val params = mWindow?.attributes
-            params?.alpha = 1.0f
-            mWindow?.attributes = params
-        }
-        if (popupWindow != null && popupWindow?.isShowing == true) {
-            popupWindow?.dismiss()
-        }
-    }
-
 
     class Builder(mContext: Context) {
 
@@ -156,20 +143,20 @@ class PopWindow() {
             return this
         }
 
-        fun setLayoutRes(res: Int, listener: OnCustomListener): Builder {
+        fun setLayoutRes(res: Int, body: (View, PopWindow) -> Unit): Builder {
             popWindow.layoutRes = res
-            popWindow.customListener = listener
-            return this
-        }
-
-        fun setCanceledOnTouchOutSide(cancel: Boolean): Builder {
-            popWindow.canceledOnTouchOutSide = cancel
+            popWindow.body = body
             return this
         }
 
 
-        fun setAnimation(anim: Int): Builder {
-            popWindow.anim = anim
+        fun setOpenAnim(anim: Int): Builder {
+            popWindow.animIn = anim
+            return this
+        }
+
+        fun setCloseAnim(anim: Int): Builder {
+            popWindow.animOut = anim
             return this
         }
 
@@ -177,23 +164,7 @@ class PopWindow() {
          * 设置背景透明度
          */
         fun setBackgroundAlpha(alpha: Float): Builder {
-            popWindow.backgroundAlpha = alpha
-            return this
-        }
-
-        /**
-         * 默认情况下，窗口被剪切到屏幕边界,当设置为false时，弹出的popupWindow可以超出屏幕
-         */
-        fun setClippingEnable(isClipEnable: Boolean): Builder {
-            popWindow.isClipEnable = isClipEnable
-            return this
-        }
-
-        /**
-         * popupWindow消失事件监听
-         */
-        fun setOnDismissListener(dismissListener: PopupWindow.OnDismissListener): Builder {
-            popWindow.dismissListener = dismissListener
+            popWindow.dimAmount = alpha
             return this
         }
 
@@ -204,8 +175,4 @@ class PopWindow() {
         }
     }
 
-
-    interface OnCustomListener {
-        fun onLayout(view: View, popupWindow: PopupWindow?)
-    }
 }
