@@ -8,7 +8,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Handler
 import android.util.DisplayMetrics
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.PopupWindow
@@ -28,6 +31,17 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
     private var dimAmount = 0.7f// 背景变暗的值，0 - 1
     private var mWindow: Window? = null//当前Activity 的窗口
     private var body: (View, PopWindow) -> Unit = { v, popWindow -> }
+    private var popWindowWidth = 0
+    private var popWindowHeight = 0
+
+    private fun getPopWindowWidth(): Int {
+        return popWindowWidth
+    }
+
+    private fun getPopWindowHeight(): Int {
+        return popWindowHeight
+    }
+
 
     private fun build() {
         val localDisplayMetrics = DisplayMetrics()
@@ -38,8 +52,11 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
 
         view = LayoutInflater.from(mContext).inflate(layoutRes!!, null)
         contentView = view
-        width = ViewGroup.LayoutParams.WRAP_CONTENT
-        height = ViewGroup.LayoutParams.WRAP_CONTENT
+        contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        popWindowWidth = contentView.measuredWidth
+        popWindowHeight = contentView.measuredHeight
+        width = contentView.measuredWidth
+        height = contentView.measuredHeight
 
         val activity = view?.context as? Activity
         val alpha = if (dimAmount > 0 && dimAmount < 1) dimAmount else 0f
@@ -68,8 +85,9 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
             if (Build.VERSION.SDK_INT >= 24) {
                 val rect = Rect()
                 anchor.getGlobalVisibleRect(rect)
-                val h = anchor.resources.displayMetrics.heightPixels - rect.bottom
-                height = h
+                contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                width = contentView.measuredWidth
+                height = contentView.measuredHeight
             }
             super.showAsDropDown(anchor, xoff, yoff)
             isDismiss = false
@@ -87,8 +105,9 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
             if (Build.VERSION.SDK_INT >= 24) {
                 val rect = Rect()
                 anchor.getGlobalVisibleRect(rect)
-                val h = anchor.resources.displayMetrics.heightPixels - rect.bottom
-                height = h
+                contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                width = contentView.measuredWidth
+                height = contentView.measuredHeight
             }
             super.showAsDropDown(anchor)
             isDismiss = false
@@ -102,6 +121,11 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
     }
 
     override fun dismiss() {
+        if (mWindow != null) {
+            val params = mWindow?.attributes
+            params?.alpha = 1.0f
+            mWindow?.attributes = params
+        }
         if (animOut != null) {
             if (isDismiss) {
                 return
@@ -110,11 +134,7 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
             val animationOut = AnimationUtils.loadAnimation(mContext, animOut!!)
             view?.startAnimation(animationOut)
             dismiss()
-            if (mWindow != null) {
-                val params = mWindow?.attributes
-                params?.alpha = 1.0f
-                mWindow?.attributes = params
-            }
+
             animationOut.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation) {}
 

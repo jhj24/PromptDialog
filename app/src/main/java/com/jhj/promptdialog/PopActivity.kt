@@ -2,9 +2,6 @@ package com.jhj.promptdialog
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.KeyEvent
-import android.view.View
-import android.widget.PopupWindow
 import com.jhj.prompt.pop.PopWindow
 import kotlinx.android.synthetic.main.activity_pop.*
 import kotlinx.android.synthetic.main.layout_pop_item.view.*
@@ -39,33 +36,25 @@ class PopActivity : AppCompatActivity() {
 
         btn_2.setOnClickListener {
             val pop = PopWindow.Builder(this@PopActivity)
-                    .setCanceledOnTouchOutSide(false)
-                    .setLayoutRes(R.layout.layout_pop_item, object : PopWindow.OnCustomListener {
-                        override fun onLayout(view: View, popupWindow: PopupWindow?) {
-                            view.tv_1.setOnClickListener {
-                                popupWindow?.dismiss()
-                                toast("1111")
-                            }
-                            view.tv_2.setOnClickListener {
-                                popupWindow?.dismiss()
-                                toast("2222")
-                            }
-                            view.tv_3.setOnClickListener {
-                                popupWindow?.dismiss()
-                                toast("3333")
-                            }
+                    .setLayoutRes(R.layout.layout_pop_item) { view, popupWindow ->
+                        view.tv_1.setOnClickListener {
+                            popupWindow?.dismiss()
+                            toast("1111")
                         }
-
-                    })
-                    .build()
-            pop.showAsDropDown(btn_2, 0, -(btn_2.height + pop.getHeight()))
+                        view.tv_2.setOnClickListener {
+                            popupWindow?.dismiss()
+                            toast("2222")
+                        }
+                        view.tv_3.setOnClickListener {
+                            popupWindow?.dismiss()
+                            toast("3333")
+                        }
+                    }.build()
+            pop.showAsDropDown(btn_2)
         }
         btn_3.setOnClickListener {
             PopWindow.Builder(this@PopActivity)
                     .setLayoutRes(R.layout.layout_pop_item)
-                    .setOnDismissListener(PopupWindow.OnDismissListener {
-                        toast("popupWindow消失")
-                    })
                     .build()
                     .showAsDropDown(btn_3)
         }
