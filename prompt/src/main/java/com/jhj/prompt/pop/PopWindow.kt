@@ -34,11 +34,11 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
     private var popWindowWidth = 0
     private var popWindowHeight = 0
 
-    private fun getPopWindowWidth(): Int {
+    fun getPopWindowWidth(): Int {
         return popWindowWidth
     }
 
-    private fun getPopWindowHeight(): Int {
+    fun getPopWindowHeight(): Int {
         return popWindowHeight
     }
 
