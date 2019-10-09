@@ -53,11 +53,18 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
         view = LayoutInflater.from(mContext).inflate(layoutRes!!, null)
         contentView = view
         contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        popWindowWidth = contentView.measuredWidth
-        popWindowHeight = contentView.measuredHeight
-        width = contentView.measuredWidth
-        height = contentView.measuredHeight
-
+        if (popWindowWidth == 0) {
+            popWindowWidth = contentView.measuredWidth
+            width = contentView.measuredWidth
+        }else{
+            width = popWindowWidth
+        }
+        if (popWindowHeight == 0) {
+            popWindowHeight = contentView.measuredHeight
+            height = contentView.measuredHeight
+        }else{
+            height = popWindowHeight
+        }
         val activity = view?.context as? Activity
         val alpha = if (dimAmount > 0 && dimAmount < 1) dimAmount else 0f
         if (activity != null && alpha != 0f) {
@@ -82,13 +89,6 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
 
     override fun showAsDropDown(anchor: View, xoff: Int, yoff: Int) {
         try {
-            if (Build.VERSION.SDK_INT >= 24) {
-                val rect = Rect()
-                anchor.getGlobalVisibleRect(rect)
-                contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                width = contentView.measuredWidth
-                height = contentView.measuredHeight
-            }
             super.showAsDropDown(anchor, xoff, yoff)
             isDismiss = false
             if (animIn != null) {
@@ -102,13 +102,6 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
 
     override fun showAsDropDown(anchor: View) {
         try {
-            if (Build.VERSION.SDK_INT >= 24) {
-                val rect = Rect()
-                anchor.getGlobalVisibleRect(rect)
-                contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                width = contentView.measuredWidth
-                height = contentView.measuredHeight
-            }
             super.showAsDropDown(anchor)
             isDismiss = false
             if (animIn != null) {
@@ -177,6 +170,16 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
 
         fun setCloseAnim(anim: Int): Builder {
             popWindow.animOut = anim
+            return this
+        }
+
+        fun setPopWindowWidth(width: Int): Builder {
+            popWindow.popWindowWidth = width
+            return this
+        }
+
+        fun setPopWindowHeight(height: Int): Builder {
+            popWindow.popWindowHeight = height
             return this
         }
 
