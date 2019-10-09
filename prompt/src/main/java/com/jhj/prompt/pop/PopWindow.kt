@@ -91,13 +91,11 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
 
     override fun showAsDropDown(anchor: View, xoff: Int, yoff: Int) {
         try {
-            if (Build.VERSION.SDK_INT >= 24) {
-                val rect = Rect()
-                anchor.getGlobalVisibleRect(rect)
-                contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                width = if (isDefineWidth) popWindowWidth else contentView.measuredWidth
-                height = if (isDefineHeight) popWindowHeight else contentView.measuredHeight
-            }
+            val rect = Rect()
+            anchor.getGlobalVisibleRect(rect)
+            contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            width = if (isDefineWidth) popWindowWidth else contentView.measuredWidth
+            height = if (isDefineHeight) popWindowHeight else contentView.measuredHeight
             super.showAsDropDown(anchor, xoff, yoff)
             isDismiss = false
             if (animIn != null) {
@@ -111,13 +109,11 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
 
     override fun showAsDropDown(anchor: View) {
         try {
-            if (Build.VERSION.SDK_INT >= 24) {
-                val rect = Rect()
-                anchor.getGlobalVisibleRect(rect)
-                contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                width = if (isDefineWidth) popWindowWidth else contentView.measuredWidth
-                height = if (isDefineHeight) popWindowHeight else contentView.measuredHeight
-            }
+            val rect = Rect()
+            anchor.getGlobalVisibleRect(rect)
+            contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            width = if (isDefineWidth) popWindowWidth else contentView.measuredWidth
+            height = if (isDefineHeight) popWindowHeight else contentView.measuredHeight
             super.showAsDropDown(anchor)
             isDismiss = false
             if (animIn != null) {
