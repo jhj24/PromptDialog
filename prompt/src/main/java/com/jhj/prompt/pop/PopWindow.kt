@@ -85,7 +85,7 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
         mWindow?.decorView?.setOnClickListener {
             dismiss()
         }
-        body(view as View, this)
+        body(contentView, this)
     }
 
     override fun showAsDropDown(anchor: View, xoff: Int, yoff: Int) {
