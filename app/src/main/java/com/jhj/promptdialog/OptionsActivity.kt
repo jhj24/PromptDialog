@@ -136,13 +136,13 @@ class OptionsActivity : FragmentActivity() {
             val selectedDate = Calendar.getInstance()//系统当前时间
             val startDate = Calendar.getInstance()
             startDate.set(2018, 1, 1)
-            val endDate = Calendar.getInstance()
-            endDate.set(2018, 1, 1)
+           /* val endDate = Calendar.getInstance()
+            endDate.set(2018, 1, 1)*/
             TimeFragment.Builder(this@OptionsActivity)
                     .setDate(selectedDate)
                     .setCyclic(false)
                     .setTitle("日历")
-                    .setRangDate(startDate, endDate)
+                    .setRangDate(startDate)
                     .setDisplayStyle(booleanArrayOf(true, true, true, false, false, false))
                     .setOnlyCenterLabel(false)
                     .setSubmitListener(object : OnTimeSelectedListener {

@@ -381,9 +381,11 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
             return this
         }
 
-        fun setRangDate(startDate: Calendar, endDate: Calendar): Builder {
-            arg.putLong(Constants.START_DATE_MILLS, startDate.time.time)
-            arg.putLong(Constants.END_DATE_MILLS, endDate.time.time)
+        fun setRangDate(startDate: Calendar? = null, endDate: Calendar? = null): Builder {
+            arg.putLong(Constants.START_DATE_MILLS, startDate?.timeInMillis
+                    ?: PromptConfig.getInstance().timeStartCalendar.timeInMillis)
+            arg.putLong(Constants.END_DATE_MILLS, endDate?.timeInMillis
+                    ?: PromptConfig.getInstance().timeEndCalendar.timeInMillis)
             return this
         }
 
