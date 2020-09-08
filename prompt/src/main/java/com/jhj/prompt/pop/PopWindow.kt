@@ -48,12 +48,11 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
     private fun build() {
         val localDisplayMetrics = DisplayMetrics()
         (mContext as Activity).windowManager.defaultDisplay.getMetrics(localDisplayMetrics)
-        if (layoutRes == null) {
-            throw NullPointerException("layoutRes cannot null")
+        if (view == null && layoutRes == null) {
+            throw NullPointerException()
         }
 
-        view = LayoutInflater.from(mContext).inflate(layoutRes!!, null)
-        contentView = view
+        contentView = if (view != null) view else LayoutInflater.from(mContext).inflate(layoutRes!!, null)
         contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
         width = if (isDefineWidth)
             popWindowWidth
@@ -86,7 +85,7 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
         mWindow?.decorView?.setOnClickListener {
             dismiss()
         }
-        body(view as View, this)
+        body(contentView, this)
     }
 
     override fun showAsDropDown(anchor: View, xoff: Int, yoff: Int) {
@@ -162,6 +161,12 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
     class Builder(mContext: Context) {
 
         private val popWindow = PopWindow(mContext)
+
+        fun setView(view: View, body: (View, PopWindow) -> Unit = { v, popWindow -> }): Builder {
+            popWindow.view = view
+            popWindow.body = body
+            return this
+        }
 
         fun setLayoutRes(res: Int): Builder {
             popWindow.layoutRes = res
