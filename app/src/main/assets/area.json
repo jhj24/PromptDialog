@@ -316,33 +316,6 @@
   },
   {
     "areaDeep": 2,
-    "areaId": 36,
-    "countChildren": 0,
-    "areaName": "北京市",
-    "areaParentId": 1,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 37,
-    "countChildren": 0,
-    "areaName": "东城区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 38,
-    "countChildren": 0,
-    "areaName": "西城区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 2,
     "areaId": 39,
     "countChildren": 0,
     "areaName": "上海市",
@@ -356,159 +329,6 @@
     "countChildren": 0,
     "areaName": "天津市",
     "areaParentId": 2,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 41,
-    "countChildren": 0,
-    "areaName": "朝阳区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 42,
-    "countChildren": 0,
-    "areaName": "丰台区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 43,
-    "countChildren": 0,
-    "areaName": "石景山区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 44,
-    "countChildren": 0,
-    "areaName": "海淀区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 45,
-    "countChildren": 0,
-    "areaName": "门头沟区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 46,
-    "countChildren": 0,
-    "areaName": "房山区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 47,
-    "countChildren": 0,
-    "areaName": "通州区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 48,
-    "countChildren": 0,
-    "areaName": "顺义区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 49,
-    "countChildren": 0,
-    "areaName": "昌平区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 50,
-    "countChildren": 0,
-    "areaName": "大兴区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 51,
-    "countChildren": 0,
-    "areaName": "怀柔区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 52,
-    "countChildren": 0,
-    "areaName": "平谷区",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 53,
-    "countChildren": 0,
-    "areaName": "密云县",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 54,
-    "countChildren": 0,
-    "areaName": "延庆县",
-    "areaParentId": 36,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 55,
-    "countChildren": 0,
-    "areaName": "和平区",
-    "areaParentId": 40,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 56,
-    "countChildren": 0,
-    "areaName": "河东区",
-    "areaParentId": 40,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 57,
-    "countChildren": 0,
-    "areaName": "河西区",
-    "areaParentId": 40,
     "areaSort": 0,
     "childern": []
   },
@@ -5099,15 +4919,6 @@
     "countChildren": 0,
     "areaName": "埃及",
     "areaParentId": 45055,
-    "areaSort": 0,
-    "childern": []
-  },
-  {
-    "areaDeep": 3,
-    "areaId": 566,
-    "countChildren": 0,
-    "areaName": "其他",
-    "areaParentId": 36,
     "areaSort": 0,
     "childern": []
   },

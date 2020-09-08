@@ -100,7 +100,7 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
             colorOut = it.getInt(Constants.TEXT_COLOR_OUT, config.pickerTextColorOUT)
             colorCenter = it.getInt(Constants.TEXT_COLOR_CENTER, config.pickerTextColorCenter)
             dividerColor = it.getInt(Constants.DIVIDER_COLOR, config.pickerDividerColor)
-            dividerType = it.getSerializable(Constants.DIVIDER_TYPE)as? DividerType
+            dividerType = it.getSerializable(Constants.DIVIDER_TYPE) as? DividerType
             itemNum = it.getInt(Constants.ITEM_NUM, config.pickerItemNum)
             optionsLabels = it.getStringArray(Constants.OPTIONS_LABELS)
             isCyclic = it.getBoolean(Constants.IS_CYCLIC, true)
@@ -109,8 +109,8 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
             spacingRatio = it.getFloat(Constants.SPACING_RATIO, config.pickerLineSpacingRatio)
             extraHeight = it.getInt(Constants.EXTRA_HEIGHT, config.pickerExtraHeight)
             dateMillis = it.getLong(Constants.DATE_MILLS, Calendar.getInstance().time.time)
-            startDateMillis = it.getLong(Constants.START_DATE_MILLS, -1)
-            endDateMillis = it.getLong(Constants.END_DATE_MILLS, -1)
+            startDateMillis = it.getLong(Constants.START_DATE_MILLS, config.timeStartCalendar.time.time)
+            endDateMillis = it.getLong(Constants.END_DATE_MILLS, config.timeEndCalendar.time.time)
             isLunarCalendar = it.getBoolean(Constants.LUNAR_CALENDAR, false)
             textGravity = it.getInt(Constants.MESSAGE_GRAVITY, config.pickerOptionsTextGravity)
         }
@@ -127,7 +127,7 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
         view.btn_option_submit.let { btnSubmit ->
             btnSubmit.text = submitText
             btnSubmit.textSize = buttonSize
-            btnSubmit.setTextColor(ContextCompat.getColorStateList(mActivity,submitColor))
+            btnSubmit.setTextColor(ContextCompat.getColorStateList(mActivity, submitColor))
             btnSubmit.setOnClickListener {
                 val date = TimeWheel.dateFormat.parse(wheel.time)
                 submitListener?.onTimeSelect(date, wheel.getView())
@@ -138,7 +138,7 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
         view.btn_option_cancel.let { btnCancel ->
             btnCancel.text = cancelText
             btnCancel.textSize = buttonSize
-            btnCancel.setTextColor(ContextCompat.getColorStateList(mActivity,cancelColor))
+            btnCancel.setTextColor(ContextCompat.getColorStateList(mActivity, cancelColor))
             btnCancel.setOnClickListener {
                 val date = TimeWheel.dateFormat.parse(wheel.time)
                 cancelListener?.onTimeSelect(date, wheel.getView())
@@ -172,15 +172,11 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
             }
         }
 
-        if (startDateMillis > 0f && endDateMillis > 0f && endDateMillis > startDateMillis) {
-            val startCalendar = Calendar.getInstance()
-            val endCalendar = Calendar.getInstance()
-            startCalendar.timeInMillis = startDateMillis
-            endCalendar.timeInMillis = endDateMillis
-            wheel.setRangDate(startCalendar, endCalendar)
-        } else if (config.timeEndCalendar.timeInMillis > config.timeStartCalendar.timeInMillis) {
-            wheel.setRangDate(config.timeStartCalendar, config.timeEndCalendar)
-        }
+        val startCalendar = Calendar.getInstance()
+        val endCalendar = Calendar.getInstance()
+        startCalendar.timeInMillis = startDateMillis
+        endCalendar.timeInMillis = endDateMillis
+        wheel.setRangDate(startCalendar, endCalendar)
         setTime(dateMillis)
 
     }
@@ -253,7 +249,7 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
     }
 
 
-    class Builder(val context: Context) : BaseBuilder<TimeFragment,Builder>(context) {
+    class Builder(val context: Context) : BaseBuilder<TimeFragment, Builder>(context) {
 
         private val mFragment = TimeFragment()
 
@@ -370,7 +366,7 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
             return this
         }
 
-        fun setItemsSpacingRatio(@FloatRange(from = 1.0, to = 2.0)spacingRatio: Float): Builder {
+        fun setItemsSpacingRatio(@FloatRange(from = 1.0, to = 2.0) spacingRatio: Float): Builder {
             arg.putFloat(Constants.SPACING_RATIO, spacingRatio)
             return this
         }

@@ -12,6 +12,7 @@ import com.jhj.prompt.R
 import com.jhj.prompt.fragment.AlertFragment
 import org.jetbrains.anko.padding
 import org.jetbrains.anko.support.v4.dimen
+import org.jetbrains.anko.support.v4.dip
 
 /**
  * DialogFragment基类
@@ -146,9 +147,9 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
             } else {
                 if (this is AlertFragment) { // AlertFragment 根据样式不同显示不同的宽度
                     if (gravity == Gravity.CENTER) {
-                        dm.widthPixels - (density * 80).toInt()
+                        dm.widthPixels - dip(80)
                     } else {
-                        dm.widthPixels - (density * 30).toInt()
+                        dm.widthPixels - dip(80)
                     }
                 } else { //默认 Dialog 宽度
                     WindowManager.LayoutParams.WRAP_CONTENT
