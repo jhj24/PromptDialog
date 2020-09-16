@@ -149,7 +149,7 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
                     if (gravity == Gravity.CENTER) {
                         dm.widthPixels - dip(80)
                     } else {
-                        dm.widthPixels - dip(80)
+                        dm.widthPixels - dip(30)
                     }
                 } else { //默认 Dialog 宽度
                     WindowManager.LayoutParams.WRAP_CONTENT

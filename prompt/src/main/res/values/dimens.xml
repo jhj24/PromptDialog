@@ -1,7 +1,7 @@
 <resources>
 
     <!-- 分割线高度 -->
-    <dimen name="height_parting_line">1dp</dimen>
+    <dimen name="height_parting_line">1px</dimen>
     <!-- item圆角大小 -->
     <dimen name="item_round_radius">5dp</dimen>
 
