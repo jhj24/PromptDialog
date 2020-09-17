@@ -62,7 +62,7 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
             popWindowHeight = contentView.measuredHeight
             contentView.measuredHeight
         }
-        val activity = view?.context as? Activity
+        val activity = contentView.context as? Activity
         val alpha = if (dimAmount > 0 && dimAmount < 1) dimAmount else 0f
         if (activity != null && alpha != 0f) {
             mWindow = activity.window
@@ -75,7 +75,7 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
         isOutsideTouchable = true
         update()
         setBackgroundDrawable(ColorDrawable(Color.argb(0, 0, 0, 0)))
-        view?.setOnClickListener {
+        contentView?.setOnClickListener {
             dismiss()
         }
         mWindow?.decorView?.setOnClickListener {
@@ -94,12 +94,13 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
             super.showAsDropDown(anchor, xoff, yoff)
             if (animEnter != null) {
                 val animationIn = AnimationUtils.loadAnimation(mContext, animEnter!!)
-                view?.startAnimation(animationIn)
+                contentView?.startAnimation(animationIn)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
 
     override fun showAsDropDown(anchor: View) {
         try {
@@ -126,6 +127,7 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
         }
         super@PopWindow.dismiss()
         if (animExit != null) {
+            contentView?.clearAnimation()
             val animationOut = AnimationUtils.loadAnimation(mContext, animExit!!)
             contentView?.startAnimation(animationOut)
         }

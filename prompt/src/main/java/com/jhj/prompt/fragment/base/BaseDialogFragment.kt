@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.util.DisplayMetrics
 import android.view.*
@@ -177,15 +178,15 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
 
     }
 
-
     fun show(fragmentManager: FragmentManager) {
         try {
+
             val ft = fragmentManager.beginTransaction()
             if (this.isAdded) {
-                ft.remove(this).commit()
+                ft?.remove(this)?.commit()
             }
-            ft.add(this, System.currentTimeMillis().toString())
-            ft.commitAllowingStateLoss()
+            ft?.add(this, System.currentTimeMillis().toString())
+            ft?.commitAllowingStateLoss()
             //fragmentManager.executePendingTransactions()
         } catch (e: Exception) {
             /*
@@ -198,12 +199,12 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
         }
     }
 
-    fun isShow(): Boolean? {
-        return dialog?.isShowing
-    }
+
+    val isShow
+        get() = dialog?.isShowing
 
     fun setOnDialogDismissListener() {
-        dismissListener?.callback(isShow() == true)
+        dismissListener?.callback(isShow == true)
     }
 
     override fun onCancel(dialog: DialogInterface?) {
@@ -214,8 +215,8 @@ abstract class BaseDialogFragment<T : BaseDialogFragment<T>> : DialogFragment() 
     }
 
     override fun onDismiss(dialog: DialogInterface?) {
-            dismissListener?.callback(true)
-            super.onDismiss(dialog)
+        dismissListener?.callback(true)
+        super.onDismiss(dialog)
     }
 
 

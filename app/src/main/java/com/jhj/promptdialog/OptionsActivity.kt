@@ -32,7 +32,7 @@ class OptionsActivity : FragmentActivity() {
 
         zero.setOnClickListener {
             val a = System.nanoTime()
-            OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
+            OptionsFragment.Builder<AreaUtil.AreaNode>()
                     .setTitle("地区选择")
                     .setSelectOptions(3)
                     .setShowItemNum(11)
@@ -46,12 +46,13 @@ class OptionsActivity : FragmentActivity() {
                             toast(options1.toString())
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
             Log.w("xxx", (System.nanoTime() - a).toString())
         }
 
         one.setOnClickListener {
-            OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
+            OptionsFragment.Builder<AreaUtil.AreaNode>()
                     .setLinkedPicker(provinceList, cityList)
                     .setMarginHorizontal(150)
                     .setShowItemNum(9)
@@ -62,23 +63,25 @@ class OptionsActivity : FragmentActivity() {
                             toast(options1.toString())
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         two.setOnClickListener {
-            OptionsFragment.Builder<AreaUtil.AreaNode>(this@OptionsActivity)
+            OptionsFragment.Builder<AreaUtil.AreaNode>()
                     .setLinkedPicker(provinceList, cityList, districtList)
                     .setSubmitListener(object : OnOptionsSelectedListener<AreaUtil.AreaNode> {
                         override fun onOptionsSelect(options: OptionsFragment<AreaUtil.AreaNode>, options1: Int?, options2: Int?, options3: Int?) {
                             toast(options1.toString())
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         three.setOnClickListener {
             val selectedDate = Calendar.getInstance()//系统当前时间
-            TimeFragment.Builder(this@OptionsActivity)
+            TimeFragment.Builder()
                     .setDate(selectedDate)
                     .setDisplayStyle(booleanArrayOf(false, false, false, true, true, false))
                     .setOnlyCenterLabel(false)
@@ -90,11 +93,12 @@ class OptionsActivity : FragmentActivity() {
                         }
 
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         four.setOnClickListener {
             val selectedDate = Calendar.getInstance()//系统当前时间
-            TimeFragment.Builder(this@OptionsActivity)
+            TimeFragment.Builder()
                     .setDate(selectedDate)
                     .setDialogGravity(Gravity.CENTER)
                     .setAnimation(R.style.anim_dialog_center)
@@ -110,7 +114,8 @@ class OptionsActivity : FragmentActivity() {
                         }
 
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         five.setOnClickListener {
             val selectedDate = Calendar.getInstance()//系统当前时间
@@ -118,7 +123,7 @@ class OptionsActivity : FragmentActivity() {
             startDate.set(2014, 0, 1)
             val endDate = Calendar.getInstance()
             endDate.set(2025, 12, 31)
-            TimeFragment.Builder(this@OptionsActivity)
+            TimeFragment.Builder()
                     .setDate(selectedDate)
                     .setDisplayStyle(booleanArrayOf(true, true, true, false, false, false))
                     .setOnlyCenterLabel(false)
@@ -130,7 +135,8 @@ class OptionsActivity : FragmentActivity() {
                         }
 
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         six.setOnClickListener {
             val selectedDate = Calendar.getInstance()//系统当前时间
@@ -138,7 +144,7 @@ class OptionsActivity : FragmentActivity() {
             startDate.set(2018, 1, 1)
            /* val endDate = Calendar.getInstance()
             endDate.set(2018, 1, 1)*/
-            TimeFragment.Builder(this@OptionsActivity)
+            TimeFragment.Builder()
                     .setDate(selectedDate)
                     .setCyclic(false)
                     .setTitle("日历")
@@ -152,7 +158,8 @@ class OptionsActivity : FragmentActivity() {
                         }
 
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         seven.setOnClickListener { }
@@ -164,7 +171,7 @@ class OptionsActivity : FragmentActivity() {
             startDate.set(2014, 0, 1, 12, 12)
             val endDate = Calendar.getInstance()
             endDate.set(2015, 11, 31, 8, 8)
-            TimeFragment.Builder(this@OptionsActivity)
+            TimeFragment.Builder()
                     .setDate(selectedDate)
                     .setCyclic(false)
                     .setRangDate(startDate, endDate)
@@ -176,7 +183,8 @@ class OptionsActivity : FragmentActivity() {
                         }
 
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
             Log.w("xxx", (System.nanoTime() - a).toString())
         }
 

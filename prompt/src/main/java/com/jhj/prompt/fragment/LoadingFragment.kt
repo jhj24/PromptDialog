@@ -1,6 +1,5 @@
 package com.jhj.prompt.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -109,12 +108,13 @@ class LoadingFragment : BaseDialogFragment<LoadingFragment>() {
         view.layout_progress_dialog.backgroundResource = mBackgroundResource
     }
 
-    class Builder(val context: Context) : BaseBuilder<LoadingFragment,Builder>(context) {
+    class Builder : BaseBuilder<LoadingFragment,Builder>() {
 
-        private val mFragment = LoadingFragment()
-
-        override val fragment: LoadingFragment
-            get() = mFragment
+        override fun build(): LoadingFragment {
+            val fragment = LoadingFragment()
+            fragment.arguments = arg
+            return fragment
+        }
 
         fun setLoadingStyle(style: LoadingStyle): Builder {
             arg.putSerializable(Constants.DIALOG_STYLE, style)

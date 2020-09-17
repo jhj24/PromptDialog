@@ -227,12 +227,13 @@ class OptionsFragment<T> : BaseDialogFragment<OptionsFragment<T>>() {
     }
 
 
-    class Builder<T>(val context: Context) : BaseBuilder<OptionsFragment<T>,Builder<T>>(context) {
+    class Builder<T> : BaseBuilder<OptionsFragment<T>, Builder<T>>() {
 
-        private val mFragment = OptionsFragment<T>()
-
-        override val fragment: OptionsFragment<T>
-            get() = mFragment
+        override fun build(): OptionsFragment<T> {
+            val fragment = OptionsFragment<T>()
+            fragment.arguments = arg
+            return fragment
+        }
 
         fun setTitle(title: String): Builder<T> {
             arg.putString(Constants.TITLE, title)

@@ -249,12 +249,13 @@ class TimeFragment : BaseDialogFragment<TimeFragment>() {
     }
 
 
-    class Builder(val context: Context) : BaseBuilder<TimeFragment, Builder>(context) {
+    class Builder : BaseBuilder<TimeFragment, Builder>() {
 
-        private val mFragment = TimeFragment()
-
-        override val fragment: TimeFragment
-            get() = mFragment
+        override fun build(): TimeFragment {
+            val fragment = TimeFragment()
+            fragment.arguments = arg
+            return fragment
+        }
 
         fun setTitle(title: String): Builder {
             arg.putString(Constants.TITLE, title)

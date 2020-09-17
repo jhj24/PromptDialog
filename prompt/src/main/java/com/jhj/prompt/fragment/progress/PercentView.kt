@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.TypedValue
-import com.jhj.prompt.R
+import org.jetbrains.anko.dip
 
 /**
  * 带百分比的加载框
@@ -60,7 +59,7 @@ class PercentView(mContext: Context, attrs: AttributeSet?, defStyleAttr: Int) : 
             mPaint.textSize = scaleDensity * scaleSize
             mPaint.isAntiAlias = true
             mPaint.color = scaleColor
-            mPaint.strokeWidth = 2 * density
+            mPaint.strokeWidth = dip(2).toFloat()
             mPaint.getTextBounds(text, 0, text.length, minRect)
             val baseLine = height / 2 - (mPaint.fontMetrics.bottom + mPaint.fontMetrics.top) / 2
             val textWidth = minRect.width()

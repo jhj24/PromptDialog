@@ -7,11 +7,10 @@ import android.support.annotation.IntRange
 import android.support.annotation.StyleRes
 import android.support.v4.app.FragmentActivity
 
-abstract class BaseBuilder<F : BaseDialogFragment<F>, T : BaseBuilder<F, T>>(val mContext: Context) {
+abstract class BaseBuilder<F : BaseDialogFragment<F>, T : BaseBuilder<F, T>>() {
 
     val arg = Bundle()
 
-    abstract val fragment: F
 
     @Suppress("UNCHECKED_CAST")
     fun setDialogGravity(gravity: Int): T {
@@ -68,18 +67,6 @@ abstract class BaseBuilder<F : BaseDialogFragment<F>, T : BaseBuilder<F, T>>(val
         return this as T
     }
 
-    @Suppress("UNCHECKED_CAST")
-    fun show(): T {
-        fragment.arguments = arg
-        fragment.show((mContext as FragmentActivity).supportFragmentManager)
-        return this as T
-    }
+    abstract fun build():F
 
-    fun isShow(): Boolean {
-        return fragment.isShow() ?: false
-    }
-
-    open fun dismiss() {
-        fragment.dismiss()
-    }
 }

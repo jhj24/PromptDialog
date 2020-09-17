@@ -24,7 +24,7 @@ class AlertActivity : FragmentActivity() {
         setContentView(R.layout.activity_alert)
 
         btn_default.setOnClickListener {
-            AlertFragment.Builder(this@AlertActivity)
+            AlertFragment.Builder()
                     .setTitle("标题")
                     .setDialogGravity(Gravity.TOP)
                     .setMessage("内容")
@@ -43,20 +43,22 @@ class AlertActivity : FragmentActivity() {
                             toast("取消")
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
 
         btn_alert.setOnClickListener {
-            AlertFragment.Builder(this@AlertActivity)
+            AlertFragment.Builder()
                     .setTitle("标题")
                     .setTitleColor(ContextCompat.getColor(this@AlertActivity, R.color.red))
                     .setMessage("内容")
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         btn_items.setOnClickListener {
-            AlertFragment.Builder(this@AlertActivity)
+            AlertFragment.Builder()
                     .setTitle("列表")
                     .setDataList(arrayListOf("1111", "2222"))
                     .setDataList(arrayListOf("3333", "4444"), Color.RED)
@@ -72,11 +74,12 @@ class AlertActivity : FragmentActivity() {
                         }
 
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         btn_custom_layout.setOnClickListener {
-            AlertFragment.Builder(this@AlertActivity)
+            AlertFragment.Builder()
                     .setCustomLayoutRes(R.layout.layout_image, object : AlertFragment.OnCustomListener {
                         override fun onLayout(alert: AlertFragment, view: View) {
                             view.image.setOnClickListener {
@@ -86,10 +89,11 @@ class AlertActivity : FragmentActivity() {
                         }
 
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         btn_bottom.setOnClickListener {
-            AlertFragment.Builder(this@AlertActivity)
+            AlertFragment.Builder()
                     .setDialogGravity(Gravity.BOTTOM)
                     .setTitle("标题")
                     .setMessage("内容")
@@ -103,11 +107,12 @@ class AlertActivity : FragmentActivity() {
                             toast("取消")
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         btn_bottom2.setOnClickListener {
-            AlertFragment.Builder(this@AlertActivity)
+            AlertFragment.Builder()
                     .setDialogGravity(Gravity.BOTTOM)
                     .setDialogBottomSeparate(true)
                     .setTitle("列表")
@@ -129,11 +134,12 @@ class AlertActivity : FragmentActivity() {
                             toast("取消")
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         btn_bottom3.setOnClickListener {
-            AlertFragment.Builder(this@AlertActivity)
+            AlertFragment.Builder()
                     .setDialogGravity(Gravity.BOTTOM)
                     .setMarginHorizontal(0)
                     .setMarginBottom(0)
@@ -157,12 +163,13 @@ class AlertActivity : FragmentActivity() {
                         }
 
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         var selected = listOf<Int>()
         btn_bottom4.setOnClickListener {
-            val a = AlertFragment.Builder(this@AlertActivity)
+            val a = AlertFragment.Builder()
                     .setDialogGravity(Gravity.BOTTOM)
                     .setSelectedDataList(arrayListOf("1111", "2222", "3333", "44444", "5555", "6666", "1111", "2222", "3333", "44444", "5555", "6666"))
                     .setDialogBottomSeparate(true)
@@ -183,7 +190,8 @@ class AlertActivity : FragmentActivity() {
 
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
     }
 

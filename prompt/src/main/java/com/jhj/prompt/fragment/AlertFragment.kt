@@ -413,12 +413,13 @@ class AlertFragment : BaseDialogFragment<AlertFragment>() {
     }
 
 
-    class Builder(val context: Context) : BaseBuilder<AlertFragment, Builder>(context) {
+    class Builder : BaseBuilder<AlertFragment, Builder>() {
 
-        private val mFragment = AlertFragment()
-
-        override val fragment: AlertFragment
-            get() = mFragment
+        override fun build(): AlertFragment {
+            val fragment = AlertFragment()
+            fragment.arguments = arg
+            return fragment
+        }
 
         fun setDialogBottomSeparate(isSeparate: Boolean): Builder {
             arg.putBoolean(Constants.DIALOG_STYLE, isSeparate)

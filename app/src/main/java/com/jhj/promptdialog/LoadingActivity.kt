@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
-import com.jhj.prompt.fragment.base.BaseDialogFragment
 import com.jhj.prompt.fragment.LoadingFragment
 import com.jhj.prompt.fragment.PercentFragment
 import com.jhj.prompt.fragment.base.OnDialogShowOnBackListener
@@ -25,7 +24,7 @@ class LoadingActivity : FragmentActivity() {
         setContentView(R.layout.activity_loading)
         no_suggest_style_1.setOnClickListener {
 
-            LoadingFragment.Builder(this@LoadingActivity)
+            LoadingFragment.Builder()
                     .setText("111")
                     .setDialogGravity(Gravity.TOP)
                     .setCancelOnTouchOut(false)
@@ -34,22 +33,25 @@ class LoadingActivity : FragmentActivity() {
                             toast("Dialog弹出时，我进行了back操作")
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         style1.setOnClickListener {
-            LoadingFragment.Builder(this@LoadingActivity)
+            LoadingFragment.Builder()
                     .setText("加载中...")
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         black_style1.setOnClickListener {
-            LoadingFragment.Builder(this@LoadingActivity)
+            LoadingFragment.Builder()
                     .setDialogBlack(true)
                     .setText("加载中...")
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         define_style1.setOnClickListener {
-            LoadingFragment.Builder(this@LoadingActivity)
+            LoadingFragment.Builder()
                     .setCircleRadius((40 * resources.displayMetrics.density).toInt())
                     .setCircleColor(Color.RED)
                     .setCircleWidth(4 * resources.displayMetrics.density)
@@ -58,56 +60,64 @@ class LoadingActivity : FragmentActivity() {
                             toast("Dialog弹出时，我进行了back操作")
                         }
                     })
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         no_suggest_style_2.setOnClickListener {
-            LoadingFragment.Builder(this@LoadingActivity)
+            LoadingFragment.Builder()
                     .setLoadingStyle(LoadingFragment.LoadingStyle.NEW_STYLE)
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         style2.setOnClickListener {
-            LoadingFragment.Builder(this@LoadingActivity)
+            LoadingFragment.Builder()
                     .setLoadingStyle(LoadingFragment.LoadingStyle.NEW_STYLE)
                     .setText("加载中...")
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         black_style2.setOnClickListener {
-            LoadingFragment.Builder(this@LoadingActivity)
+            LoadingFragment.Builder()
                     .setLoadingStyle(LoadingFragment.LoadingStyle.NEW_STYLE)
                     .setDialogBlack(true)
                     .setText("加载中...")
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
         define_style2.setOnClickListener {
-            LoadingFragment.Builder(this@LoadingActivity)
+            LoadingFragment.Builder()
                     .setLoadingStyle(LoadingFragment.LoadingStyle.NEW_STYLE)
                     .setCircleRadius((40 * resources.displayMetrics.density).toInt())
                     .setCircleColor(Color.RED)
                     .setCircleWidth(4 * resources.displayMetrics.density)
-                    .show()
+                    .build()
+                    .show(supportFragmentManager)
         }
 
         percent.setOnClickListener {
-            val dialog = PercentFragment.Builder(this@LoadingActivity)
-                    .show()
+            val dialog = PercentFragment.Builder()
+                    .build()
+            dialog.show(supportFragmentManager)
             setPro(dialog)
         }
         percent1.setOnClickListener {
-            val dialog = PercentFragment.Builder(this@LoadingActivity)
+            val dialog = PercentFragment.Builder()
                     .setScaleDisplay()
                     .setDialogBlack(true)
-                    .show()
+                    .build()
+            dialog.show(supportFragmentManager)
             setPro(dialog)
         }
         percent2.setOnClickListener {
-            val dialog = PercentFragment.Builder(this@LoadingActivity)
+            val dialog = PercentFragment.Builder()
                     .setScaleDisplay()
                     .setText("加载中...")
-                    .show()
+                    .build()
+            dialog.show(supportFragmentManager)
             setPro(dialog)
         }
         percent3.setOnClickListener {
-            val dialog = PercentFragment.Builder(this@LoadingActivity)
+            val dialog = PercentFragment.Builder()
                     .setText("加载中...")
                     .setScaleColor(ContextCompat.getColor(this@LoadingActivity, R.color.red))
                     .setScaleDisplay()
@@ -121,7 +131,8 @@ class LoadingActivity : FragmentActivity() {
                     .setDialogBlack(true)
                     .setText("加载中...")
                     .setTextColor(ContextCompat.getColor(this@LoadingActivity, R.color.red))
-                    .show()
+                    .build()
+            dialog.show(supportFragmentManager)
 
             setPro(dialog)
         }
@@ -130,7 +141,7 @@ class LoadingActivity : FragmentActivity() {
     }
 
 
-    fun setPro(dialog: PercentFragment.Builder) {
+    fun setPro(dialog: PercentFragment) {
         doAsync {
             for (i in 1..100) {
                 Thread.sleep(25)

@@ -49,7 +49,7 @@ class PercentFragment : BaseDialogFragment<PercentFragment>() {
     }
 
 
-    private fun setProgress(i: Int) {
+    fun setProgress(i: Int) {
 
         if (mView == null) {
             mProgress = i
@@ -68,6 +68,15 @@ class PercentFragment : BaseDialogFragment<PercentFragment>() {
         super.onDismiss(dialog)
         isCancel = true
     }
+
+    override fun dismiss() {
+        Handler().postDelayed({
+            if (dialog?.isShowing == true) {
+                super.dismiss()
+            }
+        }, 100)
+    }
+
 
     private fun initView(view: View) {
         val textColor: Int
@@ -145,13 +154,15 @@ class PercentFragment : BaseDialogFragment<PercentFragment>() {
         view.layout_progress_dialog.backgroundResource = backgroundResource
     }
 
-    class Builder(val context: Context) : BaseBuilder<PercentFragment, Builder>(context) {
+    class Builder : BaseBuilder<PercentFragment, Builder>() {
 
         private var maxProgress = 100
-        private val mFragment = PercentFragment()
 
-        override val fragment: PercentFragment
-            get() = mFragment
+        override fun build(): PercentFragment {
+            val fragment = PercentFragment()
+            fragment.arguments = arg
+            return fragment
+        }
 
         fun setText(text: String?): Builder {
             arg.putString(Constants.MESSAGE, text)
@@ -208,10 +219,6 @@ class PercentFragment : BaseDialogFragment<PercentFragment>() {
             return this
         }
 
-        fun setProgress(progress: Int): Builder {
-            fragment.setProgress(progress)
-            return this
-        }
 
         fun getMaxProgress(): Int {
             return maxProgress
@@ -226,14 +233,6 @@ class PercentFragment : BaseDialogFragment<PercentFragment>() {
         fun setDialogBlack(isBlackStyle: Boolean): Builder {
             arg.putBoolean(Constants.IS_BLACK_STYLE, isBlackStyle)
             return this
-        }
-
-        override fun dismiss() {
-            Handler().postDelayed({
-                if (fragment.dialog?.isShowing == true) {
-                    super.dismiss()
-                }
-            }, 100)
         }
     }
 }

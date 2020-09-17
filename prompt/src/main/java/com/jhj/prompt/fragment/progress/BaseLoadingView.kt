@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import org.jetbrains.anko.dip
 
 /**
  * 处于加载中的ProgressView基类
@@ -15,7 +16,6 @@ open class BaseLoadingView<T : BaseLoadingView<T>>(private val mContext: Context
 
     protected var mPaint: Paint = Paint()
     protected var currentAngle = 0f //当前旋转角度
-    protected val density = mContext.resources.displayMetrics.density
 
     constructor(mContext: Context) : this(mContext, null)
 
@@ -30,7 +30,7 @@ open class BaseLoadingView<T : BaseLoadingView<T>>(private val mContext: Context
 
     @SuppressLint("SwitchIntDef")
     private fun measureHandle(measureSpec: Int): Int {
-        val defaultSize = 50 * density.toInt()
+        val defaultSize = dip(50)
         val spec = MeasureSpec.getSize(measureSpec)
         val mode = MeasureSpec.getMode(measureSpec)
 
@@ -49,7 +49,7 @@ open class BaseLoadingView<T : BaseLoadingView<T>>(private val mContext: Context
         }
 
     @get:Synchronized
-    var circleWidth: Float = 2 * density
+    var circleWidth: Float =dip(2).toFloat()
         @Synchronized set(value) {
             if (value < 0) {
                 throw IllegalArgumentException("mCircleWidth not less than 0")
