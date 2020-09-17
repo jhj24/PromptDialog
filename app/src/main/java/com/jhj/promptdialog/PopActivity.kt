@@ -22,6 +22,8 @@ class PopActivity : AppCompatActivity() {
             PopWindow.Builder(this@PopActivity)
                     .setLayoutRes(R.layout.layout_pop_item)
                     .setPopWindowHeight(500)
+                    .setCloseAnim(R.anim.anim_out_top)
+                    .setOpenAnim(R.anim.anim_in_top)
                     .build()
                     .showAsDropDown(btn_0)
         }

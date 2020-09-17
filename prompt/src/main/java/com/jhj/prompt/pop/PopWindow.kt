@@ -5,14 +5,11 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
-import android.os.Handler
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.PopupWindow
 
@@ -22,12 +19,11 @@ import android.widget.PopupWindow
  */
 class PopWindow(private val mContext: Context) : PopupWindow() {
 
-    private var isDismiss = false
     private var view: View? = null
 
     private var layoutRes: Int? = null
-    private var animIn: Int? = null
-    private var animOut: Int? = null
+    private var animEnter: Int? = null
+    private var animExit: Int? = null
     private var dimAmount = 0.7f// 背景变暗的值，0 - 1
     private var mWindow: Window? = null//当前Activity 的窗口
     private var body: (View, PopWindow) -> Unit = { v, popWindow -> }
@@ -96,9 +92,8 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
             width = if (isDefineWidth) popWindowWidth else contentView.measuredWidth
             height = if (isDefineHeight) popWindowHeight else contentView.measuredHeight
             super.showAsDropDown(anchor, xoff, yoff)
-            isDismiss = false
-            if (animIn != null) {
-                val animationIn = AnimationUtils.loadAnimation(mContext, animIn!!)
+            if (animEnter != null) {
+                val animationIn = AnimationUtils.loadAnimation(mContext, animEnter!!)
                 view?.startAnimation(animationIn)
             }
         } catch (e: Exception) {
@@ -114,10 +109,9 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
             width = if (isDefineWidth) popWindowWidth else contentView.measuredWidth
             height = if (isDefineHeight) popWindowHeight else contentView.measuredHeight
             super.showAsDropDown(anchor)
-            isDismiss = false
-            if (animIn != null) {
-                val animationIn = AnimationUtils.loadAnimation(mContext, animIn!!)
-                view?.startAnimation(animationIn)
+            if (animEnter != null) {
+                val animationIn = AnimationUtils.loadAnimation(mContext, animEnter!!)
+                contentView?.startAnimation(animationIn)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -130,31 +124,10 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
             params?.alpha = 1.0f
             mWindow?.attributes = params
         }
-        if (animOut != null) {
-            if (isDismiss) {
-                return
-            }
-            isDismiss = true
-            val animationOut = AnimationUtils.loadAnimation(mContext, animOut!!)
-            view?.startAnimation(animationOut)
-            dismiss()
-
-            animationOut.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation) {}
-
-                override fun onAnimationEnd(animation: Animation) {
-                    isDismiss = false
-                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
-                        Handler().post { super@PopWindow.dismiss() }
-                    } else {
-                        super@PopWindow.dismiss()
-                    }
-                }
-
-                override fun onAnimationRepeat(animation: Animation) {}
-            })
-        } else {
-            super@PopWindow.dismiss()
+        super@PopWindow.dismiss()
+        if (animExit != null) {
+            val animationOut = AnimationUtils.loadAnimation(mContext, animExit!!)
+            contentView?.startAnimation(animationOut)
         }
     }
 
@@ -181,12 +154,12 @@ class PopWindow(private val mContext: Context) : PopupWindow() {
 
 
         fun setOpenAnim(anim: Int): Builder {
-            popWindow.animIn = anim
+            popWindow.animEnter = anim
             return this
         }
 
         fun setCloseAnim(anim: Int): Builder {
-            popWindow.animOut = anim
+            popWindow.animExit = anim
             return this
         }
 
